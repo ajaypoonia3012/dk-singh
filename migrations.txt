@@ -1,0 +1,51 @@
+ Volume in drive C is Windows-SSD
+ Volume Serial Number is C22F-C90D
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\database\migrations
+
+13-06-2026  09:33 AM    <DIR>          .
+13-06-2026  09:33 AM    <DIR>          ..
+14-03-2026  12:54 PM             1,473 0001_01_01_000000_create_users_table.php
+14-03-2026  12:54 PM               867 0001_01_01_000001_create_cache_table.php
+14-03-2026  12:54 PM             1,812 0001_01_01_000002_create_jobs_table.php
+30-05-2026  08:58 AM               804 2026_05_30_125416_create_products_table.php
+30-05-2026  09:12 AM               805 2026_05_30_131029_create_services_table.php
+30-05-2026  09:28 AM               795 2026_05_30_132558_create_testimonials_table.php
+30-05-2026  09:34 AM               855 2026_05_30_133038_create_transformations_table.php
+30-05-2026  10:21 AM               738 2026_05_30_141949_create_blogs_table.php
+30-05-2026  10:49 AM               784 2026_05_30_144807_create_plans_table.php
+30-05-2026  10:55 AM               543 2026_05_30_145531_create_workout_plans_table.php
+30-05-2026  11:49 AM               537 2026_05_30_154913_create_diet_plans_table.php
+01-06-2026  05:42 PM             1,004 2026_05_30_155000_create_orders_table.php
+30-05-2026  12:53 PM               916 2026_05_30_163729_create_settings_table.php
+30-05-2026  04:15 PM               676 2026_05_30_194032_create_memberships_table.php
+01-06-2026  05:29 PM             1,029 2026_05_30_202036_add_user_columns_to_orders_table.php
+01-06-2026  11:43 PM               876 2026_05_31_161729_create_programs_table.php
+31-05-2026  04:06 PM               825 2026_05_31_172752_add_columns_to_workout_plans_table.php
+31-05-2026  05:50 PM               841 2026_05_31_214435_update_transformations_table.php
+31-05-2026  07:50 PM               550 2026_05_31_224112_add_missing_columns_to_transformations_table.php
+31-05-2026  08:34 PM               666 2026_06_01_003058_create_contact_leads_table.php
+31-05-2026  09:04 PM               781 2026_06_01_010209_add_fields_to_services_table.php
+01-06-2026  06:03 AM             1,765 2026_06_01_100232_add_global_fields_to_settings_table.php
+01-06-2026  05:44 PM               871 2026_06_01_174222_add_crm_fields_to_contact_leads_table.php
+01-06-2026  09:50 PM               723 2026_06_02_005818_add_about_fields_to_settings_table.php
+03-06-2026  07:17 PM               220 2026_06_02_034431_add_slug_to_programs_table.php
+02-06-2026  07:15 AM             1,576 2026_06_02_111414_add_crm_fields_to_contact_leads_table.php
+02-06-2026  07:59 AM               455 2026_06_02_115803_fix_status_column_in_contact_leads_table.php
+02-06-2026  11:28 AM             1,126 2026_06_02_151800_add_crm_pipeline_fields_to_contact_leads_table.php
+02-06-2026  06:31 PM             1,108 2026_06_02_222952_add_full_fields_to_diet_plans_table.php
+02-06-2026  07:46 PM             1,440 2026_06_02_234524_upgrade_plans_table.php
+02-06-2026  08:14 PM               399 2026_06_03_001305_change_duration_column_in_plans_table.php
+02-06-2026  09:13 PM             1,326 2026_06_03_011243_upgrade_orders_table.php
+02-06-2026  11:09 PM             1,957 2026_06_03_030133_upgrade_users_table.php
+02-06-2026  11:59 PM             2,303 2026_06_03_035826_create_progress_logs_table.php
+03-06-2026  11:48 PM               567 2026_06_04_034229_add_is_admin_to_users_table.php
+04-06-2026  12:55 PM               809 2026_06_04_165251_create_workout_completions_table.php
+04-06-2026  05:19 PM               800 2026_06_04_210737_create_diet_completions_table.php
+05-06-2026  09:38 AM               715 2026_06_05_133621_create_coach_notes_table.php
+05-06-2026  10:24 AM             1,014 2026_06_05_141949_create_weekly_check_ins_table.php
+06-06-2026  11:46 AM               915 2026_06_06_143306_create_action_plans_table.php
+06-06-2026  05:24 PM               835 2026_06_06_212114_create_transformation_photos_table.php
+07-06-2026  01:04 AM               755 2026_06_07_050220_create_notifications_table.php
+              42 File(s)         39,856 bytes
+               2 Dir(s)  42,785,386,496 bytes free

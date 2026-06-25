@@ -1,0 +1,73 @@
+ Volume in drive C is Windows-SSD
+ Volume Serial Number is C22F-C90D
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+13-06-2026  09:34 AM    <DIR>          action-plan
+04-06-2026  08:12 AM             2,373 billing.blade.php
+13-06-2026  09:34 AM    <DIR>          check-ins
+13-06-2026  09:34 AM    <DIR>          coach-notes
+04-06-2026  07:14 AM             2,429 my-plan-backup.blade.php
+04-06-2026  08:17 AM             5,467 my-plan.blade.php
+13-06-2026  09:34 AM    <DIR>          notifications
+04-06-2026  09:24 AM             6,476 profile.blade.php
+13-06-2026  09:34 AM    <DIR>          progress
+13-06-2026  09:34 AM    <DIR>          reports
+13-06-2026  09:34 AM    <DIR>          transformations
+               4 File(s)         16,745 bytes
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member\action-plan
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+06-06-2026  01:08 PM             2,074 index.blade.php
+               1 File(s)          2,074 bytes
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member\check-ins
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+13-06-2026  09:43 AM             3,247 index.blade.php
+               1 File(s)          3,247 bytes
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member\coach-notes
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+06-06-2026  10:23 AM               883 index.blade.php
+               1 File(s)            883 bytes
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member\notifications
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+07-06-2026  01:49 AM             2,116 index.blade.php
+               1 File(s)          2,116 bytes
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member\progress
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+04-06-2026  10:19 AM             2,006 create.blade.php
+04-06-2026  11:34 AM             6,786 index.blade.php
+               2 File(s)          8,792 bytes
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member\reports
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+05-06-2026  11:34 PM             3,141 progress-report.blade.php
+               1 File(s)          3,141 bytes
+
+ Directory of C:\Users\pooni\Projects\dk-singh-fitness\resources\views\member\transformations
+
+13-06-2026  09:34 AM    <DIR>          .
+13-06-2026  09:34 AM    <DIR>          ..
+06-06-2026  06:07 PM             9,463 index.blade.php
+               1 File(s)          9,463 bytes
+
+     Total Files Listed:
+              12 File(s)         46,461 bytes
+              23 Dir(s)  42,785,521,664 bytes free

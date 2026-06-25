@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GLOBAL */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f6f3eb;
+    color: #111111;
+    overflow-x: hidden;
+}
+
+/* CONTAINER */
+
+.container-premium {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* NAV LINKS */
+
+.nav-link{
+
+    color: var(--secondary-color);
+
+    @apply text-base font-semibold transition duration-300;
+
+}
+
+.nav-link:hover{
+
+    color: var(--primary-color);
+
+}
+.mobile-link{
+
+    color: var(--secondary-color);
+
+    @apply text-lg font-semibold transition duration-300;
+
+}
+
+.mobile-link:hover{
+
+    color: var(--primary-color);
+
+}
+
+/* BUTTONS */
+
+.btn-primary {
+
+    background: var(--primary-color);
+    color: var(--secondary-color);
+
+    @apply font-bold px-8 py-4 rounded-2xl transition duration-300 shadow-lg hover:scale-105;
+
+}
+
+.btn-primary:hover{
+
+    filter: brightness(1.08);
+
+}
+.btn-primary-small {
+
+    background: var(--primary-color);
+    color: var(--secondary-color);
+
+    @apply px-6 py-3 rounded-2xl font-bold transition duration-300 shadow-lg hover:scale-105;
+
+}
+
+.btn-primary-small:hover {
+
+    filter: brightness(1.08);
+
+}
+
+.btn-outline {
+    @apply border-2 border-black hover:bg-black hover:text-white text-black font-bold px-8 py-4 rounded-2xl transition duration-300;
+}
+
+/* CARDS */
+
+.card-premium {
+    @apply bg-white rounded-[32px] shadow-xl hover:shadow-2xl transition duration-500 hover:-translate-y-2 border border-gray-200;
+}
+
+/* SECTION SPACING */
+
+.section-padding {
+    @apply py-16 md:py-24;
+}
+
+/* TITLES */
+
+.title-xl {
+    @apply text-4xl md:text-5xl lg:text-6xl font-black leading-tight;
+}
+
+.title-lg {
+    @apply text-3xl md:text-4xl lg:text-5xl font-black leading-tight;
+}
+
+.title-md {
+    @apply text-2xl md:text-3xl lg:text-4xl font-black;
+}
+
+/* TEXT */
+
+.text-muted {
+    @apply text-gray-600 leading-relaxed;
+}
+
+/* IMAGES */
+
+.img-cover {
+    @apply w-full h-full object-cover;
+}
+
+/* GLASS EFFECT */
+
+.glass {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px);
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #eab308;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ca8a04;
+}
+
+/* INPUTS */
+
+input,
+textarea,
+select {
+    @apply focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300;
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media (max-width: 768px) {
+
+    h1 {
+        line-height: 1.1 !important;
+    }
+
+    section {
+        overflow: hidden;
+    }
+
+    .mobile-center {
+        text-align: center;
+    }
+
+    .mobile-full {
+        width: 100%;
+    }
+
+}
+
+/* AOS FIX */
+
+[data-aos] {
+    overflow: hidden;
+}
+
+/* PERFORMANCE */
+
+img {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+a,
+button {
+    will-change: transform;
+}
