@@ -35,4 +35,20 @@ return [
         ],
     ],
 
+    'razorpay' => [
+        'key' => env('RAZORPAY_KEY'),
+        'secret' => env('RAZORPAY_SECRET'),
+    ],
+
+    'delhivery' => [
+        'url' => env('DELHIVERY_API_URL'),
+        'token' => env('DELHIVERY_TOKEN'),
+        'pickup_location' => env('DELHIVERY_PICKUP_LOCATION'),
+        'seller_name' => env('SELLER_NAME'),
+        'seller_address' => env('SELLER_ADDRESS'),
+        'length' => env('DELHIVERY_LENGTH', 10),
+        'width' => env('DELHIVERY_WIDTH', 10),
+        'height' => env('DELHIVERY_HEIGHT', 10),
+    ],
+
 ];
