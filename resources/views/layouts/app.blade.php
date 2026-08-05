@@ -23,8 +23,16 @@
 
     <meta charset="UTF-8">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@yield('title', $setting?->site_name ?? 'DK Singh Fitness')</title>
+
+    <meta name="description" content="@yield('meta_description', $setting?->meta_description ?? 'Premium fitness coaching and transformation programs.')">
+
+    <link rel="canonical" href="@yield('canonical', url()->current())">
+
     <meta name="google-site-verification"
-content="{{ $setting->google_site_verification }}">
+content="{{ $setting?->google_site_verification }}">
 
 
 <!-- OPEN GRAPH -->
@@ -40,37 +48,31 @@ content="{{ $setting->google_site_verification }}">
 
 <!-- OPEN GRAPH -->
 
-<meta property="og:title"
-      content=@yield(
-'meta_title',
-$setting->meta_title ?? $setting->site_name
-)
+<meta property="og:title" content="@yield('meta_title', $setting?->meta_title ?? $setting?->site_name ?? 'DK Singh Fitness')">
 
 <meta property="og:description"
       content="@yield('meta_description', $setting->meta_description ?? 'Premium fitness coaching and transformation programs.')">
 
-<meta property="og:type"
-      content="website">
+<meta property="og:type" content="@yield('og_type', 'website')">
 
 <meta property="og:url"
       content="{{ url()->current() }}">
 
-@if($setting && $setting->logo)
-
-<meta property="og:image"
-      content="{{ asset('storage/' . $setting->logo) }}">
-
-@endif
+<meta property="og:image" content="@yield('meta_image', !empty($setting?->logo) ? asset('storage/' . $setting->logo) : asset('favicon.ico'))">
 
 <!-- TWITTER -->
 
 <meta name="twitter:card" content="summary_large_image">
 
 <meta name="twitter:title"
-      content="@yield('meta_title', $setting->meta_title ?? $setting->site_name)">
+      content="@yield('meta_title', $setting?->meta_title ?? $setting?->site_name ?? 'DK Singh Fitness')">
 
 <meta name="twitter:description"
-      content="@yield('meta_description', $setting->meta_description ?? 'Premium fitness coaching and transformation programs.')">
+      content="@yield('meta_description', $setting?->meta_description ?? 'Premium fitness coaching and transformation programs.')">
+
+<meta name="twitter:image" content="@yield('meta_image', !empty($setting?->logo) ? asset('storage/' . $setting->logo) : asset('favicon.ico'))">
+
+@stack('head')
 
 
 
@@ -101,21 +103,16 @@ $setting->meta_title ?? $setting->site_name
 <style>
 :root{
 
-    --primary-color: {{ $themeSetting?->primary_color ?? '#facc15' }};
-    --secondary-color: {{ $themeSetting?->secondary_color ?? '#111111' }};
-    --accent-color: {{ $themeSetting?->accent_color ?? '#ffffff' }};
+    --primary-color: {{ $theme?->primary_color ?? '#facc15' }};
+    --secondary-color: {{ $theme?->secondary_color ?? '#111111' }};
+    --accent-color: {{ $theme?->accent_color ?? '#ffffff' }};
 
 }
 </style>
 
 </head>
 
-<body
-class="font-[Poppins]"
-style="
-background: var(--accent-color);
-color: var(--secondary-color);
-">
+<body class="font-[Poppins]">
 
     @include('partials.navbar')
 

@@ -1,51 +1,29 @@
+@php
+    $heroMedia = $featured?->media;
+@endphp
+
 <section class="blog-hero">
+    @if($heroMedia)
+        <img class="blog-hero__background" src="{{ $heroMedia->url }}" alt="" width="{{ $heroMedia->width ?: 1600 }}" height="{{ $heroMedia->height ?: 900 }}" fetchpriority="high" decoding="async">
+    @endif
+    <span class="blog-hero__overlay" aria-hidden="true"></span>
+    <div class="blog-hero__content">
+        <span class="blog-eyebrow">Train smarter. Live stronger.</span>
+        <h1>Evidence-led fitness for results that last.</h1>
+        <p>Practical training, nutrition, recovery, and transformation advice from DK Singh Fitness.</p>
 
-    <div style="max-width:700px;">
-
-        <span class="badge bg-warning text-dark px-3 py-2 mb-4">
-
-            DK Singh Fitness
-
-        </span>
-
-        <h1 class="display-3 fw-bold mb-4">
-
-            Fitness Articles,
-            Nutrition Guides &
-            Real Transformations
-
-        </h1>
-
-        <p class="lead text-white mb-5">
-
-            Discover science-based fitness advice, workout plans,
-            nutrition strategies and real transformation stories.
-
-        </p>
-
-        <form
-            action="{{ route('blog.index') }}"
-            method="GET"
-            class="blog-search">
-
-            <div class="input-group input-group-lg">
-
-                <input
-                    class="form-control"
-                    name="search"
-                    placeholder="Search articles..."
-                    value="{{ request('search') }}">
-
-                <button class="btn btn-warning">
-
-                    Search
-
-                </button>
-
-            </div>
-
+        <form action="{{ route('blog.index') }}" method="GET" class="blog-search" role="search">
+            <label class="visually-hidden" for="hero-blog-search">Search fitness articles</label>
+            <input id="hero-blog-search" type="search" name="search" value="{{ request('search') }}" placeholder="What do you want to improve?">
+            <button type="submit">Search articles</button>
         </form>
 
+        <div class="blog-stats" aria-label="Blog statistics">
+            <div><strong>{{ number_format($posts->total() + ($featured ? 1 : 0)) }}+</strong><span>Expert articles</span></div>
+            <div><strong>{{ number_format($categories->count()) }}</strong><span>Fitness topics</span></div>
+            <div><strong>100%</strong><span>Actionable advice</span></div>
+        </div>
     </div>
 
+    <a class="blog-hero__cta" href="#latest-articles">Explore the latest <span aria-hidden="true">↓</span></a>
 </section>

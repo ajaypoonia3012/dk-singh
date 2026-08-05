@@ -1,30 +1,14 @@
-@if($relatedPosts->count())
-
-<section class="mt-5">
-
-    <h2 class="fw-bold mb-4">
-
-        Related Articles
-
-    </h2>
-
-    <div class="row g-4">
-
-        @foreach($relatedPosts as $post)
-
-            <div class="col-md-4">
-
-                @include('blog.partials.card', [
-                    'post' => $post,
-                    'featured' => false,
-                ])
-
-            </div>
-
-        @endforeach
-
-    </div>
-
-</section>
-
+@if($relatedPosts->isNotEmpty())
+    <section class="blog-related" aria-labelledby="related-heading">
+        <div class="blog-section-heading">
+            <div><span class="blog-kicker">Keep progressing</span><h2 id="related-heading">Related articles</h2></div>
+        </div>
+        <div class="row g-4">
+            @foreach($relatedPosts as $relatedPost)
+                <div class="col-md-6 col-xl-4 d-flex">
+                    @include('blog.partials.card', ['post' => $relatedPost, 'featured' => false])
+                </div>
+            @endforeach
+        </div>
+    </section>
 @endif

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
@@ -47,7 +48,7 @@ class Media extends Model
      */
     public function getUrlAttribute(): string
     {
-        return asset('storage/' . ltrim($this->path, '/'));
+        return Storage::disk($this->disk ?: 'public')->url($this->path);
     }
 
     /**

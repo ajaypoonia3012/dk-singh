@@ -1,103 +1,50 @@
-<div class="blog-card">
+@php
+    $isFeatured = $featured ?? false;
+    $image = $post->media;
+@endphp
 
-    <a href="{{ route('blog.show',$post->slug) }}" class="text-decoration-none">
-
-        <div class="blog-card-image">
-
-            @if($post->media)
-
-                <img
-                    src="{{ asset('storage/'.$post->media->path) }}"
-                    alt="{{ $post->title }}">
-
-            @else
-
-                <img
-                    src="https://placehold.co/1200x700?text=DK+Singh+Fitness"
-                    alt="{{ $post->title }}">
-
-            @endif
-
-        </div>
-
+<article class="blog-card {{ $isFeatured ? 'blog-card--featured' : '' }}">
+    <a href="{{ route('blog.show', $post->slug) }}" class="blog-card__image-link" aria-label="Read {{ $post->title }}">
+        @if($image)
+            <img
+                src="{{ $image->url }}"
+                alt="{{ $image->alt ?: $post->title }}"
+                width="{{ $image->width ?: 1200 }}"
+                height="{{ $image->height ?: 675 }}"
+                loading="{{ $isFeatured ? 'eager' : 'lazy' }}"
+                decoding="async">
+        @else
+            <div class="blog-card__image-fallback" role="img" aria-label="{{ $post->title }}">
+                <span>DK</span> Singh Fitness
+            </div>
+        @endif
+        <span class="blog-card__shade" aria-hidden="true"></span>
     </a>
 
-    <div class="blog-card-body">
-
-        <div class="d-flex justify-content-between align-items-center mb-3">
-
+    <div class="blog-card__body">
+        <div class="blog-card__topline">
             @if($post->category)
-
-                <span class="blog-category">
-
-                    {{ $post->category->name }}
-
-                </span>
-
+                <a class="blog-category" href="{{ route('blog.category', $post->category->slug) }}">{{ $post->category->name }}</a>
             @endif
-
-            @if($featured)
-
-                <span class="badge bg-danger">
-
-                    Featured
-
-                </span>
-
+            @if($isFeatured)
+                <span class="blog-featured-label">Editor’s pick</span>
             @endif
-
         </div>
 
-        <h3 class="blog-card-title">
+        <h3><a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a></h3>
 
-            <a href="{{ route('blog.show',$post->slug) }}">
-
-                {{ $post->title }}
-
-            </a>
-
-        </h3>
-
-        <div class="blog-meta mb-3">
-
-            <span>
-
-                {{ optional($post->published_at)->format('d M Y') }}
-
-            </span>
-
-            <span>
-
-                {{ $post->reading_time }} min
-
-            </span>
-
-            <span>
-
-                {{ number_format($post->views) }} views
-
-            </span>
-
+        <div class="blog-meta">
+            <span>{{ $post->published_at?->format('M j, Y') ?? 'Recently published' }}</span>
+            <span>{{ $post->reading_time }} min read</span>
+            <span>{{ number_format($post->views) }} views</span>
         </div>
 
-        <p class="blog-excerpt">
+        @if($post->excerpt)
+            <p>{{ Str::limit($post->excerpt, $isFeatured ? 190 : 125) }}</p>
+        @endif
 
-            {{ Str::limit($post->excerpt,140) }}
-
-        </p>
-
-        <div class="mt-4">
-
-            <a
-                href="{{ route('blog.show',$post->slug) }}"
-                class="blog-btn text-decoration-none">
-
-                Read Article →
-
-            </a>
-
-        </div>
-
+        <a href="{{ route('blog.show', $post->slug) }}" class="blog-read-link">
+            Read article <span aria-hidden="true">→</span>
+        </a>
     </div>
-
-</div>
+</article>
