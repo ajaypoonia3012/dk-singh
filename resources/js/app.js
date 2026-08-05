@@ -13,3 +13,5 @@ AOS.init({
     once: true,
 });
 
+
+import './media/cropper';

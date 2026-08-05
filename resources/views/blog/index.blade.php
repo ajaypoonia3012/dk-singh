@@ -1,89 +1,91 @@
 @extends('layouts.app')
 
+@section('title','Fitness Blog')
+
 @section('content')
 
-<section class="py-24 bg-[#f6f3eb]">
+<div class="container-fluid py-5"><div class="container">
 
-    <div class="max-w-7xl mx-auto px-6">
+    @include('blog.partials.hero')
 
-        <!-- HEADING -->
+    <div class="row mt-5 g-5">
 
-        <div class="text-center mb-20">
+        <div class="col-xl-8 col-lg-8">
 
-            <p class="text-yellow-500 font-bold uppercase tracking-[4px] mb-4">
+            @if($featured)
 
-                Latest Articles
+            <section class="mb-5">
 
-            </p>
+                <h2 class="fw-bold mb-4">
+                    Featured Article
+                </h2>
 
-            <h1 class="text-5xl md:text-7xl font-black text-[#111111] mb-8">
+                @include('blog.partials.card',[
+                    'post'=>$featured,
+                    'featured'=>true
+                ])
 
-                {{ $setting->blog_label }}
+            </section>
 
-            </h1>
+            @endif
 
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <section>
 
-                Expert fitness advice, nutrition tips, workout strategies,
-                and transformation guidance from {{ $setting->site_name }}.
+                <div class="d-flex justify-content-between align-items-center mb-4">
 
-            </p>
-
-        </div>
-
-        <!-- BLOG GRID -->
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-
-            @foreach($blogs as $blog)
-
-            <div class="bg-white rounded-[35px] overflow-hidden shadow-xl hover:-translate-y-3 hover:shadow-2xl transition duration-500">
-
-                <!-- IMAGE -->
-
-                @if($blog->image)
-
-                <img
-                    src="{{ asset('storage/' . $blog->image) }}"
-                    alt="{{ $blog->title }}"
-                    class="w-full h-[320px] object-cover"
-                >
-
-                @endif
-
-                <!-- CONTENT -->
-
-                <div class="p-8">
-
-                    <h2 class="text-3xl font-black text-[#111111] mb-4">
-
-                        {{ $blog->title }}
-
+                    <h2 class="fw-bold">
+                        Latest Articles
                     </h2>
 
-                    <p class="text-gray-600 leading-relaxed mb-8">
-
-                        {{ Str::limit(strip_tags($blog->content), 120) }}
-
-                    </p>
-
-                    <a href="{{ route('blog.show', $blog->slug) }}"
-                       class="block text-center bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-2xl transition duration-300">
-
-                        Read Article
-
-                    </a>
+                    <span class="text-muted">
+                        {{ $posts->total() }} Articles
+                    </span>
 
                 </div>
 
-            </div>
+                <div class="row">
 
-            @endforeach
+                    @foreach($posts as $post)
+
+                        <div class="col-md-6 mb-4">
+
+                            @include('blog.partials.card',[
+                                'post'=>$post,
+                                'featured'=>false
+                            ])
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+                <div class="mt-4">
+
+                    {{ $posts->links() }}
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <div class="col-xl-4 col-lg-4">
+
+            @include('blog.partials.sidebar')
 
         </div>
 
     </div>
 
-</section>
+    <div class="mt-5">
+
+        @include('blog.partials.newsletter')
+
+    </div>
+
+</div>
+
+</div>
 
 @endsection

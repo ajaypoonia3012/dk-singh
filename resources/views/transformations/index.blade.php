@@ -27,20 +27,20 @@
             @forelse($transformations as $transformation)
 
                 <a
-                    href="{{ route('transformations.show', $transformation->id) }}"
+                    href="{{ route('transformations.show', $transformation->slug) }}"
                     data-aos="zoom-in"
                     class="group bg-white rounded-[32px] overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500 block">
 
                     <div class="relative overflow-hidden">
 
-                        @if($transformation->image)
+                        @if($transformation->after_image)
 
                             <img
-                                src="{{ asset('storage/' . $transformation->image) }}"
+                                src="{{ asset('storage/' . $transformation->after_image) }}"
                                 class="w-full h-[420px] object-cover group-hover:scale-110 transition duration-700"
                             >
 
-                        @else
+                        @else@if($transformation->image)
 
                             <div class="w-full h-[420px] bg-gray-200 flex items-center justify-center text-gray-500 font-bold">
 
@@ -76,7 +76,7 @@
 
                             <p class="text-[16px] leading-[32px] text-gray-600 mb-8 font-medium">
 
-                                "{{ Str::limit($transformation->story, 120) }}"
+                                "{{ Str::limit(strip_tags($transformation->story), 120) }}"
 
                             </p>
 

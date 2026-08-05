@@ -1,101 +1,118 @@
-@section('meta_title', $blog->title . ' | ' . $setting->site_name)
-
-@section('meta_description', Str::limit(strip_tags($blog->content), 150))
-
-@section('meta_keywords', $blog->title . ', fitness blog, ' . $setting->site_name)
 @extends('layouts.app')
+
+@section('title', $post->seo_title ?: $post->title)
 
 @section('content')
 
-<section class="bg-[#f6f3eb] py-24">
+<div class="container py-5">
 
-    <div class="max-w-5xl mx-auto px-6">
+    <div class="row">
 
-        <!-- IMAGE -->
+        <div class="col-lg-8">
 
-        <div class="overflow-hidden rounded-[40px] shadow-2xl mb-12">
+            <article>
 
-            <img
-                src="{{ $blog->featured_image ? asset('storage/' . $blog->featured_image) : asset('images/blog-placeholder.jpg') }}"
-                alt="{{ $blog->title }}"
-                class="w-full h-[500px] object-cover hover:scale-105 transition duration-700"
-            >
+                @if($post->media)
+
+                    <img
+                        src="{{ asset('storage/'.$post->media->path) }}"
+                        class="img-fluid rounded-4 mb-4 w-100"
+                        alt="{{ $post->title }}">
+
+                @endif
+
+                <div class="mb-3">
+
+                    @if($post->category)
+
+                        <span class="badge bg-warning text-dark">
+
+                            {{ $post->category->name }}
+
+                        </span>
+
+                    @endif
+
+                </div>
+
+                <h1 class="display-5 fw-bold mb-3">
+
+                    {{ $post->title }}
+
+                </h1>
+
+                <div class="text-muted mb-4">
+
+                    By <strong>{{ $post->author }}</strong>
+
+                    •
+
+                    {{ optional($post->published_at)->format('d M Y') }}
+
+                    •
+
+                    {{ $post->reading_time }} min read
+
+                    •
+
+                    {{ number_format($post->views) }} views
+
+                </div>
+
+                @if($post->excerpt)
+
+                    <div class="lead mb-4">
+
+                        {{ $post->excerpt }}
+
+                    </div>
+
+                @endif
+
+                <div class="blog-content">
+
+                    {!! $post->content !!}
+
+                </div>
+
+                @if($post->tags->count())
+
+                    <hr class="my-5">
+
+                    <h5 class="mb-3">
+
+                        Tags
+
+                    </h5>
+
+                    @foreach($post->tags as $tag)
+
+                        <a
+                            href="{{ route('blog.tag', $tag->slug) }}"
+                            class="badge bg-light text-dark text-decoration-none me-2 mb-2">
+
+                            {{ $tag->name }}
+
+                        </a>
+
+                    @endforeach
+
+                @endif
+
+            </article>
+
+            @include('blog.partials.related-posts')
 
         </div>
 
-        <!-- META -->
+        <div class="col-lg-4">
 
-        <div class="flex flex-wrap items-center gap-5 mb-8">
-
-            <span class="bg-yellow-500 text-black px-5 py-2 rounded-full font-bold text-sm">
-                Fitness & Nutrition
-            </span>
-
-            <span class="text-gray-500">
-                {{ $blog->created_at->format('d M Y') }}
-            </span>
-
-        </div>
-
-        <!-- TITLE -->
-
-        <h1 class="text-5xl lg:text-6xl font-black leading-tight text-[#111111] mb-10">
-
-            {{ $blog->title }}
-
-        </h1>
-
-        <!-- CONTENT -->
-
-        <div class="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-[#111111] prose-a:text-yellow-600 prose-strong:text-black">
-
-            {!! $blog->content !!}
+            @include('blog.partials.sidebar')
 
         </div>
 
     </div>
 
-</section>
-
-<!-- CTA -->
-
-<section class="bg-[#111111] py-24 text-white">
-
-    <div class="max-w-5xl mx-auto px-6 text-center">
-
-        <p class="uppercase tracking-[5px] text-yellow-500 font-bold mb-4">
-            Start Your Transformation
-        </p>
-
-        <h2 class="text-5xl lg:text-6xl font-black mb-8">
-            Ready To Achieve
-            Real Fitness Results?
-        </h2>
-
-        <p class="text-xl text-gray-300 leading-relaxed mb-10 max-w-3xl mx-auto">
-           {{ $setting->contact_page_description ?? 'Join our transformation journey today.' }}
-        </p>
-
-        <div class="flex flex-wrap justify-center gap-5">
-
-            <a href="/plans"
-               class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-10 py-5 rounded-2xl transition duration-300">
-
-               {{ $setting->view_programs_text }}
-
-            </a>
-
-            <a href="/contact"
-               class="border border-white hover:bg-white hover:text-black text-white font-bold px-10 py-5 rounded-2xl transition duration-300">
-
-                {{ $setting->contact_cta_text }}
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
+</div>
 
 @endsection

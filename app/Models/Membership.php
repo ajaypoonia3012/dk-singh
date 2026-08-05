@@ -10,9 +10,19 @@ class Membership extends Model
 
         'user_id',
         'plan_id',
+
         'starts_at',
         'expires_at',
+
         'status',
+
+        'source',
+        'auto_renew',
+        'payment_reference',
+
+        'cancelled_at',
+        'cancel_reason',
+        'notes',
 
     ];
 
@@ -20,13 +30,16 @@ class Membership extends Model
 
         'starts_at' => 'datetime',
         'expires_at' => 'datetime',
+        'cancelled_at' => 'datetime',
+
         'status' => 'boolean',
+        'auto_renew' => 'boolean',
 
     ];
 
     /*
     |--------------------------------------------------------------------------
-    | RELATIONSHIPS
+    | Relationships
     |--------------------------------------------------------------------------
     */
 
@@ -42,14 +55,29 @@ class Membership extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACTIVE CHECK
+    | Helpers
     |--------------------------------------------------------------------------
     */
 
-    public function isActive()
+    public function isActive(): bool
     {
-        return $this->status && 
-	$this->expires_at && 
-	$this->expires_at >= now();
+        return $this->status
+            && $this->expires_at
+            && $this->expires_at->isFuture();
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->expires_at
+            && $this->expires_at->isPast();
+    }
+
+    public function remainingDays(): int
+    {
+        if (! $this->expires_at) {
+            return 0;
+        }
+
+        return now()->diffInDays($this->expires_at, false);
     }
 }

@@ -4,19 +4,21 @@
 <head>
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ $setting->google_analytics_id }}">
 
-</script>
+@if(!empty($setting?->google_analytics_id) && str_starts_with($setting->google_analytics_id, 'G-'))
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $setting->google_analytics_id }}"></script>
 
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
-  window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
 
-  function gtag(){dataLayer.push(arguments);}
-
-  gtag('js', new Date());
-
-  gtag('config', '{{ $setting->google_analytics_id }}');
-</script>
+        gtag('js', new Date());
+        gtag('config', '{{ $setting->google_analytics_id }}');
+    </script>
+@endif
 
 
     <meta charset="UTF-8">
@@ -92,6 +94,7 @@ $setting->meta_title ?? $setting->site_name
     @vite([
     'resources/css/app.css',
     'resources/css/theme.css',
+'resources/css/blog.css',
     'resources/js/app.js',
 ])
 

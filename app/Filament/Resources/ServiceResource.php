@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ServiceResource\Pages;
-use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class ServiceResource extends Resource
 {
@@ -20,85 +19,156 @@ class ServiceResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 protected static ?string $navigationGroup = 'Business';
 
-    public static function form(Form $form): Form
+   public static function form(Form $form): Form
 {
     return $form
         ->schema([
 
-    Forms\Components\TextInput::make('title')
-        ->required()
-        ->maxLength(255),
+            Forms\Components\Section::make('Service Information')
+                ->schema([
 
-    Forms\Components\TextInput::make('slug')
-        ->required()
-        ->maxLength(255),
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (Set $set, ?string $state) {
+                            $set('slug', Str::slug($state));
+                        }),
 
-    Forms\Components\Textarea::make('description')
-        ->rows(4)
-        ->columnSpanFull(),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+->unique(ignoreRecord: true)
+->readOnly(),
 
-    Forms\Components\Repeater::make('features')
-        ->schema([
-            Forms\Components\TextInput::make('feature')
-                ->required(),
-        ])
-        ->columnSpanFull()
-        ->defaultItems(3)
-        ->formatStateUsing(function ($state) {
+                    Forms\Components\Textarea::make('description')
+                        ->rows(5)
+                        ->columnSpanFull(),
 
-            if (is_string($state)) {
-                return collect(json_decode($state, true))
-                    ->map(fn ($item) => ['feature' => $item])
-                    ->toArray();
-            }
+                ])
+                ->columns(2),
 
-            return $state;
-        })
-        ->dehydrateStateUsing(function ($state) {
+            Forms\Components\Section::make('Service Features')
+                ->schema([
 
-            return json_encode(
-                collect($state)->pluck('feature')->toArray()
-            );
+                    Forms\Components\Repeater::make('features')
+                        ->schema([
+                            Forms\Components\TextInput::make('feature')
+                                ->required(),
+                        ])
+                        ->defaultItems(5)
+                        ->columnSpanFull()
+                        ->formatStateUsing(function ($state) {
 
-        }),
+                            if (is_string($state)) {
+                                return collect(json_decode($state, true))
+                                    ->map(fn ($item) => ['feature' => $item])
+                                    ->toArray();
+                            }
 
-    Forms\Components\TextInput::make('price')
-        ->numeric()
-        ->prefix('₹')
-        ->required(),
+                            return $state;
+                        })
+                        ->dehydrateStateUsing(function ($state) {
 
-    Forms\Components\TextInput::make('duration')
-        ->placeholder('Monthly')
-        ->default('Monthly'),
+                            return json_encode(
+                                collect($state)->pluck('feature')->toArray()
+                            );
 
-    Forms\Components\TextInput::make('button_text')
-        ->default('Enroll'),
+                        }),
 
-    Forms\Components\FileUpload::make('image')
-        ->directory('services')
-        ->image()
-        ->imagePreviewHeight('250')
-        ->columnSpanFull(),
+                ]),
 
-    Forms\Components\Toggle::make('featured'),
+            Forms\Components\Section::make('Pricing')
+                ->schema([
 
-    Forms\Components\Toggle::make('status')
-        ->default(true),
+                    Forms\Components\TextInput::make('price')
+                        ->numeric()
+                        ->prefix('₹')
+                        ->required(),
 
-]);
+                    Forms\Components\TextInput::make('duration')
+                        ->default('12 Weeks'),
+
+                    Forms\Components\TextInput::make('button_text')
+                        ->default('Enroll Now'),
+
+                ])
+                ->columns(3),
+
+            Forms\Components\Section::make('Media')
+                ->schema([
+
+                    Forms\Components\FileUpload::make('image')
+                        ->image()
+                        ->imageEditor()
+                        ->imageEditorAspectRatios([
+                            '16:9',
+                        ])
+                        ->imageCropAspectRatio('16:9')
+                        ->imageResizeMode('cover')
+                        ->imageResizeTargetWidth('1200')
+                        ->imageResizeTargetHeight('675')
+                       ->disk('public')
+->directory('services')
+                        ->imagePreviewHeight('220')
+                        ->required(),
+
+                ]),
+
+            Forms\Components\Section::make('Settings')
+    ->schema([
+
+        Forms\Components\Toggle::make('featured')
+            ->label('Show on Homepage'),
+
+        Forms\Components\Toggle::make('status')
+            ->label('Published')
+            ->default(true),
+
+        Forms\Components\TextInput::make('sort_order')
+            ->numeric()
+            ->default(0),
+
+    ])
+    ->columns(3),
+
+Forms\Components\Section::make('SEO')
+    ->schema([
+
+        Forms\Components\TextInput::make('seo_title')
+            ->maxLength(255),
+
+        Forms\Components\Textarea::make('seo_description')
+            ->rows(4),
+
+    ]),
+
+             
+        ]);
 }
+
+
 public static function table(Table $table): Table
 {
     return $table
         ->columns([
 
-            Tables\Columns\ImageColumn::make('image'),
+            Tables\Columns\ImageColumn::make('image')
+    ->disk('public')
+    ->square()
+    ->height(70),
 
             Tables\Columns\TextColumn::make('title')
-                ->searchable(),
+                ->searchable()
+                ->sortable(),
 
-            Tables\Columns\TextColumn::make('price'),
+            Tables\Columns\TextColumn::make('price')
+                ->money('INR')
+                ->sortable(),
 
+            Tables\Columns\TextColumn::make('duration')
+    ->sortable(),
+
+Tables\Columns\TextColumn::make('sort_order')
+    ->sortable(),
             Tables\Columns\IconColumn::make('featured')
                 ->boolean(),
 
@@ -107,7 +177,8 @@ public static function table(Table $table): Table
 
         ])
         ->filters([
-            //
+            Tables\Filters\TernaryFilter::make('featured'),
+            Tables\Filters\TernaryFilter::make('status'),
         ])
         ->actions([
             Tables\Actions\EditAction::make(),
@@ -116,8 +187,10 @@ public static function table(Table $table): Table
             Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make(),
             ]),
-        ]);
+        ])
+->defaultSort('sort_order');
 }
+
     public static function getRelations(): array
     {
         return [

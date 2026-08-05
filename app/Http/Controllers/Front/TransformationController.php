@@ -9,14 +9,19 @@ class TransformationController extends Controller
 {
     public function index()
     {
-        $transformations = Transformation::latest()->get();
+        $transformations = Transformation::where('status', true)
+            ->orderBy('sort_order')
+            ->latest()
+            ->get();
 
         return view('transformations.index', compact('transformations'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $transformation = Transformation::findOrFail($id);
+        $transformation = Transformation::where('slug', $slug)
+            ->where('status', true)
+            ->firstOrFail();
 
         return view('transformations.show', compact('transformation'));
     }

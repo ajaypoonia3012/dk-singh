@@ -12,7 +12,27 @@ class Blog extends Model
         'title',
         'slug',
         'content',
-        'image',
+        'excerpt',
+
+        'category',
+        'author',
+        'reading_time',
+
+        'featured_image',
+
+        'featured',
+        'status',
+        'sort_order',
+
+        'seo_title',
+        'seo_description',
+
+    ];
+
+    protected $casts = [
+
+        'featured' => 'boolean',
+        'status' => 'boolean',
 
     ];
 
@@ -23,9 +43,7 @@ class Blog extends Model
         static::saving(function ($blog) {
 
             if (empty($blog->slug)) {
-
                 $blog->slug = Str::slug($blog->title);
-
             }
 
         });

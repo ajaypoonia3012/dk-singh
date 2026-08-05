@@ -43,19 +43,31 @@ class ThemeSettingResource extends Resource
             Forms\Components\Section::make('Homepage Sections')
                 ->schema([
 
-                    Forms\Components\Toggle::make('show_programs'),
+    Forms\Components\Toggle::make('show_hero'),
 
-                    Forms\Components\Toggle::make('show_services'),
+    Forms\Components\Toggle::make('show_programs'),
 
-                    Forms\Components\Toggle::make('show_products'),
+    Forms\Components\Toggle::make('show_products'),
 
-                    Forms\Components\Toggle::make('show_blogs'),
+    Forms\Components\Toggle::make('show_services'),
 
-                    Forms\Components\Toggle::make('show_transformations'),
+    Forms\Components\Toggle::make('show_transformations'),
 
-                    Forms\Components\Toggle::make('show_plans'),
+    Forms\Components\Toggle::make('show_testimonials'),
 
-                ]),
+    Forms\Components\Toggle::make('show_homepage_cards'),
+
+    Forms\Components\Toggle::make('show_about'),
+
+    Forms\Components\Toggle::make('show_bmi'),
+
+    Forms\Components\Toggle::make('show_blogs'),
+
+    Forms\Components\Toggle::make('show_plans'),
+
+    Forms\Components\Toggle::make('show_contact'),
+
+]),
 
             Forms\Components\Section::make('Announcement Bar')
                 ->schema([

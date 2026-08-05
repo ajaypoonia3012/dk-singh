@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Front\HomeController;
+use App\Livewire\Media\MediaBrowser;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\ServiceController;
 use App\Http\Controllers\Front\BlogController;
@@ -34,19 +35,12 @@ use App\Http\Controllers\Front\MyOrderController;
 use App\Http\Controllers\Front\FitnessHubController;
 use App\Http\Controllers\Front\FitnessWorkoutController;
 use App\Http\Controllers\Front\FitnessDietController;
+
 /*
     |--------------------------------------------------------------------------
     | PROGRAMS
     |--------------------------------------------------------------------------
     */
-
-
-Route::get('/programs', [ProgramController::class, 'index'])
-    ->name('programs.index');
-
-Route::get('/programs/{slug}', [ProgramController::class, 'show'])
-    ->name('programs.show');
-
 
 
 
@@ -70,9 +64,14 @@ Route::get('/services/{slug}', [ServiceController::class, 'show'])
 Route::get('/blog', [BlogController::class, 'index'])
     ->name('blog.index');
 
+Route::get('/blog/category/{slug}', [BlogController::class, 'category'])
+    ->name('blog.category');
+
+Route::get('/blog/tag/{slug}', [BlogController::class, 'tag'])
+    ->name('blog.tag');
+
 Route::get('/blog/{slug}', [BlogController::class, 'show'])
     ->name('blog.show');
-
 Route::get('/contact', [ContactController::class, 'index']);
 
 Route::post('/contact', [ContactController::class, 'submit'])
@@ -96,8 +95,12 @@ Route::get(
 )->middleware('auth')
  ->name('member.coach-notes');
 
-Route::get('/transformations', [TransformationController::class, 'index']);
-Route::get('/transformations/{id}', [TransformationController::class, 'show']);
+Route::get('/transformations', [TransformationController::class, 'index'])
+    ->name('transformations.index');
+
+Route::get('/transformations/{slug}', [TransformationController::class, 'show'])
+    ->name('transformations.show');
+
 
 Route::get('/workout-plans', [WorkoutPlanController::class, 'index'])
     ->name('workout-plans.index');
@@ -324,3 +327,10 @@ Route::post(
 ->name('product.payment.success');
 
 require __DIR__.'/auth.php';
+use App\Livewire\Media\MediaLibrary;
+
+Route::get('/media-library', MediaLibrary::class);
+
+Route::get('/media-test', MediaBrowser::class);
+
+Route::view('/grid-test', 'grid-test');

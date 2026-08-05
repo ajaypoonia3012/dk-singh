@@ -123,6 +123,10 @@ class Setting extends Model
 
 'verified_client_label',
 
+'followers_label',
+'years_label',
+'transformations_label',
+
 
 
     ];

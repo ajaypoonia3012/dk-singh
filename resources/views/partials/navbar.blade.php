@@ -25,7 +25,8 @@ border-color: rgba(0,0,0,.08);
 
                     <div>
 
-                        <h2 class="text-2xl font-black text-black leading-tight">
+                        <h2 class="text-2xl font-black leading-tight"
+style="color: var(--secondary-color);">
                            {{ $setting->site_name }}
                         </h2>
 
@@ -50,7 +51,11 @@ border-color: rgba(0,0,0,.08);
             <!-- MOBILE BUTTON -->
 
             <button id="mobileMenuButton"
-                class="lg:hidden flex items-center justify-center w-12 h-12 rounded-2xl bg-yellow-500 text-black text-2xl font-bold">
+                class="lg:hidden flex items-center justify-center w-12 h-12 rounded-2xl text-2xl font-bold"
+style="
+background: var(--primary-color);
+color: var(--secondary-color);
+">
 
                 ☰
 
@@ -63,7 +68,11 @@ border-color: rgba(0,0,0,.08);
     <!-- MOBILE MENU -->
 
     <div id="mobileMenu"
-         class="hidden lg:hidden bg-white border-t border-gray-200 shadow-lg">
+         class="hidden lg:hidden border-t shadow-lg"
+style="
+background: var(--accent-color);
+border-color: rgba(0,0,0,.08);
+">
 
         <div class="px-6 py-8 space-y-5 flex flex-col">
 
@@ -112,21 +121,21 @@ border-color: rgba(0,0,0,.08);
 @if(auth()->user()->account_type === 'admin')
 
 <a href="/admin"
-   class="bg-yellow-500 text-black text-center py-4 rounded-2xl font-bold mt-4">
+   class="btn-primary text-center mt-4">
     Admin Panel
 </a>
 
 @elseif(auth()->user()->activeMembership)
 
 <a href="/member/dashboard"
-   class="bg-yellow-500 text-black text-center py-4 rounded-2xl font-bold mt-4">
+   class="btn-primary text-center mt-4">
     My Plan
 </a>
 
 @else
 
 <a href="{{ route('account.orders') }}"
-   class="bg-yellow-500 text-black text-center py-4 rounded-2xl font-bold mt-4">
+   class="btn-primary text-center mt-4">
     My Orders
 </a>
 
@@ -135,7 +144,7 @@ border-color: rgba(0,0,0,.08);
             @else
 
                 <a href="/register"
-                   class="bg-yellow-500 text-black text-center py-4 rounded-2xl font-bold mt-4">
+                   class="btn-primary text-center mt-4">
 
                     Join Now
 

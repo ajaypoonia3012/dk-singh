@@ -19,6 +19,9 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
-        "aos": "^2.3.4"
+        "@popperjs/core": "^2.11.8",
+        "aos": "^2.3.4",
+        "bootstrap": "^5.3.8",
+        "cropperjs": "^1.6.2"
     }
 }

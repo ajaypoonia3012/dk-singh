@@ -12,12 +12,20 @@ class ThemeSetting extends Model
         'secondary_color',
         'accent_color',
 
-        'show_programs',
-        'show_services',
-        'show_products',
-        'show_blogs',
-        'show_transformations',
-        'show_plans',
+       'show_hero',
+
+'show_programs',
+'show_services',
+'show_products',
+'show_blogs',
+'show_transformations',
+'show_plans',
+
+'show_about',
+'show_bmi',
+'show_homepage_cards',
+'show_testimonials',
+'show_contact',
 
         'announcement_enabled',
         'announcement_text',
@@ -41,12 +49,20 @@ class ThemeSetting extends Model
 
     protected $casts = [
 
-        'show_programs' => 'boolean',
-        'show_services' => 'boolean',
-        'show_products' => 'boolean',
-        'show_blogs' => 'boolean',
-        'show_transformations' => 'boolean',
-        'show_plans' => 'boolean',
+        'show_hero' => 'boolean',
+
+'show_programs' => 'boolean',
+'show_services' => 'boolean',
+'show_products' => 'boolean',
+'show_blogs' => 'boolean',
+'show_transformations' => 'boolean',
+'show_plans' => 'boolean',
+
+'show_about' => 'boolean',
+'show_bmi' => 'boolean',
+'show_homepage_cards' => 'boolean',
+'show_testimonials' => 'boolean',
+'show_contact' => 'boolean',
 
         'announcement_enabled' => 'boolean',
         'popup_enabled' => 'boolean',

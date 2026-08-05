@@ -19,6 +19,17 @@ class WorkoutPlan extends Model
         'video_type',
         'video_url',
         'video_file',
+
+        'featured',
+        'status',
+        'sort_order',
+        'seo_title',
+        'seo_description',
+    ];
+
+    protected $casts = [
+        'featured' => 'boolean',
+        'status' => 'boolean',
     ];
 
     protected static function boot()

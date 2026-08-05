@@ -21,6 +21,10 @@ class Service extends Model
 'featured',
 'status',
 
+'sort_order',
+'seo_title',
+'seo_description',
+
     ];
 
     protected $casts = [

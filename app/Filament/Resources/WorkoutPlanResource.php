@@ -12,6 +12,8 @@ use Filament\Resources\Resource;
 
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
 
 class WorkoutPlanResource extends Resource
 {
@@ -25,52 +27,125 @@ class WorkoutPlanResource extends Resource
             ->schema([
 
                 Forms\Components\TextInput::make('title')
-                    ->required(),
+    ->required()
+    ->live(onBlur: true)
+    ->afterStateUpdated(function (Set $set, ?string $state) {
+        $set('slug', Str::slug($state));
+    }),
+
+Forms\Components\TextInput::make('slug')
+    ->required()
+    ->readOnly(),
+
 Forms\Components\FileUpload::make('thumbnail')
     ->image()
-    ->directory('workout-thumbnails'),
+    ->imageEditor()
+    ->imageEditorAspectRatios([
+        '4:5',
+    ])
+    ->imageCropAspectRatio('4:5')
+    ->imageResizeMode('cover')
+    ->imageResizeTargetWidth('800')
+    ->imageResizeTargetHeight('1000')
+    ->disk('public')
+    ->disk('public')
+->directory('workout-plans')
+    ->imagePreviewHeight('220'),
 
-
-                Forms\Components\Textarea::make('description'),
+Forms\Components\Textarea::make('description')
+    ->rows(4),
 
                 Forms\Components\RichEditor::make('content')
-                    ->required(),
+    ->required()
+    ->columnSpanFull()
+    ->toolbarButtons([
+        'bold',
+        'italic',
+        'bulletList',
+        'orderedList',
+        'h2',
+        'h3',
+        'link',
+    ]),
 
-                Forms\Components\TextInput::make('difficulty'),
+                Forms\Components\Select::make('difficulty')
+    ->options([
+        'Beginner' => 'Beginner',
+        'Intermediate' => 'Intermediate',
+        'Advanced' => 'Advanced',
+    ])
+    ->required(),
 
 Forms\Components\Select::make('category')
     ->options([
-        'weight_loss' => 'Weight Loss',
-        'weight_gain' => 'Weight Gain',
-        'muscle_building' => 'Muscle Building',
-        'fat_loss' => 'Fat Loss',
-        'home_workout' => 'Home Workout',
-        'strength' => 'Strength',
-        'mobility' => 'Mobility',
-        'general_fitness' => 'General Fitness',
-    ]),
+        'Weight Loss' => 'Weight Loss',
+        'Fat Loss' => 'Fat Loss',
+        'Weight Gain' => 'Weight Gain',
+        'Muscle Building' => 'Muscle Building',
+        'Strength' => 'Strength',
+        'Home Workout' => 'Home Workout',
+        'Mobility' => 'Mobility',
+        'Women Fitness' => 'Women Fitness',
+        'Senior Fitness' => 'Senior Fitness',
+    ])
+    ->searchable()
+    ->required(),
 
 Forms\Components\Select::make('required_access')
     ->options([
-        'public' => 'Public',
-        'basic' => 'Basic',
-        'pro' => 'Pro',
-        'elite' => 'Elite',
+        'public' => 'Public (Free)',
+        'basic' => 'Basic Plan',
+        'pro' => 'Pro Plan',
+        'elite' => 'Elite Plan',
     ])
-    ->default('public'),
+    ->default('public')
+    ->required(),
 
 Forms\Components\Select::make('video_type')
     ->options([
         'youtube' => 'YouTube',
         'google_drive' => 'Google Drive',
         'upload' => 'Upload',
-    ]),
+    ])
+    ->default('youtube'),
 
-Forms\Components\TextInput::make('video_url'),
+Forms\Components\TextInput::make('video_url')
+    ->label('Video URL')
+    ->visible(fn ($get) =>
+        in_array($get('video_type'), ['youtube', 'google_drive'])
+    ),
 
 Forms\Components\FileUpload::make('video_file')
-    ->directory('workout-videos'),
+    ->disk('public')
+->directory('workout-videos')
+    ->acceptedFileTypes([
+        'video/mp4',
+        'video/quicktime',
+    ])
+    ->visible(fn ($get) =>
+        $get('video_type') === 'upload'
+    ),
 
+Forms\Components\Toggle::make('featured')
+    ->label('Featured Workout'),
+
+Forms\Components\Toggle::make('status')
+    ->label('Published')
+    ->default(true),
+
+Forms\Components\TextInput::make('sort_order')
+    ->numeric()
+    ->default(0),
+
+Forms\Components\Section::make('SEO')
+    ->schema([
+
+        Forms\Components\TextInput::make('seo_title'),
+
+        Forms\Components\Textarea::make('seo_description')
+            ->rows(4),
+
+    ]),
 
 
 
@@ -81,38 +156,74 @@ Forms\Components\FileUpload::make('video_file')
     {
         return $table
             ->columns([
-Tables\Columns\ImageColumn::make('thumbnail'),
-                Tables\Columns\TextColumn::make('title'),
 
-                Tables\Columns\TextColumn::make('difficulty'),
-Tables\Columns\TextColumn::make('category'),
+    Tables\Columns\ImageColumn::make('thumbnail')
+        ->disk('public')
+        ->square()
+        ->height(60),
 
-Tables\Columns\BadgeColumn::make('required_access'),
+    Tables\Columns\TextColumn::make('title')
+        ->searchable()
+        ->sortable(),
 
-Tables\Columns\BadgeColumn::make('video_type'),
+    Tables\Columns\BadgeColumn::make('difficulty'),
 
-Tables\Columns\TextColumn::make('category')
-    ->badge(),
+    Tables\Columns\BadgeColumn::make('category'),
 
-Tables\Columns\TextColumn::make('required_access')
-    ->badge(),
+    Tables\Columns\BadgeColumn::make('required_access'),
 
+    Tables\Columns\BadgeColumn::make('video_type'),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->date(),
+    Tables\Columns\IconColumn::make('featured')
+        ->boolean(),
 
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
+    Tables\Columns\IconColumn::make('status')
+        ->boolean(),
+
+    Tables\Columns\TextColumn::make('sort_order')
+        ->sortable(),
+
+])  
+
+->filters([
+
+    Tables\Filters\SelectFilter::make('difficulty')
+        ->options([
+            'Beginner' => 'Beginner',
+            'Intermediate' => 'Intermediate',
+            'Advanced' => 'Advanced',
+        ]),
+
+    Tables\Filters\SelectFilter::make('required_access')
+        ->options([
+            'public' => 'Public',
+            'basic' => 'Basic',
+            'pro' => 'Pro',
+            'elite' => 'Elite',
+        ]),
+
+    Tables\Filters\TernaryFilter::make('featured'),
+
+    Tables\Filters\TernaryFilter::make('status'),
+
+])        
+
+->actions([
+    Tables\Actions\EditAction::make(),
+])
+
+ ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+->bulkActions([
+    Tables\Actions\BulkActionGroup::make([
+        Tables\Actions\DeleteBulkAction::make(),
+    ]),
+])
+
+->defaultSort('sort_order');
     }
 
     public static function getRelations(): array

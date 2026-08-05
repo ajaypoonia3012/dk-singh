@@ -1,80 +1,252 @@
+﻿@section('meta_title', $service->title . ' | ' . $setting->site_name)
+
+@section('meta_description', Str::limit(strip_tags($service->description), 150))
+
+@section('meta_keywords', $service->title . ', fitness coaching, ' . $setting->site_name)
+
 @extends('layouts.app')
 
 @section('content')
 
-<section class="bg-[#f6f3eb] py-24 min-h-screen">
+<section class="relative py-24 bg-[#f6f3eb] overflow-hidden min-h-screen">
 
-    <div class="max-w-5xl mx-auto px-6">
+    <!-- BACKGROUND EFFECT -->
 
-        <div class="mb-16 text-center">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-200 opacity-20 blur-3xl rounded-full"></div>
 
-            <p class="uppercase tracking-[3px] text-yellow-500 font-bold mb-4">
-                Premium Workout Program
-            </p>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
 
-            <h1 class="text-5xl font-black text-black mb-6">
-                {{ $workout->title }}
-            </h1>
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
 
-            <span class="bg-yellow-500 text-black px-5 py-2 rounded-full font-black">
+            <!-- IMAGE -->
 
-                {{ $workout->difficulty }}
+            <div data-aos="fade-right">
 
-            </span>
+                @if($service->image)
 
-        </div>
+                    <div class="overflow-hidden rounded-[40px] shadow-2xl">
 
-        <div class="bg-white border border-gray-200 rounded-3xl p-10 shadow-xl">
+                        <img
+                            src="{{ asset('storage/' . $service->image) }}"
+                            alt="{{ $service->title }}"
+                            class="w-full h-[700px] object-cover hover:scale-105 transition duration-700"
+                        >
 
-            <div class="text-gray-700 leading-9 text-lg prose max-w-none">
+                    </div>
 
-                {!! $workout->content !!}
+                @else
+
+                    <div class="w-full h-[700px] rounded-[40px] bg-white flex items-center justify-center shadow-2xl">
+
+                        <span class="text-8xl">🔥</span>
+
+                    </div>
+
+                @endif
+
+            </div>
+
+            <!-- CONTENT -->
+
+            <div data-aos="fade-left">
+
+                <!-- BADGE -->
+
+                <div class="inline-flex items-center gap-3 bg-yellow-500 text-black px-6 py-3 rounded-full font-bold text-sm uppercase tracking-[2px] mb-8 shadow-lg">
+
+                    Premium Fitness Service
+
+                </div>
+
+                <!-- TITLE -->
+
+                <h1 class="text-5xl md:text-7xl font-black text-[#111111] leading-tight mb-8">
+
+                    {{ $service->title }}
+
+                </h1>
+
+                <!-- PRICE -->
+
+                <div class="flex items-end gap-4 mb-10">
+
+                    <span class="text-6xl font-black text-yellow-500">
+
+                        ₹{{ number_format($service->price) }}
+
+                    </span>
+
+                    @if($service->duration)
+
+                    <span class="text-2xl text-gray-500 mb-2">
+
+                        /{{ $service->duration }}
+
+                    </span>
+
+                    @endif
+
+                </div>
+
+                <!-- DESCRIPTION -->
+
+                <p class="text-xl text-gray-600 leading-[42px] mb-12">
+
+                    {{ $service->description }}
+
+                </p>
+
+                <!-- FEATURES -->
+
+                @if($service->features)
+
+                <div class="grid sm:grid-cols-2 gap-5 mb-12">
+
+                    @foreach((is_array($service->features) ? $service->features : json_decode($service->features ?? '[]', true)) as $feature)
+
+                    <div class="flex items-start gap-4 bg-white rounded-2xl p-5 shadow-lg hover:-translate-y-1 hover:shadow-xl transition duration-300">
+
+                        <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-black font-black text-sm mt-1">âœ“</div>
+
+                        <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-black font-black text-sm mt-1">✓</div>
+
+                            {{ is_array($feature) ? ($feature["feature"] ?? "") : $feature }}
+
+                        </span>
+
+                    </div>
+
+                    @endforeach
+
+                </div>
+
+                @endif
+
+                <!-- BUTTONS -->
+
+                <div class="flex flex-wrap gap-5 mb-14">
+
+                    <a href="/contact"
+                       class="bg-yellow-500 hover:bg-yellow-400 hover:scale-105 text-black font-black px-10 py-5 rounded-2xl transition duration-300 shadow-2xl">
+
+                        {{ $service->button_text ?? 'Get Started' }}
+
+                    </a>
+
+                    <a href="/plans"
+                       class="border-2 border-black hover:bg-black hover:text-white text-black font-black px-10 py-5 rounded-2xl transition duration-300">
+
+                        {{ $setting->view_programs_text }}
+
+                    </a>
+
+                </div>
+
+                <!-- TRUST STATS -->
+
+                <div class="grid grid-cols-3 gap-6">
+
+                    <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+
+                        <h3 class="text-4xl font-black text-yellow-500">
+                            15K+
+                        </h3>
+
+                        <p class="text-gray-600 mt-2">
+                            Transformations
+                        </p>
+
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+
+                        <h3 class="text-4xl font-black text-yellow-500">
+                            15+
+                        </h3>
+
+                        <p class="text-gray-600 mt-2">
+                            Years Experience
+                        </p>
+
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+
+                        <h3 class="text-4xl font-black text-yellow-500">
+                            24/7
+                        </h3>
+
+                        <p class="text-gray-600 mt-2">
+                            Support
+                        </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
-        @if(session('success'))
+    </div>
 
-<div class="bg-green-100 text-green-700 p-4 rounded-xl mb-6">
+</section>
 
-    {{ session('success') }}
 
-</div>
+<!-- CTA SECTION -->
 
-@endif
+<section class="py-24 bg-[#111111] relative overflow-hidden">
 
-<div class="mt-16 text-center">
+    <div class="absolute top-0 left-0 w-full h-full opacity-10">
 
-    @auth
+        <div class="absolute top-10 left-10 w-72 h-72 bg-yellow-500 rounded-full blur-3xl"></div>
 
-    <form method="POST"
-          action="{{ route('workout.complete', $workout->id) }}">
+        <div class="absolute bottom-10 right-10 w-72 h-72 bg-yellow-500 rounded-full blur-3xl"></div>
 
-        @csrf
+    </div>
 
-        <button
-            class="bg-green-600 hover:bg-green-500 text-white px-10 py-5 rounded-2xl font-black">
+    <div class="max-w-5xl mx-auto px-6 relative z-10 text-center">
 
-            Mark Workout Completed
+        <p class="text-yellow-500 uppercase tracking-[4px] font-bold mb-6">
 
-        </button>
+            Start Your Transformation
 
-    </form>
+        </p>
 
-    @else
+        <h2 class="text-5xl md:text-6xl font-black text-white leading-tight mb-8">
 
-    <a
-        href="/login"
-        class="bg-yellow-500 text-black px-10 py-5 rounded-2xl font-black">
+            Ready To Achieve
+            <br>
+            Real Fitness Results?
 
-        Login To Continue
+        </h2>
 
-    </a>
+        <p class="text-xl text-gray-400 leading-relaxed mb-12 max-w-3xl mx-auto">
 
-    @endauth
+            Join {{ $setting->site_name }} programs and get expert coaching,
+            structured guidance, and a transformation-focused system
+            designed for sustainable results.
 
-</div>
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-5">
+
+            <a href="/plans"
+               class="bg-yellow-500 hover:bg-yellow-400 hover:scale-105 text-black font-black px-10 py-5 rounded-2xl transition duration-300 shadow-2xl">
+
+                Book Consultation
+
+            </a>
+
+            <a href="/transformations"
+               class="border border-white text-white hover:bg-white hover:text-black hover:scale-105 px-10 py-5 rounded-2xl font-black transition duration-300">
+
+                {{ $setting->view_transformations_text }}
+
+            </a>
+
+        </div>
+
     </div>
 
 </section>

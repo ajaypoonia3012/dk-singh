@@ -13,6 +13,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
+
+
 class PlanResource extends Resource
 {
     protected static ?string $model = Plan::class;
@@ -32,14 +36,22 @@ class PlanResource extends Resource
                     ->schema([
 
                         Forms\Components\TextInput::make('name')
-                            ->required(),
+    ->required()
+    ->live(onBlur: true)
+    ->afterStateUpdated(function (Set $set, ?string $state) {
+        $set('slug', Str::slug($state));
+    }),
 
 Forms\Components\TextInput::make('slug')
+    ->required()
     ->unique(ignoreRecord: true)
-    ->helperText('basic-plan, pro-plan, elite-plan'),
+    ->readOnly()
+    ->helperText('Automatically generated'),
+
 
                         Forms\Components\Textarea::make('description')
-                            ->rows(4),
+                            ->rows(4)
+->required(),
 
                         Forms\Components\TextInput::make('price')
                             ->numeric()
@@ -79,7 +91,19 @@ Forms\Components\TextInput::make('slug')
                             ->default('basic'),
 
                         Forms\Components\FileUpload::make('thumbnail')
-                            ->directory('plans'),
+    ->image()
+    ->imageEditor()
+    ->imageEditorAspectRatios([
+        '4:5',
+    ])
+    ->imageCropAspectRatio('4:5')
+    ->imageResizeMode('cover')
+    ->imageResizeTargetWidth('800')
+    ->imageResizeTargetHeight('1000')
+    ->disk('public')
+    ->directory('plans')
+->panelAspectRatio('4:5')
+    ->imagePreviewHeight('220'),
 
                         Forms\Components\Repeater::make('features')
                             ->schema([
@@ -89,8 +113,10 @@ Forms\Components\TextInput::make('slug')
 
                             ])
                             ->columns(1)
-                            ->defaultItems(3)
-                            ->collapsible(),
+                            ->defaultItems(5)
+->collapsible()
+->reorderable()
+->cloneable(),
 
                         Forms\Components\Toggle::make('featured')
                             ->default(false),
@@ -113,28 +139,31 @@ Forms\Components\TextInput::make('slug')
         return $table
             ->columns([
 
+Tables\Columns\ImageColumn::make('thumbnail')
+    ->disk('public')
+    ->square()
+    ->height(60),
+
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('price')
-    ->formatStateUsing(
-        fn ($state) => '₹' . number_format((float) $state, 2)
-    ),
+    ->money('INR')
+    ->sortable(),
 
                 Tables\Columns\TextColumn::make('discount_price')
-    ->formatStateUsing(
-        fn ($state) => $state
-            ? '₹' . number_format((float) $state, 2)
-            : '-'
-    ),
+    ->money('INR')
+    ->sortable(),
 
                 Tables\Columns\BadgeColumn::make('access_type')
-                    ->colors([
-                        'primary' => 'basic',
-                        'warning' => 'pro',
-                        'success' => 'elite',
-                    ]),
+    ->colors([
+        'primary' => 'basic',
+        'warning' => 'pro',
+        'success' => 'elite',
+    ])
+    ->sortable(),
 
                 Tables\Columns\IconColumn::make('featured')
                     ->boolean(),
@@ -150,6 +179,23 @@ Forms\Components\TextInput::make('slug')
                 Tables\Actions\DeleteAction::make(),
 
             ])
+
+->filters([
+
+    Tables\Filters\TernaryFilter::make('featured'),
+
+    Tables\Filters\TernaryFilter::make('status'),
+
+    Tables\Filters\SelectFilter::make('access_type')
+        ->options([
+            'basic' => 'Basic',
+            'pro' => 'Pro',
+            'elite' => 'Elite',
+        ]),
+
+])
+
+
             ->bulkActions([
 
                 Tables\Actions\DeleteBulkAction::make(),

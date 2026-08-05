@@ -1,4 +1,4 @@
-@section('meta_title', $service->title . ' | ' . $setting->site_name)
+﻿@section('meta_title', $service->title . ' | ' . $setting->site_name)
 
 @section('meta_description', Str::limit(strip_tags($service->description), 150))
 
@@ -38,9 +38,7 @@
 
                     <div class="w-full h-[700px] rounded-[40px] bg-white flex items-center justify-center shadow-2xl">
 
-                        <span class="text-8xl">
-                            🏋️
-                        </span>
+                        <span class="text-8xl">🔥</span>
 
                     </div>
 
@@ -104,19 +102,15 @@
 
                 <div class="grid sm:grid-cols-2 gap-5 mb-12">
 
-                    @foreach(json_decode($service->features ?? '[]', true) as $feature)
+                    @foreach((is_array($service->features) ? $service->features : json_decode($service->features ?? '[]', true)) as $feature)
 
                     <div class="flex items-start gap-4 bg-white rounded-2xl p-5 shadow-lg hover:-translate-y-1 hover:shadow-xl transition duration-300">
 
-                        <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-black font-black text-sm mt-1">
+                        <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-black font-black text-sm mt-1">âœ“</div>
 
-                            ✓
+                        <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-black font-black text-sm mt-1">✓</div>
 
-                        </div>
-
-                        <span class="text-gray-700 font-medium leading-relaxed">
-
-                            {{ $feature }}
+                            {{ is_array($feature) ? ($feature["feature"] ?? "") : $feature }}
 
                         </span>
 

@@ -1,0 +1,1944 @@
+<?php
+
+namespace App\Livewire\Builder;
+
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\On;
+
+use App\Models\Setting;
+use App\Models\WebsiteSection;
+use App\Models\HomepageCard;
+use App\Models\Program;
+use App\Models\Product;
+use App\Models\Transformation;
+use App\Models\Testimonial;
+use App\Models\Blog;
+use App\Models\HeroSetting;
+
+use Illuminate\Support\Facades\Storage;
+
+use Intervention\Image\ImageManager;
+
+use Intervention\Image\Drivers\Gd\Driver;
+
+use App\Services\Builder\HeroService;
+use App\Services\Builder\BlogService;
+use App\Services\Builder\BuilderState;
+use App\Services\Builder\ProductService;
+use App\Services\Builder\ProgramService;
+use App\Services\Builder\TransformationService;
+use App\Services\Builder\TestimonialService;
+
+
+class WebsiteBuilder extends Component
+{
+    use WithFileUploads;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Website Builder
+    |--------------------------------------------------------------------------
+    */
+
+    public $sections;
+
+    public $selectedSection;
+
+    public $selectedDevice = 'desktop';
+
+public $setting;
+
+/*
+|--------------------------------------------------------------------------
+| Hero
+|--------------------------------------------------------------------------
+*/
+
+public $hero = [];
+public $contact = [];
+public $heroBackgroundMediaId;
+
+public $heroBackgroundOptions = [];
+public $showHeroMediaPicker = false;
+
+
+/*
+|--------------------------------------------------------------------------
+| Homepage Cards
+|--------------------------------------------------------------------------
+*/
+
+public $homepageCards = [];
+
+    public $selectedHomepageCardId = null;
+
+    public $homepageCard = [];
+
+    public $homepageCardImage;
+
+   
+/*
+|--------------------------------------------------------------------------
+| Programs
+|--------------------------------------------------------------------------
+*/
+
+public $programs = [];
+
+public $selectedProgramId = null;
+
+public $program = [];
+
+public $programImage;   
+
+/*
+|--------------------------------------------------------------------------
+| Products
+|--------------------------------------------------------------------------
+*/
+
+public $products = [];
+
+public $selectedProductId = null;
+
+public $product = [];
+
+public $productImage;
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Transformations
+|--------------------------------------------------------------------------
+*/
+
+public $transformations = [];
+
+public $selectedTransformationId = null;
+
+public $transformation = [];
+
+public $beforeImage;
+
+public $afterImage;
+
+/*
+|--------------------------------------------------------------------------
+| Testimonials
+|--------------------------------------------------------------------------
+*/
+
+public $testimonials = [];
+
+public $selectedTestimonialId = null;
+
+public $testimonial = [];
+
+public $testimonialImage;
+
+
+/*
+|--------------------------------------------------------------------------
+| Blogs
+|--------------------------------------------------------------------------
+*/
+
+public $blogs = [];
+
+public $selectedBlogId = null;
+
+public $blog = [];
+
+public $blogImage;
+
+ /*
+|--------------------------------------------------------------------------
+| Mount
+|--------------------------------------------------------------------------
+*/
+
+    public function mount()
+    {
+        $builder = new BuilderState();
+
+        $this->setting = Setting::first();
+
+
+$this->contact = [
+
+    'contact_title'       => $this->setting->contact_title,
+    'contact_heading'     => $this->setting->contact_heading,
+    'contact_description' => $this->setting->contact_description,
+
+    'map_embed_url'       => $this->setting->map_embed_url,
+    'map_link'            => $this->setting->map_link,
+    'contact_map_text'    => $this->setting->contact_map_text,
+
+];
+
+        /*
+|--------------------------------------------------------------------------
+| Hero
+|--------------------------------------------------------------------------
+*/
+
+$hero = (new HeroService())->get();
+
+$this->hero = [
+
+    'heading' => $hero->heading,
+
+    'subheading' => $hero->subheading,
+
+    'button_text' => $hero->button_text,
+
+    'button_link' => $hero->button_link,
+
+    'view_button_text' => $hero->view_button_text,
+
+    'view_button_link' => $hero->view_button_link,
+
+];
+
+$this->heroBackgroundMediaId = $hero->background_media_id;
+
+        $this->homepageCards = HomepageCard::orderBy('sort_order')->get();
+
+if ($this->homepageCards->count()) {
+    $this->loadHomepageCard(
+        $this->homepageCards->first()->id
+    );
+}
+
+$this->programs = Program::orderBy('sort_order')->get();
+
+if ($this->programs->count()) {
+    $this->loadProgram(
+        $this->programs->first()->id
+    );
+}
+
+$this->products = Product::orderBy('sort_order')->get();
+
+if ($this->products->count()) {
+
+    $this->loadProduct(
+        $this->products->first()->id
+    );
+
+}
+
+$this->transformations = Transformation::orderBy('sort_order')->get();
+
+if ($this->transformations->count()) {
+
+    $this->loadTransformation(
+        $this->transformations->first()->id
+    );
+
+}
+
+
+
+$this->testimonials = Testimonial::orderBy('sort_order')->get();
+
+if ($this->testimonials->count()) {
+
+    $this->loadTestimonial(
+        $this->testimonials->first()->id
+    );
+
+}
+
+
+$this->blogs = Blog::orderBy('sort_order')->get();
+
+if ($this->blogs->count()) {
+
+    $this->loadBlog(
+        $this->blogs->first()->id
+    );
+
+}
+
+
+
+        $this->sections = WebsiteSection::orderBy('sort_order')->get();
+
+        $this->selectedSection = $this->sections->first();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Homepage Card
+    |--------------------------------------------------------------------------
+    */
+
+    public function loadHomepageCard($id)
+    {
+        $card = HomepageCard::findOrFail($id);
+
+        $this->selectedHomepageCardId = $card->id;
+
+        $this->homepageCard = $card->toArray();
+    }
+
+    public function selectHomepageCard($id)
+    {
+        $this->loadHomepageCard($id);
+    }
+
+    public function saveHomepageCard()
+    {
+        $card = HomepageCard::findOrFail(
+            $this->selectedHomepageCardId
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Upload Image
+        |--------------------------------------------------------------------------
+        */
+
+        if ($this->homepageCardImage) {
+
+            $path = $this->homepageCardImage->store(
+                'homepage-cards',
+                'public'
+            );
+
+            $this->homepageCard['background_image'] = $path;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Save Card
+        |--------------------------------------------------------------------------
+        */
+
+        $card->update($this->homepageCard);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Refresh Builder
+        |--------------------------------------------------------------------------
+        */
+
+        $this->homepageCards = HomepageCard::orderBy('sort_order')->get();
+
+        $this->loadHomepageCard($card->id);
+
+        $this->homepageCardImage = null;
+
+        $this->dispatch(
+            'notify',
+            title: 'Homepage Card Saved'
+        );
+    }
+
+
+
+
+public function openHeroMediaPicker()
+{
+    $this->showHeroMediaPicker = true;
+}
+
+public function closeHeroMediaPicker()
+{
+    $this->showHeroMediaPicker = false;
+}
+
+#[On('media-selected')]
+public function setHeroMedia($id)
+{
+    $this->heroBackgroundMediaId = $id;
+    $this->showHeroMediaPicker = false;
+}
+
+public function deleteHeroImage()
+{
+    if (
+        $this->setting->hero_image &&
+        Storage::disk('public')->exists(
+            $this->setting->hero_image
+        )
+    ) {
+        Storage::disk('public')->delete(
+            $this->setting->hero_image
+        );
+    }
+
+    $this->setting->update([
+
+        'hero_image' => null,
+
+    ]);
+
+    $this->setting = Setting::first();
+
+    $this->dispatch(
+        'notify',
+        title: 'Hero Image Deleted'
+    );
+}
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Homepage Card Ordering
+    |--------------------------------------------------------------------------
+    */
+
+    public function moveHomepageCardUp($id)
+    {
+        $card = HomepageCard::find($id);
+
+        if (!$card) {
+            return;
+        }
+
+        $previous = HomepageCard::where(
+            'sort_order',
+            '<',
+            $card->sort_order
+        )
+        ->orderByDesc('sort_order')
+        ->first();
+
+        if (!$previous) {
+            return;
+        }
+
+        [$card->sort_order, $previous->sort_order] = [
+            $previous->sort_order,
+            $card->sort_order,
+        ];
+
+        $card->save();
+
+        $previous->save();
+
+        $this->homepageCards =
+            HomepageCard::orderBy('sort_order')->get();
+    }
+
+    public function moveHomepageCardDown($id)
+    {
+        $card = HomepageCard::find($id);
+
+        if (!$card) {
+            return;
+        }
+
+        $next = HomepageCard::where(
+            'sort_order',
+            '>',
+            $card->sort_order
+        )
+        ->orderBy('sort_order')
+        ->first();
+
+        if (!$next) {
+            return;
+        }
+
+        [$card->sort_order, $next->sort_order] = [
+            $next->sort_order,
+            $card->sort_order,
+        ];
+
+        $card->save();
+
+        $next->save();
+
+        $this->homepageCards =
+            HomepageCard::orderBy('sort_order')->get();
+    }
+
+
+public function addHomepageCard()
+{
+    $card = HomepageCard::create([
+
+        'title' => 'New Homepage Card',
+
+        'subtitle' => 'Subtitle',
+
+        'description' => 'Description',
+
+        'button_text' => 'Learn More',
+
+        'button_link' => '#',
+
+        'background_image' => null,
+
+        'icon' => 'ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â',
+
+        'sort_order' => HomepageCard::max('sort_order') + 1,
+
+        'is_active' => true,
+
+    ]);
+
+    $this->homepageCards =
+        HomepageCard::orderBy('sort_order')->get();
+
+    $this->loadHomepageCard($card->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Homepage Card Created'
+    );
+}
+
+
+
+public function deleteHomepageCard($id)
+{
+    $service = new \App\Services\Builder\HomepageCardService();
+
+    $card = $service->find($id);
+
+    $service->delete($card);
+
+    $this->homepageCards = $service->all();
+
+    if ($this->homepageCards->count()) {
+
+        $this->loadHomepageCard(
+            $this->homepageCards->first()->id
+        );
+
+    } else {
+
+        $this->homepageCard = [];
+
+        $this->selectedHomepageCardId = null;
+    }
+
+    $this->dispatch(
+        'notify',
+        title: 'Homepage Card Deleted'
+    );
+}
+
+
+public function toggleHomepageCard($id)
+{
+    $service = new \App\Services\Builder\HomepageCardService();
+
+    $card = $service->find($id);
+
+    $service->toggle($card);
+
+    $this->homepageCards = $service->all();
+
+    $this->loadHomepageCard($card->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Homepage Card Updated'
+    );
+}
+
+/*
+|--------------------------------------------------------------------------
+| Programs
+|--------------------------------------------------------------------------
+*/
+
+public function loadProgram($id)
+{
+    $program = Program::findOrFail($id);
+
+    $this->selectedProgramId = $program->id;
+
+    $this->program = $program->toArray();
+}
+
+public function selectProgram($id)
+{
+    $this->loadProgram($id);
+}
+
+public function addProgram()
+{
+    $service = new ProgramService();
+
+    $program = $service->create();
+
+    $this->programs = $service->all();
+
+    $this->loadProgram($program->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Program Created'
+    );
+}
+
+public function saveProgram()
+{
+    $service = new ProgramService();
+
+    $program = $service->find(
+        $this->selectedProgramId
+    );
+
+    if ($this->programImage) {
+
+        $path = $this->programImage->store(
+            'programs',
+            'public'
+        );
+
+        $this->program['image'] = $path;
+    }
+
+$this->validate([
+    'program.title' => 'required|string|max:255',
+    'program.price' => 'nullable|numeric',
+]);
+
+    $service->update(
+        $program,
+        $this->program
+    );
+
+    $this->programs = $service->all();
+
+    $this->loadProgram($program->id);
+
+    $this->programImage = null;
+
+    $this->dispatch(
+        'notify',
+        title: 'Program Saved'
+    );
+}
+
+public function deleteProgram($id)
+{
+    $service = new ProgramService();
+
+    $program = $service->find($id);
+
+    $service->delete($program);
+
+    $this->programs = $service->all();
+
+    if ($this->programs->count()) {
+
+        $this->loadProgram(
+            $this->programs->first()->id
+        );
+
+    } else {
+
+        $this->program = [];
+
+        $this->selectedProgramId = null;
+
+    }
+
+    $this->dispatch(
+        'notify',
+        title: 'Program Deleted'
+    );
+}
+
+public function duplicateProgram($id)
+{
+    $service = new ProgramService();
+
+    $program = $service->find($id);
+
+    $copy = $service->duplicate($program);
+
+    $this->programs = $service->all();
+
+    $this->loadProgram($copy->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Program Duplicated'
+    );
+}
+
+public function toggleProgramStatus($id)
+{
+    $service = new ProgramService();
+
+    $program = $service->find($id);
+
+    $service->toggleStatus($program);
+
+    $this->programs = $service->all();
+
+    $this->loadProgram($program->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Program Updated'
+    );
+}
+
+public function toggleProgramFeatured($id)
+{
+    $service = new ProgramService();
+
+    $program = $service->find($id);
+
+    $service->toggleFeatured($program);
+
+    $this->programs = $service->all();
+
+    $this->loadProgram($program->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Featured Updated'
+    );
+}
+
+
+public function moveProgramUp($id)
+{
+    $program = Program::find($id);
+
+    if (!$program) {
+        return;
+    }
+
+    $previous = Program::where(
+        'sort_order',
+        '<',
+        $program->sort_order
+    )
+    ->orderByDesc('sort_order')
+    ->first();
+
+    if (!$previous) {
+        return;
+    }
+
+    [$program->sort_order, $previous->sort_order] = [
+        $previous->sort_order,
+        $program->sort_order,
+    ];
+
+    $program->save();
+
+    $previous->save();
+
+    $this->programs =
+        Program::orderBy('sort_order')->get();
+$this->loadProgram($program->id);
+}
+
+public function moveProgramDown($id)
+{
+    $program = Program::find($id);
+
+    if (!$program) {
+        return;
+    }
+
+    $next = Program::where(
+        'sort_order',
+        '>',
+        $program->sort_order
+    )
+    ->orderBy('sort_order')
+    ->first();
+
+    if (!$next) {
+        return;
+    }
+
+    [$program->sort_order, $next->sort_order] = [
+        $next->sort_order,
+        $program->sort_order,
+    ];
+
+    $program->save();
+
+    $next->save();
+
+    $this->programs =
+        Program::orderBy('sort_order')->get();
+$this->loadProgram($program->id);
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Products
+|--------------------------------------------------------------------------
+*/
+
+public function loadProduct($id)
+{
+    $product = Product::findOrFail($id);
+
+    $this->selectedProductId = $product->id;
+
+    $this->product = $product->toArray();
+}
+
+public function selectProduct($id)
+{
+    $this->loadProduct($id);
+}
+
+public function addProduct()
+{
+    $service = new ProductService();
+
+    $product = $service->create();
+
+    $this->products = $service->all();
+
+    $this->loadProduct($product->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Product Created'
+    );
+}
+
+public function saveProduct()
+{
+    $service = new ProductService();
+
+    $product = $service->find(
+        $this->selectedProductId
+    );
+
+    if ($this->productImage) {
+
+        $path = $this->productImage->store(
+            'products',
+            'public'
+        );
+
+        $this->product['image'] = $path;
+    }
+
+    $this->validate([
+        'product.name' => 'required|string|max:255',
+        'product.price' => 'nullable|numeric',
+    ]);
+
+    $service->update(
+        $product,
+        $this->product
+    );
+
+    $this->products = $service->all();
+
+    $this->loadProduct($product->id);
+
+    $this->productImage = null;
+
+    $this->dispatch(
+        'notify',
+        title: 'Product Saved'
+    );
+}
+
+public function deleteProduct($id)
+{
+    $service = new ProductService();
+
+    $product = $service->find($id);
+
+    $service->delete($product);
+
+    $this->products = $service->all();
+
+    if ($this->products->count()) {
+
+        $this->loadProduct(
+            $this->products->first()->id
+        );
+
+    } else {
+
+        $this->product = [];
+
+        $this->selectedProductId = null;
+    }
+
+    $this->dispatch(
+        'notify',
+        title: 'Product Deleted'
+    );
+}
+
+public function duplicateProduct($id)
+{
+    $service = new ProductService();
+
+    $product = $service->find($id);
+
+    $copy = $service->duplicate($product);
+
+    $this->products = $service->all();
+
+    $this->loadProduct($copy->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Product Duplicated'
+    );
+}
+
+public function toggleProductStatus($id)
+{
+    $service = new ProductService();
+
+    $product = $service->find($id);
+
+    $service->toggleStatus($product);
+
+    $this->products = $service->all();
+
+    $this->loadProduct($product->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Product Updated'
+    );
+}
+
+public function toggleProductFeatured($id)
+{
+    $service = new ProductService();
+
+    $product = $service->find($id);
+
+    $service->toggleFeatured($product);
+
+    $this->products = $service->all();
+
+    $this->loadProduct($product->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Featured Updated'
+    );
+}
+
+public function moveProductUp($id)
+{
+    $product = Product::find($id);
+
+    if (!$product) {
+        return;
+    }
+
+    $previous = Product::where(
+        'sort_order',
+        '<',
+        $product->sort_order
+    )
+    ->orderByDesc('sort_order')
+    ->first();
+
+    if (!$previous) {
+        return;
+    }
+
+    [$product->sort_order, $previous->sort_order] = [
+        $previous->sort_order,
+        $product->sort_order,
+    ];
+
+    $product->save();
+
+    $previous->save();
+
+    $this->products = Product::orderBy('sort_order')->get();
+
+    $this->loadProduct($product->id);
+}
+
+public function moveProductDown($id)
+{
+    $product = Product::find($id);
+
+    if (!$product) {
+        return;
+    }
+
+    $next = Product::where(
+        'sort_order',
+        '>',
+        $product->sort_order
+    )
+    ->orderBy('sort_order')
+    ->first();
+
+    if (!$next) {
+        return;
+    }
+
+    [$product->sort_order, $next->sort_order] = [
+        $next->sort_order,
+        $product->sort_order,
+    ];
+
+    $product->save();
+
+    $next->save();
+
+    $this->products = Product::orderBy('sort_order')->get();
+
+    $this->loadProduct($product->id);
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Testimonials
+|--------------------------------------------------------------------------
+*/
+
+public function loadTestimonial($id)
+{
+    $testimonial = Testimonial::findOrFail($id);
+
+    $this->selectedTestimonialId = $testimonial->id;
+
+    $this->testimonial = $testimonial->toArray();
+}
+
+public function selectTestimonial($id)
+{
+    $this->loadTestimonial($id);
+}
+
+public function addTestimonial()
+{
+    $service = new TestimonialService();
+
+    $testimonial = $service->create();
+
+    $this->testimonials = $service->all();
+
+    $this->loadTestimonial($testimonial->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Testimonial Created'
+    );
+}
+
+public function saveTestimonial()
+{
+    $service = new TestimonialService();
+
+    $testimonial = $service->find(
+        $this->selectedTestimonialId
+    );
+
+    if ($this->testimonialImage) {
+
+        $path = $this->testimonialImage->store(
+            'testimonials',
+            'public'
+        );
+
+        $this->testimonial['image'] = $path;
+    }
+
+    $this->validate([
+        'testimonial.name' => 'required|string|max:255',
+        'testimonial.review' => 'required|string',
+    ]);
+
+    $service->update(
+        $testimonial,
+        $this->testimonial
+    );
+
+    $this->testimonials = $service->all();
+
+    $this->loadTestimonial($testimonial->id);
+
+    $this->testimonialImage = null;
+
+    $this->dispatch(
+        'notify',
+        title: 'Testimonial Saved'
+    );
+}
+
+public function deleteTestimonial($id)
+{
+    $service = new TestimonialService();
+
+    $testimonial = $service->find($id);
+
+    $service->delete($testimonial);
+
+    $this->testimonials = $service->all();
+
+    if ($this->testimonials->count()) {
+
+        $this->loadTestimonial(
+            $this->testimonials->first()->id
+        );
+
+    } else {
+
+        $this->testimonial = [];
+
+        $this->selectedTestimonialId = null;
+    }
+
+    $this->dispatch(
+        'notify',
+        title: 'Testimonial Deleted'
+    );
+}
+
+public function duplicateTestimonial($id)
+{
+    $service = new TestimonialService();
+
+    $testimonial = $service->find($id);
+
+    $copy = $service->duplicate($testimonial);
+
+    $this->testimonials = $service->all();
+
+    $this->loadTestimonial($copy->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Testimonial Duplicated'
+    );
+}
+
+public function toggleTestimonialStatus($id)
+{
+    $service = new TestimonialService();
+
+    $testimonial = $service->find($id);
+
+    $service->toggleStatus($testimonial);
+
+    $this->testimonials = $service->all();
+
+    $this->loadTestimonial($testimonial->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Status Updated'
+    );
+}
+
+public function toggleTestimonialFeatured($id)
+{
+    $service = new TestimonialService();
+
+    $testimonial = $service->find($id);
+
+    $service->toggleFeatured($testimonial);
+
+    $this->testimonials = $service->all();
+
+    $this->loadTestimonial($testimonial->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Featured Updated'
+    );
+}
+
+public function moveTestimonialUp($id)
+{
+    $item = Testimonial::find($id);
+
+    if (!$item) {
+        return;
+    }
+
+    $previous = Testimonial::where(
+        'sort_order',
+        '<',
+        $item->sort_order
+    )
+    ->orderByDesc('sort_order')
+    ->first();
+
+    if (!$previous) {
+        return;
+    }
+
+    [$item->sort_order, $previous->sort_order] = [
+        $previous->sort_order,
+        $item->sort_order,
+    ];
+
+    $item->save();
+    $previous->save();
+
+    $this->testimonials = Testimonial::orderBy('sort_order')->get();
+
+    $this->loadTestimonial($item->id);
+}
+
+public function moveTestimonialDown($id)
+{
+    $item = Testimonial::find($id);
+
+    if (!$item) {
+        return;
+    }
+
+    $next = Testimonial::where(
+        'sort_order',
+        '>',
+        $item->sort_order
+    )
+    ->orderBy('sort_order')
+    ->first();
+
+    if (!$next) {
+        return;
+    }
+
+    [$item->sort_order, $next->sort_order] = [
+        $next->sort_order,
+        $item->sort_order,
+    ];
+
+    $item->save();
+    $next->save();
+
+    $this->testimonials = Testimonial::orderBy('sort_order')->get();
+
+    $this->loadTestimonial($item->id);
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Blogs
+|--------------------------------------------------------------------------
+*/
+
+public function loadBlog($id)
+{
+    $blog = Blog::findOrFail($id);
+
+    $this->selectedBlogId = $blog->id;
+
+    $this->blog = $blog->toArray();
+}
+
+public function selectBlog($id)
+{
+    $this->loadBlog($id);
+}
+
+public function addBlog()
+{
+    $service = new BlogService();
+
+    $blog = $service->create();
+
+    $this->blogs = $service->all();
+
+    $this->loadBlog($blog->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Blog Created'
+    );
+}
+
+public function saveBlog()
+{
+    $service = new BlogService();
+
+    $blog = $service->find(
+        $this->selectedBlogId
+    );
+
+    if ($this->blogImage) {
+
+        $path = $this->blogImage->store(
+            'blogs',
+            'public'
+        );
+
+        $this->blog['featured_image'] = $path;
+    }
+
+    $this->validate([
+        'blog.title' => 'required|string|max:255',
+        'blog.content' => 'required|string',
+    ]);
+
+    $service->update(
+        $blog,
+        $this->blog
+    );
+
+    $this->blogs = $service->all();
+
+    $this->loadBlog($blog->id);
+
+    $this->blogImage = null;
+
+    $this->dispatch(
+        'notify',
+        title: 'Blog Saved'
+    );
+}
+
+public function deleteBlog($id)
+{
+    $service = new BlogService();
+
+    $blog = $service->find($id);
+
+    $service->delete($blog);
+
+    $this->blogs = $service->all();
+
+    if ($this->blogs->count()) {
+
+        $this->loadBlog(
+            $this->blogs->first()->id
+        );
+
+    } else {
+
+        $this->blog = [];
+
+        $this->selectedBlogId = null;
+    }
+
+    $this->dispatch(
+        'notify',
+        title: 'Blog Deleted'
+    );
+}
+
+public function duplicateBlog($id)
+{
+    $service = new BlogService();
+
+    $blog = $service->find($id);
+
+    $copy = $service->duplicate($blog);
+
+    $this->blogs = $service->all();
+
+    $this->loadBlog($copy->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Blog Duplicated'
+    );
+}
+
+public function toggleBlogStatus($id)
+{
+    $service = new BlogService();
+
+    $blog = $service->find($id);
+
+    $service->toggleStatus($blog);
+
+    $this->blogs = $service->all();
+
+    $this->loadBlog($blog->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Status Updated'
+    );
+}
+
+public function toggleBlogFeatured($id)
+{
+    $service = new BlogService();
+
+    $blog = $service->find($id);
+
+    $service->toggleFeatured($blog);
+
+    $this->blogs = $service->all();
+
+    $this->loadBlog($blog->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Featured Updated'
+    );
+}
+
+public function moveBlogUp($id)
+{
+    $item = Blog::find($id);
+
+    if (!$item) {
+        return;
+    }
+
+    $previous = Blog::where(
+        'sort_order',
+        '<',
+        $item->sort_order
+    )
+    ->orderByDesc('sort_order')
+    ->first();
+
+    if (!$previous) {
+        return;
+    }
+
+    [$item->sort_order, $previous->sort_order] = [
+        $previous->sort_order,
+        $item->sort_order,
+    ];
+
+    $item->save();
+    $previous->save();
+
+    $this->blogs = Blog::orderBy('sort_order')->get();
+
+    $this->loadBlog($item->id);
+}
+
+public function moveBlogDown($id)
+{
+    $item = Blog::find($id);
+
+    if (!$item) {
+        return;
+    }
+
+    $next = Blog::where(
+        'sort_order',
+        '>',
+        $item->sort_order
+    )
+    ->orderBy('sort_order')
+    ->first();
+
+    if (!$next) {
+        return;
+    }
+
+    [$item->sort_order, $next->sort_order] = [
+        $next->sort_order,
+        $item->sort_order,
+    ];
+
+    $item->save();
+    $next->save();
+
+    $this->blogs = Blog::orderBy('sort_order')->get();
+
+    $this->loadBlog($item->id);
+}
+
+
+
+  /*
+|--------------------------------------------------------------------------
+| Hero
+|--------------------------------------------------------------------------
+*/
+
+public function saveHero()
+{
+    $this->validate([
+
+        'hero.heading' => 'required|string|max:255',
+
+        'hero.subheading' => 'nullable|string',
+
+        'hero.button_text' => 'nullable|string|max:255',
+
+        'hero.button_link' => 'nullable|string|max:255',
+
+        'hero.view_button_text' => 'nullable|string|max:255',
+
+        'hero.view_button_link' => 'nullable|string|max:255',
+
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Upload Hero Image
+    |--------------------------------------------------------------------------
+    */
+
+   
+if ($this->heroImage) {
+
+
+        $manager = new ImageManager(new Driver());
+
+
+        $image = $manager->read(
+            $this->heroImage->getRealPath()
+        );
+
+        $image->scaleDown(width: 1600);
+
+        $filename = uniqid('hero_') . '.webp';
+
+        $path = storage_path(
+            'app/public/settings/' . $filename
+        );
+
+        $image->toWebp(82)->save($path);
+
+        if (
+            $this->setting->hero_image &&
+            Storage::disk('public')->exists(
+                $this->setting->hero_image
+            )
+        ) {
+            Storage::disk('public')->delete(
+                $this->setting->hero_image
+            );
+        }
+
+        
+    $this->setting->update([
+
+        'hero_image' =>
+            'settings/' . $filename,
+
+    ]);
+
+    
+
+    $this->heroImage = null;
+
+}
+
+    (new HeroService())->update([
+
+
+
+    'heading' => $this->hero['heading'],
+
+
+
+    'subheading' => $this->hero['subheading'],
+
+
+
+    'button_text' => $this->hero['button_text'],
+
+
+
+    'button_link' => $this->hero['button_link'],
+
+
+
+    'view_button_text' => $this->hero['view_button_text'],
+
+
+
+    'view_button_link' => $this->hero['view_button_link'],
+
+
+
+]);
+
+$this->setting = Setting::first();
+$this->hero = (new HeroService())->get()->toArray();
+
+$this->dispatch(
+
+    'notify',
+
+    title: 'Hero Updated'
+
+);
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Transformations
+|--------------------------------------------------------------------------
+*/
+
+public function loadTransformation($id)
+{
+    $transformation = Transformation::findOrFail($id);
+
+    $this->selectedTransformationId = $transformation->id;
+
+    $this->transformation = $transformation->toArray();
+}
+
+public function selectTransformation($id)
+{
+    $this->loadTransformation($id);
+}
+
+public function addTransformation()
+{
+    $service = new TransformationService();
+
+    $transformation = $service->create();
+
+    $this->transformations = $service->all();
+
+    $this->loadTransformation($transformation->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Transformation Created'
+    );
+}
+
+public function saveTransformation()
+{
+    $service = new TransformationService();
+
+    $transformation = $service->find(
+        $this->selectedTransformationId
+    );
+
+    if ($this->beforeImage) {
+
+        $path = $this->beforeImage->store(
+            'transformations',
+            'public'
+        );
+
+        $this->transformation['before_image'] = $path;
+    }
+
+    if ($this->afterImage) {
+
+        $path = $this->afterImage->store(
+            'transformations',
+            'public'
+        );
+
+        $this->transformation['after_image'] = $path;
+    }
+
+    $this->validate([
+        'transformation.name' => 'required|string|max:255',
+    ]);
+
+    $service->update(
+        $transformation,
+        $this->transformation
+    );
+
+    $this->transformations = $service->all();
+
+    $this->loadTransformation($transformation->id);
+
+    $this->beforeImage = null;
+    $this->afterImage = null;
+
+    $this->dispatch(
+        'notify',
+        title: 'Transformation Saved'
+    );
+}
+
+public function deleteTransformation($id)
+{
+    $service = new TransformationService();
+
+    $transformation = $service->find($id);
+
+    $service->delete($transformation);
+
+    $this->transformations = $service->all();
+
+    if ($this->transformations->count()) {
+
+        $this->loadTransformation(
+            $this->transformations->first()->id
+        );
+
+    } else {
+
+        $this->transformation = [];
+
+        $this->selectedTransformationId = null;
+    }
+
+    $this->dispatch(
+        'notify',
+        title: 'Transformation Deleted'
+    );
+}
+
+public function duplicateTransformation($id)
+{
+    $service = new TransformationService();
+
+    $transformation = $service->find($id);
+
+    $copy = $service->duplicate($transformation);
+
+    $this->transformations = $service->all();
+
+    $this->loadTransformation($copy->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Transformation Duplicated'
+    );
+}
+
+public function toggleTransformationStatus($id)
+{
+    $service = new TransformationService();
+
+    $transformation = $service->find($id);
+
+    $service->toggleStatus($transformation);
+
+    $this->transformations = $service->all();
+
+    $this->loadTransformation($transformation->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Transformation Updated'
+    );
+}
+
+public function toggleTransformationFeatured($id)
+{
+    $service = new TransformationService();
+
+    $transformation = $service->find($id);
+
+    $service->toggleFeatured($transformation);
+
+    $this->transformations = $service->all();
+
+    $this->loadTransformation($transformation->id);
+
+    $this->dispatch(
+        'notify',
+        title: 'Featured Updated'
+    );
+}
+
+public function moveTransformationUp($id)
+{
+    $item = Transformation::find($id);
+
+    if (!$item) {
+        return;
+    }
+
+    $previous = Transformation::where(
+        'sort_order',
+        '<',
+        $item->sort_order
+    )
+    ->orderByDesc('sort_order')
+    ->first();
+
+    if (!$previous) {
+        return;
+    }
+
+    [$item->sort_order, $previous->sort_order] = [
+        $previous->sort_order,
+        $item->sort_order,
+    ];
+
+    $item->save();
+
+    $previous->save();
+
+    $this->transformations = Transformation::orderBy('sort_order')->get();
+
+    $this->loadTransformation($item->id);
+}
+
+public function moveTransformationDown($id)
+{
+    $item = Transformation::find($id);
+
+    if (!$item) {
+        return;
+    }
+
+    $next = Transformation::where(
+        'sort_order',
+        '>',
+        $item->sort_order
+    )
+    ->orderBy('sort_order')
+    ->first();
+
+    if (!$next) {
+        return;
+    }
+
+    [$item->sort_order, $next->sort_order] = [
+        $next->sort_order,
+        $item->sort_order,
+    ];
+
+    $item->save();
+
+    $next->save();
+
+    $this->transformations = Transformation::orderBy('sort_order')->get();
+
+    $this->loadTransformation($item->id);
+}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Contact
+|--------------------------------------------------------------------------
+*/
+
+public function saveContact()
+{
+    $this->setting->update($this->contact);
+
+    $this->dispatch(
+        'notify',
+        title: 'Contact Saved'
+    );
+}
+
+    /*
+    |--------------------------------------------------------------------------
+    | Website Sections
+    |--------------------------------------------------------------------------
+    */
+
+    public function selectSection($id)
+    {
+        $this->selectedSection =
+            $this->sections->firstWhere(
+                'id',
+                $id
+            );
+    }
+
+    public function changeDevice($device)
+    {
+        $this->selectedDevice = $device;
+    }
+
+    public function saveSection()
+    {
+        if (!$this->selectedSection) {
+            return;
+        }
+
+        $this->selectedSection->save();
+
+        $this->sections =
+            WebsiteSection::orderBy('sort_order')->get();
+    }
+
+    public function moveUp($id)
+    {
+        $section = WebsiteSection::find($id);
+
+        if (!$section) {
+            return;
+        }
+
+        $previous = WebsiteSection::where(
+            'sort_order',
+            '<',
+            $section->sort_order
+        )
+        ->orderByDesc('sort_order')
+        ->first();
+
+        if ($previous) {
+
+            [$section->sort_order, $previous->sort_order] = [
+                $previous->sort_order,
+                $section->sort_order,
+            ];
+
+            $section->save();
+
+            $previous->save();
+        }
+
+        $this->sections =
+            WebsiteSection::orderBy('sort_order')->get();
+    }
+
+    public function moveDown($id)
+    {
+        $section = WebsiteSection::find($id);
+
+        if (!$section) {
+            return;
+        }
+
+        $next = WebsiteSection::where(
+            'sort_order',
+            '>',
+            $section->sort_order
+        )
+        ->orderBy('sort_order')
+        ->first();
+
+        if ($next) {
+
+            [$section->sort_order, $next->sort_order] = [
+                $next->sort_order,
+                $section->sort_order,
+            ];
+
+            $section->save();
+
+            $next->save();
+        }
+
+        $this->sections =
+            WebsiteSection::orderBy('sort_order')->get();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Render
+    |--------------------------------------------------------------------------
+    */
+
+    public function render()
+    {
+        return view(
+            'livewire.builder.website-builder'
+        );
+    }
+}

@@ -16,10 +16,24 @@ class DietPlan extends Model
         'goal',
         'image',
         'price',
+
+        'category',
+        'diet_type',
+        'required_access',
+
+        'featured',
         'status',
-'category',
-'diet_type',
-'required_access',
+        'sort_order',
+
+        'seo_title',
+        'seo_description',
+
+    ];
+
+    protected $casts = [
+
+        'featured' => 'boolean',
+        'status' => 'boolean',
 
     ];
 
@@ -30,9 +44,7 @@ class DietPlan extends Model
         static::saving(function ($dietPlan) {
 
             if (empty($dietPlan->slug)) {
-
                 $dietPlan->slug = Str::slug($dietPlan->title);
-
             }
 
         });

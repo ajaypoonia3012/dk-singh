@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Livewire\Media;
+
+use App\Models\Media;
+use Livewire\Attributes\On;
+use Livewire\Component;
+
+class MediaBrowser extends Component
+{
+    public ?int $selected = null;
+
+    public function select($id)
+{
+    $this->selected = $id;
+}
+
+    #[On('media-created')]
+    public function refreshLibrary()
+    {
+        // Livewire automatically re-renders.
+    }
+
+    public function render()
+{
+    return view(
+        'livewire.media.media-browser',
+        [
+            'media' => Media::latest()->get(),
+        ]
+    );
+}
+}

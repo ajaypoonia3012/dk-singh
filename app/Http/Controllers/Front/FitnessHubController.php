@@ -12,44 +12,45 @@ use App\Models\Service;
 
 class FitnessHubController extends Controller
 {
-   public function index()
-{
-    $workouts = WorkoutPlan::where('required_access', 'public')
-        ->latest()
-        ->take(6)
-        ->get();
+    public function index()
+    {
+        $workouts = WorkoutPlan::where('required_access', 'public')
+            ->latest()
+            ->take(6)
+            ->get();
 
-    $diets = DietPlan::where('required_access', 'public')
-        ->latest()
-        ->take(6)
-        ->get();
+        $diets = DietPlan::where('required_access', 'public')
+            ->latest()
+            ->take(6)
+            ->get();
 
-    $blogs = Blog::latest()
-        ->take(12)
-        ->get();
+        $blogs = Blog::latest()
+            ->take(12)
+            ->get();
 
-    $transformations = Transformation::latest()
-        ->take(12)
-        ->get();
+        $transformations = Transformation::latest()
+            ->take(12)
+            ->get();
 
-    $programs = Program::latest()
-        ->take(3)
-        ->get();
+        $programs = Program::latest()
+            ->take(3)
+            ->get();
 
-    $services = Service::where('status', 1)
-        ->latest()
-        ->take(3)
-        ->get();
+        $services = Service::where('status', 1)
+            ->latest()
+            ->take(3)
+            ->get();
 
-    return view(
-        'fitness-hub.index',
-        compact(
-            'workouts',
-            'diets',
-            'blogs',
-            'transformations',
-            'programs',
-            'services'
-        )
-    );
+        return view(
+            'fitness-hub.index',
+            compact(
+                'workouts',
+                'diets',
+                'blogs',
+                'transformations',
+                'programs',
+                'services'
+            )
+        );
+    }
 }

@@ -16,27 +16,107 @@ class TransformationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
+    protected static ?string $navigationGroup = 'Content';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
 
-                Forms\Components\TextInput::make('name')
-                    ->required(),
+                Forms\Components\Section::make('Client Information')
+                    ->schema([
 
-                Forms\Components\Textarea::make('description')
-                    ->required(),
+                        Forms\Components\TextInput::make('name')
+                            ->required(),
 
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->directory('transformations')
-                    ->required(),
+                        Forms\Components\TextInput::make('goal')
+                            ->required(),
 
-                Forms\Components\TextInput::make('goal')
-                    ->required(),
+                        Forms\Components\TextInput::make('program')
+                            ->placeholder('Fat Loss Transformation'),
 
-                Forms\Components\TextInput::make('duration')
-                    ->required(),
+                        Forms\Components\TextInput::make('coach')
+                            ->default('DK Singh'),
+
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Transformation Details')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('before_weight')
+                            ->numeric()
+                            ->suffix('KG'),
+
+                        Forms\Components\TextInput::make('after_weight')
+                            ->numeric()
+                            ->suffix('KG'),
+
+                        Forms\Components\TextInput::make('weight_loss')
+                            ->numeric()
+                            ->suffix('KG'),
+
+                        Forms\Components\TextInput::make('duration')
+                            ->placeholder('12 Weeks'),
+
+                    ])
+                    ->columns(4),
+
+                Forms\Components\Section::make('Transformation Images')
+                    ->schema([
+
+                        Forms\Components\Select::make('before_media_id')
+                            ->label('Before Photo')
+                            ->relationship('beforeMedia', 'name')
+                            ->searchable()
+                            ->nullable(),
+
+                        Forms\Components\Select::make('after_media_id')
+                            ->label('After Photo')
+                            ->relationship('afterMedia', 'name')
+                            ->searchable()
+                            ->nullable(),
+
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Story')
+                    ->schema([
+
+                        Forms\Components\Textarea::make('description')
+                            ->rows(3),
+
+                        Forms\Components\RichEditor::make('story')
+                            ->columnSpanFull(),
+
+                    ]),
+
+                Forms\Components\Section::make('Publishing')
+                    ->schema([
+
+                        Forms\Components\Toggle::make('featured')
+                            ->label('Featured Transformation'),
+
+                        Forms\Components\Toggle::make('status')
+                            ->label('Published')
+                            ->default(true),
+
+                        Forms\Components\TextInput::make('sort_order')
+                            ->numeric()
+                            ->default(0),
+
+                    ])
+                    ->columns(3),
+
+                Forms\Components\Section::make('SEO')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('seo_title'),
+
+                        Forms\Components\Textarea::make('seo_description')
+                            ->rows(4),
+
+                    ]),
 
             ]);
     }
@@ -46,26 +126,81 @@ class TransformationResource extends Resource
         return $table
             ->columns([
 
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('beforeMedia.path')
+                    ->disk('public')
+                    ->label('Before')
+                    ->square()
+                    ->height(70),
 
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\ImageColumn::make('afterMedia.path')
+                    ->disk('public')
+                    ->label('After')
+                    ->square()
+                    ->height(70),
 
-                Tables\Columns\TextColumn::make('goal'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
 
-                Tables\Columns\TextColumn::make('duration'),
+                Tables\Columns\TextColumn::make('goal')
+                    ->badge()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('program')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('weight_loss')
+                    ->suffix(' KG')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('duration')
+                    ->sortable(),
+
+                Tables\Columns\IconColumn::make('featured')
+                    ->label('Featured')
+                    ->boolean(),
+
+                Tables\Columns\IconColumn::make('status')
+                    ->label('Published')
+                    ->boolean(),
+
+                Tables\Columns\TextColumn::make('sort_order')
+                    ->sortable(),
 
             ])
             ->filters([
-                //
+
+                Tables\Filters\TernaryFilter::make('featured'),
+
+                Tables\Filters\TernaryFilter::make('status'),
+
+                Tables\Filters\SelectFilter::make('goal')
+                    ->options([
+                        'Weight Loss' => 'Weight Loss',
+                        'Fat Loss' => 'Fat Loss',
+                        'Weight Gain' => 'Weight Gain',
+                        'Muscle Building' => 'Muscle Building',
+                        'Strength' => 'Strength',
+                    ]),
+
             ])
             ->actions([
+
                 Tables\Actions\EditAction::make(),
+
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
+
                 Tables\Actions\BulkActionGroup::make([
+
                     Tables\Actions\DeleteBulkAction::make(),
+
                 ]),
-            ]);
+
+            ])
+            ->defaultSort('sort_order');
     }
 
     public static function getPages(): array

@@ -31,6 +31,12 @@ class AdminPanelProvider extends PanelProvider
     ?? config('app.name')
 )
 ->login()
+
+->sidebarCollapsibleOnDesktop()
+
+->sidebarWidth('18rem')
+
+->collapsedSidebarWidth('4.5rem')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -40,18 +46,34 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-    \App\Filament\Widgets\LeadsOverview::class,
-    
+         
+
+ ->widgets([
+
     \App\Filament\Widgets\StatsOverview::class,
-\App\Filament\Widgets\LeadsChart::class,
 
-    \App\Filament\Resources\AdminResource\Widgets\RevenueChart::class,
+    \App\Filament\Widgets\Dashboard\QuickActions::class,
 
-    \App\Filament\Resources\AdminResource\Widgets\RecentOrders::class,
+    \App\Filament\Widgets\Dashboard\RevenueChart::class,
+
+    \App\Filament\Widgets\Dashboard\MembershipChart::class,
+
+    \App\Filament\Widgets\Dashboard\RecentOrders::class,
+
+    \App\Filament\Widgets\Dashboard\RecentMembers::class,
+
+    \App\Filament\Widgets\Dashboard\ExpiringMemberships::class,
+
+    \App\Filament\Widgets\Dashboard\ActivityFeed::class,
+
+    \App\Filament\Widgets\LeadsChart::class,
+
+    \App\Filament\Widgets\LeadsOverview::class,
 
 ])
-            ->middleware([
+        
+
+    ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
