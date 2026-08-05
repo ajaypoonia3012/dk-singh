@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Middleware\ActiveMembership;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\AuditSecurityEvents;
+use App\Http\Middleware\MembershipMiddleware;
+use App\Http\Middleware\ProfileCompletedMiddleware;
+use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,20 +17,25 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
 
-   ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function (Middleware $middleware) {
 
-    $middleware->alias([
+        $middleware->append([
+            SecurityHeaders::class,
+            AuditSecurityEvents::class,
+        ]);
 
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        $middleware->alias([
 
-        'membership' => \App\Http\Middleware\MembershipMiddleware::class,
+            'admin' => AdminMiddleware::class,
 
-        'active.membership' => \App\Http\Middleware\ActiveMembership::class,
+            'membership' => MembershipMiddleware::class,
 
-'profile.completed' => \App\Http\Middleware\ProfileCompletedMiddleware::class,
-    ]);
+            'active.membership' => ActiveMembership::class,
 
-})
+            'profile.completed' => ProfileCompletedMiddleware::class,
+        ]);
+
+    })
 
     ->withExceptions(function (Exceptions $exceptions) {
         //
