@@ -2,31 +2,20 @@
 
 namespace App\Models;
 
-use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
-
-use App\Models\Membership;
-use App\Models\Order;
-use App\Models\ProgressLog;
-
-use App\Models\WeeklyCheckIn;
-use App\Models\CoachNote;
-use App\Models\Notification;
 
 class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
 
-
-public function canAccessPanel(Panel $panel): bool
-{
-    return $this->isAdmin();
-}
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->isAdmin();
+    }
     /*
     |--------------------------------------------------------------------------
     | MASS ASSIGNABLE
@@ -61,10 +50,10 @@ public function canAccessPanel(Panel $panel): bool
         'bio',
 
         'is_premium',
-'is_coach',
-'is_admin',
-'account_type',
-'profile_completed',
+        'is_coach',
+        'is_admin',
+        'account_type',
+        'profile_completed',
 
     ];
 
@@ -91,9 +80,9 @@ public function canAccessPanel(Panel $panel): bool
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_premium' => 'boolean',
-'is_coach' => 'boolean',
-'is_admin' => 'boolean',
-'profile_completed' => 'boolean',
+            'is_coach' => 'boolean',
+            'is_admin' => 'boolean',
+            'profile_completed' => 'boolean',
         ];
     }
 
@@ -110,22 +99,39 @@ public function canAccessPanel(Panel $panel): bool
             ->where('expires_at', '>=', now())
             ->latestOfMany();
     }
-public function isAdmin()
-{
-    return $this->account_type === 'admin';
-}
 
-public function isMember()
-{
-    return $this->activeMembership()->exists();
-}
+    public function isAdmin(): bool
+    {
+        return $this->account_type === 'admin' || $this->is_admin === true;
+    }
 
-public function isCustomer()
-{
-    return !$this->isAdmin()
-        && !$this->isMember();
-}
+    public function isMember()
+    {
+        return $this->activeMembership()->exists();
+    }
 
+    public function isCustomer()
+    {
+        return ! $this->isAdmin()
+            && ! $this->isMember();
+    }
+
+    protected static function booted(): void
+    {
+        static::saving(function (User $user): void {
+            if ($user->isDirty('account_type')) {
+                $user->is_admin = $user->account_type === 'admin';
+
+                return;
+            }
+
+            if ($user->isDirty('is_admin')) {
+                $user->account_type = $user->is_admin
+                    ? 'admin'
+                    : ($user->account_type === 'admin' ? 'customer' : $user->account_type);
+            }
+        });
+    }
 
     public function memberships()
     {
@@ -184,26 +190,24 @@ public function isCustomer()
         return $this->hasMany(ProgressLog::class);
     }
 
+    public function weeklyCheckIns()
+    {
+        return $this->hasMany(
+            WeeklyCheckIn::class
+        );
+    }
 
-public function weeklyCheckIns()
-{
-    return $this->hasMany(
-        WeeklyCheckIn::class
-    );
-}
+    public function coachNotes()
+    {
+        return $this->hasMany(
+            CoachNote::class
+        );
+    }
 
-
-public function coachNotes()
-{
-    return $this->hasMany(
-        CoachNote::class
-    );
-}
-
-public function notificationsList()
-{
-    return $this->hasMany(
-        Notification::class
-    );
-}
+    public function notificationsList()
+    {
+        return $this->hasMany(
+            Notification::class
+        );
+    }
 }
