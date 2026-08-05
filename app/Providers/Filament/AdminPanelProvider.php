@@ -2,6 +2,17 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\Dashboard\ActivityFeed;
+use App\Filament\Widgets\Dashboard\ExpiringMemberships;
+use App\Filament\Widgets\Dashboard\MembershipChart;
+use App\Filament\Widgets\Dashboard\QuickActions;
+use App\Filament\Widgets\Dashboard\RecentMembers;
+use App\Filament\Widgets\Dashboard\RecentOrders;
+use App\Filament\Widgets\Dashboard\RevenueChart;
+use App\Filament\Widgets\LeadsChart;
+use App\Filament\Widgets\LeadsOverview;
+use App\Filament\Widgets\StatsOverview;
+use App\Models\Setting;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -10,12 +21,12 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -26,17 +37,13 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-->brandName(
-    \App\Models\Setting::first()?->site_name
-    ?? config('app.name')
-)
-->login()
-
-->sidebarCollapsibleOnDesktop()
-
-->sidebarWidth('18rem')
-
-->collapsedSidebarWidth('4.5rem')
+            ->brandName(fn (): string => Schema::hasTable('settings')
+                ? Setting::query()->value('site_name') ?? config('app.name')
+                : config('app.name'))
+            ->login()
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('18rem')
+            ->collapsedSidebarWidth('4.5rem')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -46,34 +53,30 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-         
+            ->widgets([
 
- ->widgets([
+                StatsOverview::class,
 
-    \App\Filament\Widgets\StatsOverview::class,
+                QuickActions::class,
 
-    \App\Filament\Widgets\Dashboard\QuickActions::class,
+                RevenueChart::class,
 
-    \App\Filament\Widgets\Dashboard\RevenueChart::class,
+                MembershipChart::class,
 
-    \App\Filament\Widgets\Dashboard\MembershipChart::class,
+                RecentOrders::class,
 
-    \App\Filament\Widgets\Dashboard\RecentOrders::class,
+                RecentMembers::class,
 
-    \App\Filament\Widgets\Dashboard\RecentMembers::class,
+                ExpiringMemberships::class,
 
-    \App\Filament\Widgets\Dashboard\ExpiringMemberships::class,
+                ActivityFeed::class,
 
-    \App\Filament\Widgets\Dashboard\ActivityFeed::class,
+                LeadsChart::class,
 
-    \App\Filament\Widgets\LeadsChart::class,
+                LeadsOverview::class,
 
-    \App\Filament\Widgets\LeadsOverview::class,
-
-])
-        
-
-    ->middleware([
+            ])
+            ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,

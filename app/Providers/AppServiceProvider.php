@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\View;
+use App\Models\Notification;
 use App\Models\Setting;
 use App\Models\ThemeSetting;
-use App\Models\Notification;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\View\View as IlluminateView;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,41 +25,35 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (Schema::hasTable('settings')) {
+        View::composer('*', function (IlluminateView $view): void {
+            static $loaded = false;
+            static $setting = null;
+            static $theme = null;
 
-    $setting = Setting::first();
+            if (! $loaded) {
+                $setting = Schema::hasTable('settings') ? Setting::query()->first() : null;
+                $theme = Schema::hasTable('theme_settings') ? ThemeSetting::query()->first() : null;
+                $loaded = true;
 
-    View::share('setting', $setting);
-}
-
-if (Schema::hasTable('theme_settings')) {
-
-    $theme = ThemeSetting::first();
-
-    View::share('theme', $theme);
-}
-
-        View::composer('*', function ($view) {
-
-            $count = 0;
-
-            if (auth()->check()) {
-
-                $count = Notification::where(
-                    'user_id',
-                    auth()->id()
-                )
-                ->where(
-                    'is_read',
-                    false
-                )
-                ->count();
+                View::share('setting', $setting);
+                View::share('theme', $theme);
             }
 
-            $view->with(
-                'unreadNotifications',
-                $count
-            );
+            $view->with('setting', $setting);
+            $view->with('theme', $theme);
+        });
+
+        View::composer('partials.navbar', function (IlluminateView $view): void {
+            $unreadNotifications = 0;
+
+            if (auth()->check() && Schema::hasTable('notifications')) {
+                $unreadNotifications = Notification::query()
+                    ->where('user_id', auth()->id())
+                    ->where('is_read', false)
+                    ->count();
+            }
+
+            $view->with('unreadNotifications', $unreadNotifications);
         });
     }
 }
