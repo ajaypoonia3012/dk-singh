@@ -2,15 +2,39 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\DietPlan;
+use App\Models\Membership;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Membership;
+use App\Models\User;
 use App\Models\WorkoutPlan;
-use App\Models\DietPlan;
 
 class DashboardService
 {
+    public function getStatsOverview(): array
+    {
+        $orders = Order::query()
+            ->selectRaw('COUNT(*) as aggregate')
+            ->selectRaw(
+                'COALESCE(SUM(CASE WHEN payment_status = ? THEN amount ELSE 0 END), 0) as revenue',
+                ['paid']
+            )
+            ->first();
+
+        return [
+            'revenue' => (float) $orders->revenue,
+            'orders' => (int) $orders->aggregate,
+            'active_memberships' => Membership::query()
+                ->where('status', true)
+                ->where('expires_at', '>=', now())
+                ->count(),
+            'users' => User::query()->count(),
+            'workouts' => WorkoutPlan::query()->count(),
+            'diet_plans' => DietPlan::query()->count(),
+            'products' => Product::query()->count(),
+        ];
+    }
+
     /*
     |--------------------------------------------------------------------------
     | OVERVIEW
@@ -53,12 +77,14 @@ class DashboardService
             'total' => Order::where('payment_status', 'paid')
                 ->sum('amount'),
 
-            'today' => Order::whereDate('created_at', today())
+            'today' => Order::whereBetween('created_at', [today(), today()->endOfDay()])
                 ->where('payment_status', 'paid')
                 ->sum('amount'),
 
-            'this_month' => Order::whereMonth('created_at', now()->month)
-                ->whereYear('created_at', now()->year)
+            'this_month' => Order::whereBetween('created_at', [
+                now()->startOfMonth(),
+                now()->endOfMonth(),
+            ])
                 ->where('payment_status', 'paid')
                 ->sum('amount'),
 

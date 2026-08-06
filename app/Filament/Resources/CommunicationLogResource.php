@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CommunicationLogResource\Pages;
-use App\Filament\Resources\CommunicationLogResource\RelationManagers;
 use App\Models\CommunicationLog;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,7 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CommunicationLogResource extends Resource
 {
@@ -19,42 +17,47 @@ class CommunicationLogResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['user:id,name', 'provider:id,name']);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
-           ->schema([
+            ->schema([
 
-    Forms\Components\Select::make('user_id')
-        ->relationship('user', 'name')
-        ->searchable(),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable(),
 
-    Forms\Components\Select::make('communication_provider_id')
-        ->relationship('provider', 'name')
-        ->searchable(),
+                Forms\Components\Select::make('communication_provider_id')
+                    ->relationship('provider', 'name')
+                    ->searchable(),
 
-    Forms\Components\TextInput::make('channel')
-        ->disabled(),
+                Forms\Components\TextInput::make('channel')
+                    ->disabled(),
 
-    Forms\Components\TextInput::make('recipient')
-        ->disabled(),
+                Forms\Components\TextInput::make('recipient')
+                    ->disabled(),
 
-    Forms\Components\Textarea::make('message')
-        ->rows(8)
-        ->disabled(),
+                Forms\Components\Textarea::make('message')
+                    ->rows(8)
+                    ->disabled(),
 
-    Forms\Components\Select::make('status')
-        ->options([
-            'pending' => 'Pending',
-            'sent' => 'Sent',
-            'failed' => 'Failed',
-        ])
-        ->disabled(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'sent' => 'Sent',
+                        'failed' => 'Failed',
+                    ])
+                    ->disabled(),
 
-    Forms\Components\Textarea::make('response')
-        ->rows(5)
-        ->disabled(),
+                Forms\Components\Textarea::make('response')
+                    ->rows(5)
+                    ->disabled(),
 
-]);
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -62,28 +65,28 @@ class CommunicationLogResource extends Resource
         return $table
             ->columns([
 
-    Tables\Columns\TextColumn::make('user.name')
-        ->label('User')
-        ->searchable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('User')
+                    ->searchable(),
 
-    Tables\Columns\TextColumn::make('provider.name')
-        ->label('Provider'),
+                Tables\Columns\TextColumn::make('provider.name')
+                    ->label('Provider'),
 
-    Tables\Columns\TextColumn::make('channel'),
+                Tables\Columns\TextColumn::make('channel'),
 
-    Tables\Columns\TextColumn::make('recipient'),
+                Tables\Columns\TextColumn::make('recipient'),
 
-    Tables\Columns\BadgeColumn::make('status')
-        ->colors([
-            'warning' => 'pending',
-            'success' => 'sent',
-            'danger' => 'failed',
-        ]),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'warning' => 'pending',
+                        'success' => 'sent',
+                        'danger' => 'failed',
+                    ]),
 
-    Tables\Columns\TextColumn::make('created_at')
-        ->dateTime(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime(),
 
-])
+            ])
             ->filters([
                 //
             ])

@@ -15,19 +15,21 @@ class RevenueChart extends ChartWidget
         $labels = [];
         $data = [];
 
-        // Last 6 months
+        $start = Carbon::now()->subMonths(5)->startOfMonth();
+        $revenueByMonth = Order::query()
+            ->where('payment_status', 'paid')
+            ->whereBetween('created_at', [$start, Carbon::now()->endOfMonth()])
+            ->get(['amount', 'created_at'])
+            ->groupBy(fn (Order $order): string => $order->created_at->format('Y-m'))
+            ->map(fn ($orders): float => (float) $orders->sum('amount'));
+
         for ($i = 5; $i >= 0; $i--) {
 
             $date = Carbon::now()->subMonths($i);
 
             $labels[] = $date->format('M');
 
-            $revenue = Order::where('payment_status', 'paid')
-                ->whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
-                ->sum('amount');
-
-            $data[] = (float) $revenue;
+            $data[] = $revenueByMonth->get($date->format('Y-m'), 0.0);
         }
 
         return [

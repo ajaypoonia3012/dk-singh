@@ -4,14 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ShipmentResource\Pages;
 use App\Models\Shipment;
-
 use Filament\Forms;
 use Filament\Forms\Form;
-
 use Filament\Resources\Resource;
-
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ShipmentResource extends Resource
 {
@@ -20,6 +18,11 @@ class ShipmentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
     protected static ?string $navigationGroup = 'Commerce';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['order:id,order_number', 'courierProvider:id,name']);
+    }
 
     public static function form(Form $form): Form
     {

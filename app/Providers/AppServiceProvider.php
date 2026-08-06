@@ -37,6 +37,7 @@ use App\Policies\AdminPolicy;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
@@ -69,8 +70,12 @@ class AppServiceProvider extends ServiceProvider
             static $theme = null;
 
             if (! $loaded) {
-                $setting = Schema::hasTable('settings') ? Setting::query()->first() : null;
-                $theme = Schema::hasTable('theme_settings') ? ThemeSetting::query()->first() : null;
+                $setting = Schema::hasTable('settings')
+                    ? Cache::rememberForever(Setting::CACHE_KEY, fn () => Setting::query()->first())
+                    : null;
+                $theme = Schema::hasTable('theme_settings')
+                    ? Cache::rememberForever(ThemeSetting::CACHE_KEY, fn () => ThemeSetting::query()->first())
+                    : null;
                 $loaded = true;
 
                 View::share('setting', $setting);

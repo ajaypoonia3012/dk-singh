@@ -2,9 +2,9 @@
 
 namespace App\Filament\Widgets\Dashboard;
 
+use App\Models\Membership;
 use App\Models\Order;
 use App\Models\User;
-use App\Models\Membership;
 use Filament\Widgets\Widget;
 
 class ActivityFeed extends Widget
@@ -21,7 +21,7 @@ class ActivityFeed extends Widget
 
             'users' => User::latest()->take(5)->get(),
 
-            'memberships' => Membership::latest()->take(5)->get(),
+            'memberships' => Membership::query()->with('user:id,name')->latest()->take(5)->get(),
 
         ];
     }

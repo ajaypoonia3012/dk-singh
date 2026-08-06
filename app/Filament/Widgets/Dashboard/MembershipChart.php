@@ -15,15 +15,19 @@ class MembershipChart extends ChartWidget
         $labels = [];
         $data = [];
 
+        $start = Carbon::now()->subMonths(5)->startOfMonth();
+        $counts = Membership::query()
+            ->whereBetween('created_at', [$start, Carbon::now()->endOfMonth()])
+            ->get(['created_at'])
+            ->countBy(fn (Membership $membership): string => $membership->created_at->format('Y-m'));
+
         for ($i = 5; $i >= 0; $i--) {
 
             $date = Carbon::now()->subMonths($i);
 
             $labels[] = $date->format('M');
 
-            $data[] = Membership::whereYear('created_at', $date->year)
-                ->whereMonth('created_at', $date->month)
-                ->count();
+            $data[] = $counts->get($date->format('Y-m'), 0);
         }
 
         return [

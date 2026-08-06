@@ -3,16 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-
 use App\Models\User;
-
 use Filament\Forms;
 use Filament\Forms\Form;
-
 use Filament\Resources\Resource;
-
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserResource extends Resource
 {
@@ -23,6 +20,11 @@ class UserResource extends Resource
     protected static ?string $navigationGroup = 'CRM';
 
     protected static ?string $navigationLabel = 'Users';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('activeMembership.plan');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -114,7 +116,7 @@ class UserResource extends Resource
 
                     ->formatStateUsing(function ($state, $record) {
 
-                        if (!$record->activeMembership) {
+                        if (! $record->activeMembership) {
 
                             return 'No Membership';
 
@@ -177,43 +179,37 @@ class UserResource extends Resource
 
                 Tables\Filters\Filter::make('active_members')
 
-                    ->query(fn ($query) =>
+                    ->query(fn ($query) => $query->whereHas('activeMembership', function ($q) {
 
-                        $query->whereHas('activeMembership', function ($q) {
+                        $q->where('status', true)
+                            ->where('expires_at', '>=', now());
 
-                            $q->where('status', true)
-                              ->where('expires_at', '>=', now());
-
-                        })
+                    })
 
                     ),
 
                 Tables\Filters\Filter::make('expired_members')
 
-                    ->query(fn ($query) =>
+                    ->query(fn ($query) => $query->whereHas('activeMembership', function ($q) {
 
-                        $query->whereHas('activeMembership', function ($q) {
+                        $q->where('expires_at', '<', now());
 
-                            $q->where('expires_at', '<', now());
-
-                        })
+                    })
 
                     ),
 
                 Tables\Filters\Filter::make('expiring_soon')
 
-                    ->query(fn ($query) =>
+                    ->query(fn ($query) => $query->whereHas('activeMembership', function ($q) {
 
-                        $query->whereHas('activeMembership', function ($q) {
+                        $q->whereBetween('expires_at', [
 
-                            $q->whereBetween('expires_at', [
+                            now(),
+                            now()->addDays(7),
 
-                                now(),
-                                now()->addDays(7),
+                        ]);
 
-                            ]);
-
-                        })
+                    })
 
                     ),
 
@@ -225,10 +221,8 @@ class UserResource extends Resource
 
                 Tables\Actions\Action::make('WhatsApp')
 
-                    ->url(fn ($record) =>
-
-                        $record->whatsapp_number
-                            ? 'https://wa.me/' . $record->whatsapp_number
+                    ->url(fn ($record) => $record->whatsapp_number
+                            ? 'https://wa.me/'.$record->whatsapp_number
                             : null
 
                     )

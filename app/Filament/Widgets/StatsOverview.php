@@ -12,14 +12,13 @@ class StatsOverview extends StatsOverviewWidget
     {
         $dashboard = app(DashboardService::class);
 
-        $overview = $dashboard->getOverview();
-        $revenue = $dashboard->getRevenue();
+        $stats = $dashboard->getStatsOverview();
 
         return [
 
             Stat::make(
                 'Revenue',
-                '₹' . number_format($revenue['total'], 2)
+                '₹'.number_format($stats['revenue'], 2)
             )
                 ->description('Lifetime Revenue')
                 ->descriptionIcon('heroicon-m-banknotes')
@@ -27,7 +26,7 @@ class StatsOverview extends StatsOverviewWidget
 
             Stat::make(
                 'Orders',
-                $overview['orders']
+                $stats['orders']
             )
                 ->description('Completed Orders')
                 ->descriptionIcon('heroicon-m-shopping-cart')
@@ -35,7 +34,7 @@ class StatsOverview extends StatsOverviewWidget
 
             Stat::make(
                 'Active Members',
-                $overview['active_memberships']
+                $stats['active_memberships']
             )
                 ->description('Premium Members')
                 ->descriptionIcon('heroicon-m-user-group')
@@ -43,7 +42,7 @@ class StatsOverview extends StatsOverviewWidget
 
             Stat::make(
                 'Customers',
-                $overview['users']
+                $stats['users']
             )
                 ->description('Registered Users')
                 ->descriptionIcon('heroicon-m-users')
@@ -51,7 +50,7 @@ class StatsOverview extends StatsOverviewWidget
 
             Stat::make(
                 'Workout Plans',
-                $overview['workouts']
+                $stats['workouts']
             )
                 ->description('Published Workouts')
                 ->descriptionIcon('heroicon-m-fire')
@@ -59,7 +58,7 @@ class StatsOverview extends StatsOverviewWidget
 
             Stat::make(
                 'Diet Plans',
-                $overview['diet_plans']
+                $stats['diet_plans']
             )
                 ->description('Published Diet Plans')
                 ->descriptionIcon('heroicon-m-heart')
@@ -67,7 +66,7 @@ class StatsOverview extends StatsOverviewWidget
 
             Stat::make(
                 'Products',
-                $overview['products']
+                $stats['products']
             )
                 ->description('Supplements')
                 ->descriptionIcon('heroicon-m-cube')

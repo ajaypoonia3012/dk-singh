@@ -11,34 +11,23 @@ class LeadsChart extends ChartWidget
 
     protected function getData(): array
     {
-        $days = collect(range(6, 0))->map(function ($day) {
-
-            return now()->subDays($day);
-
-        });
+        $days = collect(range(6, 0))->map(fn (int $day) => now()->subDays($day)->startOfDay());
+        $counts = ContactLead::query()
+            ->whereBetween('created_at', [$days->first(), $days->last()->copy()->endOfDay()])
+            ->get(['created_at'])
+            ->countBy(fn (ContactLead $lead): string => $lead->created_at->toDateString());
 
         return [
 
             'datasets' => [
                 [
                     'label' => 'Leads',
-                    'data' => $days->map(function ($date) {
-
-                        return ContactLead::whereDate(
-                            'created_at',
-                            $date
-                        )->count();
-
-                    }),
+                    'data' => $days->map(fn ($date): int => $counts->get($date->toDateString(), 0)),
 
                 ],
             ],
 
-            'labels' => $days->map(function ($date) {
-
-                return $date->format('d M');
-
-            }),
+            'labels' => $days->map(fn ($date): string => $date->format('d M')),
 
         ];
     }

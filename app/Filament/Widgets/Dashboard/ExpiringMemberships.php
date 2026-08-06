@@ -19,8 +19,7 @@ class ExpiringMemberships extends TableWidget
             ->query(
                 Membership::with(['user', 'plan'])
                     ->whereNotNull('expires_at')
-                    ->whereDate('expires_at', '>=', now())
-                    ->whereDate('expires_at', '<=', now()->addDays(7))
+                    ->whereBetween('expires_at', [today(), today()->addDays(7)->endOfDay()])
                     ->orderBy('expires_at')
             )
 
@@ -38,7 +37,7 @@ class ExpiringMemberships extends TableWidget
 
                 Tables\Columns\TextColumn::make('expires_at')
                     ->label('Days Left')
-                    ->formatStateUsing(fn ($record) => now()->diffInDays($record->expires_at) . ' Days'),
+                    ->formatStateUsing(fn ($record) => now()->diffInDays($record->expires_at).' Days'),
 
             ])
 

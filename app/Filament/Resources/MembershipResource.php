@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class MembershipResource extends Resource
 {
@@ -21,6 +22,11 @@ class MembershipResource extends Resource
     protected static ?string $navigationLabel = 'Memberships';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['user:id,name', 'plan:id,name']);
+    }
 
     public static function form(Form $form): Form
     {
