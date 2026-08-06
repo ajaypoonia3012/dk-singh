@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CommunicationProviderResource\Pages;
-use App\Filament\Resources\CommunicationProviderResource\RelationManagers;
 use App\Models\CommunicationProvider;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CommunicationProviderResource extends Resource
 {
@@ -24,35 +21,47 @@ class CommunicationProviderResource extends Resource
         return $form
             ->schema([
 
-    Forms\Components\TextInput::make('name')
-        ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->required(),
 
-    Forms\Components\Select::make('type')
-        ->options([
-            'whatsapp' => 'WhatsApp',
-            'email' => 'Email',
-        ])
-        ->required(),
+                Forms\Components\Select::make('type')
+                    ->options([
+                        'whatsapp' => 'WhatsApp',
+                        'email' => 'Email',
+                    ])
+                    ->required(),
 
-    Forms\Components\TextInput::make('provider')
-        ->required(),
+                Forms\Components\TextInput::make('provider')
+                    ->required(),
 
-    Forms\Components\TextInput::make('api_url'),
+                Forms\Components\TextInput::make('api_url'),
 
-    Forms\Components\Textarea::make('api_key'),
+                Forms\Components\TextInput::make('api_key')
+                    ->password()
+                    ->revealable()
+                    ->autocomplete('new-password')
+                    ->afterStateHydrated(fn (Forms\Components\TextInput $component) => $component->state(null))
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->helperText('Leave blank to keep the stored key.'),
 
-    Forms\Components\Textarea::make('api_secret'),
+                Forms\Components\TextInput::make('api_secret')
+                    ->password()
+                    ->revealable()
+                    ->autocomplete('new-password')
+                    ->afterStateHydrated(fn (Forms\Components\TextInput $component) => $component->state(null))
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->helperText('Leave blank to keep the stored secret.'),
 
-    Forms\Components\TextInput::make('sender_id'),
+                Forms\Components\TextInput::make('sender_id'),
 
-    Forms\Components\TextInput::make('instance_id'),
+                Forms\Components\TextInput::make('instance_id'),
 
-    Forms\Components\Toggle::make('is_active')
-        ->default(true),
+                Forms\Components\Toggle::make('is_active')
+                    ->default(true),
 
-    Forms\Components\Toggle::make('is_default'),
+                Forms\Components\Toggle::make('is_default'),
 
-]);
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -60,20 +69,20 @@ class CommunicationProviderResource extends Resource
         return $table
             ->columns([
 
-    Tables\Columns\TextColumn::make('name')
-        ->searchable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
 
-    Tables\Columns\TextColumn::make('type'),
+                Tables\Columns\TextColumn::make('type'),
 
-    Tables\Columns\TextColumn::make('provider'),
+                Tables\Columns\TextColumn::make('provider'),
 
-    Tables\Columns\IconColumn::make('is_active')
-        ->boolean(),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean(),
 
-    Tables\Columns\IconColumn::make('is_default')
-        ->boolean(),
+                Tables\Columns\IconColumn::make('is_default')
+                    ->boolean(),
 
-])
+            ])
             ->filters([
                 //
             ])

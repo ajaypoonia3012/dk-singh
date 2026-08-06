@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourierProvider extends Model
 {
+    protected $hidden = [
+        'api_key',
+        'api_secret',
+    ];
+
     protected $fillable = [
 
         'name',
@@ -24,6 +29,8 @@ class CourierProvider extends Model
 
         'is_active' => 'boolean',
         'is_default' => 'boolean',
+        'api_key' => 'encrypted',
+        'api_secret' => 'encrypted',
 
     ];
 
