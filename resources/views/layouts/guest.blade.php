@@ -18,7 +18,11 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    @if(filled($setting?->logo))
+                        <img src="{{ asset('storage/'.$setting->logo) }}" alt="{{ $setting->site_name }}" class="w-20 h-20 object-contain">
+                    @else
+                        <span class="text-xl font-bold">{{ $setting?->site_name ?: config('app.name') }}</span>
+                    @endif
                 </a>
             </div>
 

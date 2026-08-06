@@ -19,7 +19,7 @@
             </h2>
 
             <p class="text-gray-600 mt-5 max-w-2xl mx-auto">
-                Premium homemade fitness supplements by DK Singh.
+                Premium homemade fitness supplements by {{ $setting?->site_name ?: config('app.name') }}.
             </p>
 
         </div>

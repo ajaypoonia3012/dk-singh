@@ -17,7 +17,7 @@ Workout Library
 </h1>
 
 <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-Free workout plans designed by DK Singh.
+Free workout plans designed by {{ $setting?->site_name ?: config('app.name') }}.
 </p>
 
 </div>

@@ -847,7 +847,7 @@ loading="lazy"
                     </h4>
 
                     <p class="text-gray-600">
-                        {{ $setting->phone ?? '+91 72400 73888' }}
+                        {{ $setting?->phone }}
                     </p>
 
                 </div>

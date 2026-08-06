@@ -1,13 +1,14 @@
 <nav id="navbar"
     class="fixed top-0 left-0 w-full z-50 transition-all duration-500 backdrop-blur-xl border-b"
 style="
-background: color-mix(in srgb, var(--accent-color) 85%, transparent);
+background: color-mix(in srgb, var(--navbar-background) 85%, transparent);
 border-color: rgba(0,0,0,.08);
+color: var(--navbar-text);
 ">
 
     <div class="max-w-7xl mx-auto px-6">
 
-        <div class="flex items-center justify-between h-24">
+        <div class="flex items-center justify-between" style="height: var(--navbar-height);">
 
             <!-- LOGO -->
 
@@ -77,7 +78,7 @@ border-color: rgba(0,0,0,.08);
         <div class="px-6 py-8 space-y-5 flex flex-col">
 
             <a href="/" class="font-semibold text-lg">
-                Home
+                {{ $setting?->home_label ?: 'Home' }}
             </a>
 
             <a href="/programs" class="font-semibold text-lg">
@@ -97,15 +98,15 @@ border-color: rgba(0,0,0,.08);
 </a>
 
          <a href="/fitness-hub" class="font-semibold text-lg">
-    Fitness Hub
+    {{ $setting?->fitness_hub_label ?: 'Fitness Hub' }}
 </a>   
 
             <a href="/about" class="font-semibold text-lg">
-                About
+                {{ $setting?->about_label ?: 'About' }}
             </a>
 
             <a href="/plans" class="font-semibold text-lg">
-                Plans
+                {{ $setting?->plan_label ?: 'Plans' }}
             </a>
 
 <a href="{{ route('products.index') }}"
@@ -113,7 +114,7 @@ border-color: rgba(0,0,0,.08);
     {{ $setting->product_label ?? 'Products' }}
 </a>
             <a href="/contact" class="font-semibold text-lg">
-                Contact
+                {{ $setting?->contact_label ?: 'Contact' }}
             </a>
 
             @auth
@@ -122,21 +123,21 @@ border-color: rgba(0,0,0,.08);
 
 <a href="/admin"
    class="btn-primary text-center mt-4">
-    Admin Panel
+    {{ $setting?->admin_panel_label ?: 'Admin Panel' }}
 </a>
 
 @elseif(auth()->user()->activeMembership)
 
 <a href="/member/dashboard"
    class="btn-primary text-center mt-4">
-    My Plan
+    {{ $setting?->my_plan_label ?: 'My Plan' }}
 </a>
 
 @else
 
 <a href="{{ route('account.orders') }}"
    class="btn-primary text-center mt-4">
-    My Orders
+    {{ $setting?->my_orders_label ?: 'My Orders' }}
 </a>
 
 @endif
@@ -146,7 +147,7 @@ border-color: rgba(0,0,0,.08);
                 <a href="/register"
                    class="btn-primary text-center mt-4">
 
-                    Join Now
+                    {{ $setting?->register_label ?: $setting?->cta_button_text ?: 'Join Now' }}
 
                 </a>
 
@@ -160,7 +161,7 @@ border-color: rgba(0,0,0,.08);
 
 <!-- SPACER -->
 
-<div class="h-24"></div>
+<div style="height: var(--navbar-height);"></div>
 
 <!-- MOBILE MENU SCRIPT -->
 

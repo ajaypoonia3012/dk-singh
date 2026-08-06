@@ -5,14 +5,14 @@
         <a href="/login"
            class="hover:text-[var(--primary-color)] transition duration-300 font-semibold">
 
-            Login
+            {{ $setting?->login_label ?: 'Login' }}
 
         </a>
 
         <a href="/register"
            class="btn-primary-small">
 
-            Join Now
+            {{ $setting?->register_label ?: $setting?->cta_button_text ?: 'Join Now' }}
 
         </a>
 
@@ -24,21 +24,21 @@
 
             <a href="/admin"
                class="btn-primary-small">
-                Admin Panel
+                {{ $setting?->admin_panel_label ?: 'Admin Panel' }}
             </a>
 
         @elseif(auth()->user()->activeMembership)
 
             <a href="/member/dashboard"
                class="btn-primary-small">
-                My Plan
+                {{ $setting?->my_plan_label ?: 'My Plan' }}
             </a>
 
         @else
 
             <a href="{{ route('account.orders') }}"
                class="btn-primary-small">
-                My Orders
+                {{ $setting?->my_orders_label ?: 'My Orders' }}
             </a>
 
         @endif
@@ -77,7 +77,7 @@
                 type="submit"
                 class="hover:text-red-500 transition duration-300"
             >
-                Logout
+                {{ $setting?->logout_label ?: 'Logout' }}
             </button>
         </form>
 

@@ -17,7 +17,7 @@ Diet Library
 </h1>
 
 <p class="text-xl text-gray-600">
-Free nutrition plans from DK Singh.
+Free nutrition plans from {{ $setting?->site_name ?: config('app.name') }}.
 </p>
 
 </div>

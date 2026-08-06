@@ -2,7 +2,7 @@
 
     <span class="badge bg-warning text-dark px-3 py-2 mb-3">
 
-        Join DK Singh Fitness
+        Join {{ $setting?->site_name ?: config('app.name') }}
 
     </span>
 

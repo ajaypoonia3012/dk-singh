@@ -1,4 +1,4 @@
-<footer class="bg-black text-white pt-20 pb-10 mt-20">
+<footer class="pt-20 pb-10 mt-20" style="background: var(--footer-background); color: var(--footer-text);">
 
     <div class="max-w-7xl mx-auto px-6">
 
@@ -12,10 +12,10 @@
 
                 <div class="flex items-center gap-3 mb-6">
 
-                    @if(!empty($setting?->logo))
+                    @if(!empty($setting?->dark_logo) || !empty($setting?->logo))
 
                         <img
-                            src="{{ asset('storage/' . $setting->logo) }}"
+                            src="{{ asset('storage/'.($setting->dark_logo ?: $setting->logo)) }}"
                             alt="{{ $setting->site_name }}"
                             class="w-14 h-14 object-contain"
                         >
@@ -25,11 +25,11 @@
                     <div>
 
                         <h2 class="text-2xl font-black text-yellow-500">
-                            {{ $setting->site_name ?? 'DK Singh Fitness' }}
+                            {{ $setting?->site_name ?: config('app.name') }}
                         </h2>
 
                         <p class="text-xs uppercase tracking-[3px] text-gray-400">
-                            {{ $setting->site_tagline ?? 'Fitness & Nutrition' }}
+                            {{ $setting?->site_tagline }}
                         </p>
 
                     </div>
@@ -116,7 +116,7 @@
 
 
 <a href="/fitness-hub" class="block hover:text-yellow-500 transition">
-    Fitness Hub
+    {{ $setting?->fitness_hub_label ?: 'Fitness Hub' }}
 </a>
 
 
@@ -204,12 +204,11 @@
         <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-5">
 
             <p class="text-gray-500 text-sm text-center md:text-left">
-                © {{ date('Y') }} {{ $setting->site_name ?? 'DK Singh Fitness' }}.
-                All rights reserved.
+                © {{ date('Y') }} {{ $setting?->copyright_text ?: $setting?->legal_business_name ?: $setting?->site_name ?: config('app.name') }}.
             </p>
 
             <p class="text-gray-600 text-sm">
-               {{ $setting->site_tagline ?? 'Fitness & Nutrition' }}
+               {{ $setting?->site_tagline }}
             </p>
 
         </div>
@@ -217,4 +216,3 @@
     </div>
 
 </footer>
-

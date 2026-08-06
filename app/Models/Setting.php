@@ -39,12 +39,17 @@ class Setting extends Model
 
         'logo',
         'favicon',
+        'dark_logo',
+        'apple_touch_icon',
 
         'phone',
         'email',
+        'support_email',
         'whatsapp',
 
         'address',
+        'legal_business_name',
+        'tax_id',
 
         'facebook',
         'instagram',
@@ -80,6 +85,10 @@ class Setting extends Model
         'meta_keywords',
 
         'footer_text',
+        'copyright_text',
+        'fitness_hub_label',
+        'supplements_label',
+        'supplements_heading',
 
         'contact_title',
         'contact_heading',
@@ -127,6 +136,13 @@ class Setting extends Model
         'years_label',
         'transformations_label',
 
+        'maintenance_enabled',
+        'maintenance_message',
+
+    ];
+
+    protected $casts = [
+        'maintenance_enabled' => 'boolean',
     ];
 
     protected static function booted(): void

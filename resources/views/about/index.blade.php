@@ -29,7 +29,7 @@ class="w-full h-[650px] object-cover rounded-[40px] shadow-2xl"
             <div data-aos="fade-left">
 
                 <p class="uppercase tracking-[5px] text-yellow-500 font-bold mb-4">
-                    {{ $setting->about_title ?? 'About DK Singh' }}
+                    {{ $setting?->about_title ?: 'About '.$setting?->site_name }}
                 </p>
 
                 <h1 class="text-5xl lg:text-7xl font-black leading-tight text-[#111111] mb-8">

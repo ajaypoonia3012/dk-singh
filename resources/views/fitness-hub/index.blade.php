@@ -204,7 +204,7 @@ class="w-full h-64 object-cover">
 
             Free resources are a great start.
             Get personalized coaching, nutrition guidance,
-            and transformation programs from DK Singh.
+            and transformation programs from {{ $setting?->site_name ?: config('app.name') }}.
 
         </p>
 

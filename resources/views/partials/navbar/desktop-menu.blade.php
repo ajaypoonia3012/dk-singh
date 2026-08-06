@@ -1,7 +1,7 @@
 <div class="hidden lg:flex items-center gap-8 text-sm font-semibold">
 
     <a href="/" class="hover:text-[var(--primary-color)] transition">
-        Home
+        {{ $setting?->home_label ?: 'Home' }}
     </a>
 
     <a href="/programs"
@@ -26,17 +26,17 @@
 
     <a href="/fitness-hub"
        class="hover:text-[var(--primary-color)] transition">
-        Fitness Hub
+        {{ $setting?->fitness_hub_label ?: 'Fitness Hub' }}
     </a>
 
     <a href="/about"
        class="hover:text-[var(--primary-color)] transition">
-        About
+        {{ $setting?->about_label ?: 'About' }}
     </a>
 
     <a href="/plans"
        class="hover:text-[var(--primary-color)] transition">
-        Plans
+        {{ $setting?->plan_label ?: 'Plans' }}
     </a>
 
     <a href="{{ route('products.index') }}"
@@ -46,7 +46,7 @@
 
     <a href="/contact"
        class="hover:text-[var(--primary-color)] transition">
-        Contact
+        {{ $setting?->contact_label ?: 'Contact' }}
     </a>
 
 </div>

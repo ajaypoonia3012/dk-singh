@@ -24,7 +24,7 @@
 
             <p class="text-gray-600 mt-5 max-w-2xl mx-auto">
 
-                Choose the perfect fitness program designed by DK Singh to match your goals.
+                Choose the perfect fitness program designed by {{ $setting?->site_name ?: config('app.name') }} to match your goals.
 
             </p>
 
