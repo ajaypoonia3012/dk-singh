@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasGroupedConfiguration;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
 class Setting extends Model
 {
+    use HasGroupedConfiguration;
+
     public const CACHE_KEY = 'site.settings';
 
     protected $fillable = [
@@ -142,8 +145,38 @@ class Setting extends Model
     ];
 
     protected $casts = [
-        'maintenance_enabled' => 'boolean',
+        'enterprise_configuration' => 'array',
     ];
+
+    protected function groupedConfigurationColumn(): string
+    {
+        return 'enterprise_configuration';
+    }
+
+    protected function groupedConfigurationDefaults(): array
+    {
+        return [
+            'dark_logo' => null,
+            'apple_touch_icon' => null,
+            'support_email' => null,
+            'legal_business_name' => null,
+            'tax_id' => null,
+            'copyright_text' => null,
+            'fitness_hub_label' => 'Fitness Hub',
+            'followers_label' => 'Followers',
+            'years_label' => 'Years Experience',
+            'transformations_label' => 'Transformations',
+            'maintenance_enabled' => false,
+            'maintenance_message' => null,
+        ];
+    }
+
+    protected function groupedConfigurationTypes(): array
+    {
+        return [
+            'maintenance_enabled' => 'boolean',
+        ];
+    }
 
     protected static function booted(): void
     {

@@ -53,7 +53,7 @@ class SettingResource extends Resource
                     ->description('Core identity displayed in browser metadata, navigation, and the footer.')
                     ->icon('heroicon-o-swatch')
                     ->schema([
-                        Forms\Components\TextInput::make('site_name')->required()->maxLength(100)
+                        Forms\Components\TextInput::make('site_name')->markAsRequired()->rules(['required'])->maxLength(100)
                             ->helperText('Public business or website name.'),
                         Forms\Components\TextInput::make('site_tagline')->maxLength(160)
                             ->helperText('Short positioning statement used near the logo.'),
@@ -152,8 +152,8 @@ class SettingResource extends Resource
                         Forms\Components\TextInput::make('phone')->tel()->maxLength(40),
                         Forms\Components\TextInput::make('whatsapp')->tel()->maxLength(40)
                             ->helperText('Include country code without spaces for WhatsApp links.'),
-                        Forms\Components\TextInput::make('email')->email()->maxLength(190),
-                        Forms\Components\TextInput::make('support_email')->email()->maxLength(190),
+                        Forms\Components\TextInput::make('email')->rules(['nullable', 'email'])->maxLength(190),
+                        Forms\Components\TextInput::make('support_email')->rules(['nullable', 'email'])->maxLength(190),
                         Forms\Components\Textarea::make('address')->rows(3)->maxLength(500)->columnSpanFull(),
                         Forms\Components\Textarea::make('working_hours')->rows(3)->maxLength(500),
                     ])->columns(['default' => 1, 'md' => 2]),
@@ -165,8 +165,8 @@ class SettingResource extends Resource
                         Forms\Components\TextInput::make('contact_heading')->maxLength(160),
                         Forms\Components\Textarea::make('contact_description')->rows(3)->maxLength(500),
                         Forms\Components\Textarea::make('contact_map_text')->rows(3)->maxLength(500),
-                        Forms\Components\TextInput::make('map_embed_url')->url()->maxLength(2048),
-                        Forms\Components\TextInput::make('map_link')->url()->maxLength(2048),
+                        self::urlInput('map_embed_url', 'Map embed URL'),
+                        self::urlInput('map_link', 'Public map URL'),
                     ])->columns(['default' => 1, 'lg' => 2]),
                 Section::make('Social profiles')
                     ->icon('heroicon-o-share')
@@ -246,7 +246,9 @@ class SettingResource extends Resource
                     ->description('Identifiers only—never paste complete script tags.')
                     ->schema([
                         Forms\Components\TextInput::make('google_analytics_id')
-                            ->placeholder('G-XXXXXXXXXX')->regex('/^G-[A-Z0-9]+$/i')->maxLength(30),
+                            ->placeholder('G-XXXXXXXXXX')
+                            ->rules(['nullable', 'regex:/^G-[A-Z0-9]+$/i'])
+                            ->maxLength(30),
                         Forms\Components\TextInput::make('google_site_verification')->maxLength(255),
                     ])->columns(2),
             ]);
@@ -298,7 +300,10 @@ class SettingResource extends Resource
 
     private static function urlInput(string $name, string $label): Forms\Components\TextInput
     {
-        return Forms\Components\TextInput::make($name)->label($label)->url()->maxLength(2048);
+        return Forms\Components\TextInput::make($name)
+            ->label($label)
+            ->rules(['nullable', 'url'])
+            ->maxLength(2048);
     }
 
     /** @return array<Forms\Components\TextInput> */
