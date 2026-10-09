@@ -13,7 +13,8 @@ class ImportWebsiteContent extends Command
     protected $signature = 'content:import 
                             {--file= : Path to content package JSON}
                             {--dry-run : Validate and simulate import without writing to database}
-                            {--backup : Force full table backup before importing}';
+                            {--backup : Force full table backup before importing}
+                            {--restore= : Path to backup directory to restore}';
 
     protected $description = 'Safely and idempotently import canonical website content while strictly preserving customer/order data';
 
@@ -74,6 +75,10 @@ class ImportWebsiteContent extends Command
 
     public function handle(): int
     {
+        if ($restoreDir = $this->option('restore')) {
+            return $this->handleRestore($restoreDir);
+        }
+
         $filePath = $this->option('file') 
             ?: storage_path('app/content_export/website_content_package.json');
 
@@ -124,7 +129,7 @@ class ImportWebsiteContent extends Command
 
         DB::beginTransaction();
         try {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            $this->disableForeignKeys();
 
             foreach ($this->allowedContentTables as $table) {
                 if (! isset($content['tables'][$table])) {
@@ -142,6 +147,12 @@ class ImportWebsiteContent extends Command
 
                 if (! $isDryRun) {
                     foreach ($records as $record) {
+                        foreach ($record as $key => $val) {
+                            if (is_array($val)) {
+                                $record[$key] = json_encode($val);
+                            }
+                        }
+
                         // If record has an 'id' column, use it as unique key
                         if (isset($record['id'])) {
                             DB::table($table)->updateOrInsert(
@@ -173,7 +184,7 @@ class ImportWebsiteContent extends Command
                 ];
             }
 
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            $this->enableForeignKeys();
 
             if ($isDryRun) {
                 DB::rollBack();
@@ -192,10 +203,80 @@ class ImportWebsiteContent extends Command
 
             return self::SUCCESS;
         } catch (\Throwable $e) {
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            $this->enableForeignKeys();
             DB::rollBack();
             $this->error("Import encountered error: {$e->getMessage()}. Rolled back completely!");
             return self::FAILURE;
+        }
+    }
+
+    protected function handleRestore(string $restoreDir): int
+    {
+        if (! File::isDirectory($restoreDir)) {
+            $this->error("Restore directory does not exist: {$restoreDir}");
+            return self::FAILURE;
+        }
+
+        $this->warn("Restoring content from backup snapshot: {$restoreDir}");
+
+        DB::beginTransaction();
+        try {
+            $this->disableForeignKeys();
+
+            foreach ($this->allowedContentTables as $table) {
+                $filePath = "{$restoreDir}/{$table}.json";
+                if (! File::exists($filePath)) {
+                    continue;
+                }
+
+                $records = json_decode(File::get($filePath), true);
+                if (! is_array($records)) {
+                    continue;
+                }
+
+                DB::table($table)->truncate();
+                foreach ($records as $record) {
+                    foreach ($record as $k => $v) {
+                        if (is_array($v)) {
+                            $record[$k] = json_encode($v);
+                        }
+                    }
+                    DB::table($table)->insert($record);
+                }
+                $this->info("Restored {$table}: " . count($records) . " record(s).");
+            }
+
+            $this->enableForeignKeys();
+            DB::commit();
+
+            Cache::flush();
+            AppServiceProvider::clearSharedViewData();
+            $this->info('Restore completed successfully and caches cleared.');
+
+            return self::SUCCESS;
+        } catch (\Throwable $e) {
+            $this->enableForeignKeys();
+            DB::rollBack();
+            $this->error("Restore failed: {$e->getMessage()}");
+            return self::FAILURE;
+        }
+    }
+
+    protected function disableForeignKeys(): void
+    {
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = OFF;');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        }
+    }
+
+    protected function enableForeignKeys(): void
+    {
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = ON;');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
     }
 }
