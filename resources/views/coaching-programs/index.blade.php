@@ -21,7 +21,7 @@
         </p>
 
         {{-- QUICK JUMP NAVIGATION --}}
-        <div class="inline-flex flex-wrap items-center justify-center gap-3 p-2 theme-card theme-radius theme-shadow max-w-2xl mx-auto">
+        <div class="inline-flex flex-wrap items-center justify-center gap-3 p-2 theme-card theme-radius theme-shadow max-w-4xl mx-auto">
             <a href="#programs" class="theme-navbar-link text-xs md:text-sm font-bold uppercase tracking-wider px-4 py-2 rounded-lg hover:theme-surface-strong transition">
                 1. Transformation Programs
             </a>

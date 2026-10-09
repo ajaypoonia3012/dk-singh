@@ -15,45 +15,6 @@
                 </x-theme.section-subtitle>
             </header>
 
-            @if($products->count())
-                <div class="mb-20" data-theme-section="products">
-                    <header class="theme-section-header">
-                        <p class="theme-eyebrow">{{ $setting->supplements_label }}</p>
-                        <x-theme.section-heading class="text-4xl md:text-5xl mt-4">
-                            {{ $setting->supplements_heading }}
-                        </x-theme.section-heading>
-                    </header>
-
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 theme-grid-gap">
-                        @foreach($products as $product)
-                            <x-theme.card class="overflow-hidden">
-                                @if($product->image)
-                                    <img
-                                        src="{{ asset('storage/'.$product->image) }}"
-                                        alt="{{ $product->name }}"
-                                        loading="lazy"
-                                        decoding="async"
-                                        class="w-full h-72 object-cover"
-                                    >
-                                @endif
-
-                                <div class="theme-card-padding theme-stack-md">
-                                    <x-theme.section-heading level="3" class="text-2xl">
-                                        {{ $product->name }}
-                                    </x-theme.section-heading>
-                                    <p class="theme-section-heading theme-text-primary text-3xl">
-                                        ₹{{ number_format($product->price) }}
-                                    </p>
-                                    <x-theme.button :href="route('products.show', $product->slug)">
-                                        View Product
-                                    </x-theme.button>
-                                </div>
-                            </x-theme.card>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-
             <div class="grid md:grid-cols-2 lg:grid-cols-3 theme-grid-gap">
                 @foreach($programs as $program)
                     <x-theme.card data-aos="zoom-in" class="group overflow-hidden hover:-translate-y-2 transition duration-500">
@@ -91,6 +52,45 @@
                     </x-theme.card>
                 @endforeach
             </div>
+
+            @if($products->count())
+                <div class="mt-20 pt-16 border-t theme-divider" data-theme-section="products">
+                    <header class="theme-section-header">
+                        <p class="theme-eyebrow mb-4">{{ $setting?->supplements_label ?: 'Supplements & Nutrition' }}</p>
+                        <x-theme.section-heading class="text-4xl md:text-5xl mb-5">
+                            {{ $setting?->supplements_heading ?: 'Health & Fitness Products' }}
+                        </x-theme.section-heading>
+                    </header>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 theme-grid-gap">
+                        @foreach($products as $product)
+                            <x-theme.card class="overflow-hidden hover:-translate-y-2 transition duration-500">
+                                @if($product->image)
+                                    <img
+                                        src="{{ asset('storage/'.$product->image) }}"
+                                        alt="{{ $product->name }}"
+                                        loading="lazy"
+                                        decoding="async"
+                                        class="w-full h-72 object-cover"
+                                    >
+                                @endif
+
+                                <div class="theme-card-padding theme-stack-md">
+                                    <x-theme.section-heading level="3" class="text-2xl">
+                                        {{ $product->name }}
+                                    </x-theme.section-heading>
+                                    <p class="theme-section-heading theme-text-primary text-3xl">
+                                        ₹{{ number_format($product->price) }}
+                                    </p>
+                                    <x-theme.button :href="route('products.show', $product->slug)">
+                                        View Product
+                                    </x-theme.button>
+                                </div>
+                            </x-theme.card>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </x-theme.section>
     @endif
 
@@ -303,7 +303,7 @@
                             <div class="theme-text-primary text-base tracking-[2px] mb-2" aria-label="Five-star transformation">★★★★★</div>
                             <x-theme.section-heading level="3" class="text-xl font-bold mb-2">{{ $transformation->name }}</x-theme.section-heading>
                             <p class="theme-section-subtitle text-sm leading-relaxed line-clamp-3">
-                                “{{ Str::limit(trim(strip_tags($transformation->story ?? $transformation->description)), 140) }}”
+                                “{{ Str::limit($transformation->clean_story, 140) }}”
                             </p>
                         </div>
                     </div>
@@ -343,7 +343,7 @@
                     <div>
                         <div class="theme-text-primary text-base mb-3 tracking-[2px]" aria-label="Five-star testimonial">★★★★★</div>
                         <p class="theme-section-subtitle text-sm md:text-base leading-relaxed mb-6 font-normal">
-                            “{{ Str::limit(trim(strip_tags($testimonial->review ?? $testimonial->content)), 160) }}”
+                            “{{ Str::limit($testimonial->clean_review, 160) }}”
                         </p>
                     </div>
 

@@ -68,6 +68,16 @@ class Transformation extends Model
         );
     }
 
+    public function getCleanStoryAttribute(): string
+    {
+        $raw = $this->story ?: $this->description;
+        if (blank($raw)) {
+            return '';
+        }
+        $decoded = html_entity_decode(strip_tags($raw), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        return trim(preg_replace('/[\s\x{00a0}]+/u', ' ', $decoded));
+    }
+
     protected static function boot()
     {
         parent::boot();

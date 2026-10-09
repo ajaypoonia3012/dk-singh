@@ -47,7 +47,7 @@
                         </div>
 
                         <p class="text-gray-700 leading-relaxed text-sm md:text-base mb-6 font-normal">
-                            “{{ Str::limit(trim(strip_tags($testimonial->review ?? $testimonial->content)), 160) }}”
+                            “{{ Str::limit($testimonial->clean_review, 160) }}”
                         </p>
                     </div>
 

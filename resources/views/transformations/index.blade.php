@@ -73,9 +73,9 @@
                                 {{ $transformation->name }}
                             </h2>
 
-                            @if($transformation->story)
+                            @if($transformation->clean_story)
                                 <p class="text-sm leading-relaxed theme-text-neutral line-clamp-3">
-                                    “{{ Str::limit(trim(strip_tags($transformation->story)), 140) }}”
+                                    “{{ Str::limit($transformation->clean_story, 140) }}”
                                 </p>
                             @endif
                         </div>

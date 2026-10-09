@@ -74,7 +74,7 @@
                             </h3>
 
                             <p class="text-sm leading-relaxed text-gray-600 line-clamp-3">
-                                “{{ Str::limit(trim(strip_tags($transformation->story ?? $transformation->description)), 140) }}”
+                                “{{ Str::limit($transformation->clean_story, 140) }}”
                             </p>
                         </div>
                     </div>
