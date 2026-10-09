@@ -8,6 +8,8 @@ use Filament\Widgets\ChartWidget;
 
 class MembershipChart extends ChartWidget
 {
+    protected static ?int $sort = 7;
+
     protected static ?string $heading = 'Membership Growth';
 
     protected function getData(): array

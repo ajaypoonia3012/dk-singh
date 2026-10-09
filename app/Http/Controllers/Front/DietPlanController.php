@@ -9,12 +9,12 @@ class DietPlanController extends Controller
 {
     public function index()
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
 
             return redirect('/login');
         }
 
-        if (!auth()->user()->hasProAccess()) {
+        if (! auth()->user()->hasProAccess()) {
 
             return redirect('/plans')
                 ->with('error', 'Pro or Elite membership required.');
@@ -27,12 +27,12 @@ class DietPlanController extends Controller
 
     public function show($id)
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
 
             return redirect('/login');
         }
 
-        if (!auth()->user()->hasProAccess()) {
+        if (! auth()->user()->hasProAccess()) {
 
             return redirect('/plans')
                 ->with('error', 'Pro or Elite membership required.');

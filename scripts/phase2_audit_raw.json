@@ -1,0 +1,548 @@
+{
+    "categories": [
+        {
+            "id": 17,
+            "name": "Fitness",
+            "slug": "fitness",
+            "description": "Comprehensive guides on functional fitness, daily activity, cardiovascular health, and building sustainable healthy habits.",
+            "featured": true,
+            "status": true,
+            "sort_order": 1,
+            "seo_title": "Fitness Guides & Daily Health Tips | DK Singh Fitness",
+            "seo_description": "Explore evidence-based fitness advice, cardiovascular health guides, and daily activity strategies designed for real life by DK Singh Fitness.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 48
+        },
+        {
+            "id": 18,
+            "name": "Workout & Training",
+            "slug": "workout-and-training",
+            "description": "Hypertrophy routines, progressive overload strategies, training splits, and gym exercise tutorials.",
+            "featured": true,
+            "status": true,
+            "sort_order": 2,
+            "seo_title": "Workout Routines & Strength Training | DK Singh Fitness",
+            "seo_description": "Master gym training splits, progressive overload, and strength workouts with DK Singh Fitness workout guides.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 24
+        },
+        {
+            "id": 19,
+            "name": "Weight Loss",
+            "slug": "weight-loss",
+            "description": "Science-backed fat loss strategies, sustainable calorie deficits, and realistic body transformation frameworks.",
+            "featured": true,
+            "status": true,
+            "sort_order": 3,
+            "seo_title": "Sustainable Weight Loss & Fat Loss Guides | DK Singh Fitness",
+            "seo_description": "Lose fat permanently without crash dieting. Practical calorie deficit, walking, and nutrition strategies for sustainable fat loss.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 25
+        },
+        {
+            "id": 20,
+            "name": "Muscle Building",
+            "slug": "muscle-building",
+            "description": "Hypertrophy principles, optimal protein timing, training volume, and muscle recovery science.",
+            "featured": true,
+            "status": true,
+            "sort_order": 4,
+            "seo_title": "Muscle Building & Hypertrophy Guides | DK Singh Fitness",
+            "seo_description": "Learn the principles of natural muscle growth, optimal training volume, recovery, and high-protein nutrition.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 1
+        },
+        {
+            "id": 21,
+            "name": "Nutrition",
+            "slug": "nutrition",
+            "description": "Macronutrient fundamentals, micronutrients, portion control, and evidence-based dietary guidelines.",
+            "featured": true,
+            "status": true,
+            "sort_order": 5,
+            "seo_title": "Nutrition Fundamentals & Macro Guides | DK Singh Fitness",
+            "seo_description": "Understand calories, macros, proteins, and micronutrients with evidence-based nutrition guides from DK Singh Fitness.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 27
+        },
+        {
+            "id": 22,
+            "name": "Indian Diet",
+            "slug": "indian-diet",
+            "description": "Nutritional analysis of traditional Indian foods, high-protein vegetarian options, and healthy meal planning.",
+            "featured": true,
+            "status": true,
+            "sort_order": 6,
+            "seo_title": "Indian Diet Plans & High Protein Foods | DK Singh Fitness",
+            "seo_description": "Discover how to hit your protein and fitness goals while eating authentic Indian home-cooked meals.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 34
+        },
+        {
+            "id": 23,
+            "name": "Healthy Recipes",
+            "slug": "healthy-recipes",
+            "description": "Delicious, macro-friendly, and nutrient-dense recipes crafted for fitness enthusiasts and home cooks.",
+            "featured": true,
+            "status": true,
+            "sort_order": 7,
+            "seo_title": "Healthy High-Protein Recipes | DK Singh Fitness",
+            "seo_description": "Quick, nutritious, and macro-balanced recipes that fuel your workouts and satisfy your tastebuds.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 75
+        },
+        {
+            "id": 24,
+            "name": "Lifestyle & Wellness",
+            "slug": "lifestyle-and-wellness",
+            "description": "Stress management, sleep optimization, metabolic health, and holistic wellness for peak performance.",
+            "featured": false,
+            "status": true,
+            "sort_order": 8,
+            "seo_title": "Lifestyle, Sleep & Wellness Guides | DK Singh Fitness",
+            "seo_description": "Optimize recovery, manage stress, improve sleep quality, and maintain optimal metabolic health.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 6
+        },
+        {
+            "id": 25,
+            "name": "Mindset & Motivation",
+            "slug": "mindset-and-motivation",
+            "description": "Mental resilience, consistency frameworks, overcoming workout slumps, and goal-setting mastery.",
+            "featured": false,
+            "status": true,
+            "sort_order": 9,
+            "seo_title": "Mindset, Motivation & Habit Building | DK Singh Fitness",
+            "seo_description": "Build mental toughness and consistency on your fitness journey with DK Singh Fitness mindset coaching.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 3
+        },
+        {
+            "id": 26,
+            "name": "Women's Fitness",
+            "slug": "womens-fitness",
+            "description": "Specialized strength, core recovery, hormonal health, and fitness guidelines for women at every life stage.",
+            "featured": false,
+            "status": true,
+            "sort_order": 10,
+            "seo_title": "Women's Fitness, Strength & Hormonal Health | DK Singh Fitness",
+            "seo_description": "Empowering strength, core rehabilitation, and sustainable nutrition guides tailored for women's fitness goals.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 2
+        },
+        {
+            "id": 27,
+            "name": "Home Workouts",
+            "slug": "home-workouts",
+            "description": "Effective bodyweight workouts, resistance band circuits, and minimal-equipment training routines.",
+            "featured": false,
+            "status": true,
+            "sort_order": 11,
+            "seo_title": "Home Workouts & Calisthenics | DK Singh Fitness",
+            "seo_description": "Get fit and build lean muscle from home with effective minimal-equipment routines by DK Singh Fitness.",
+            "created_at": "2026-10-04T21:09:30.000000Z",
+            "updated_at": "2026-10-04T21:09:30.000000Z",
+            "posts_count": 4
+        }
+    ],
+    "samples": {
+        "fitness": {
+            "category": "Fitness",
+            "sample_title": "9 Days with Bappa: A Celebration of Devotion, Wisdom & Low Carb Modak",
+            "sample_slug": "9-days-with-bappa-a-celebration-of-devotion-wisdom-low-carb-modak"
+        },
+        "workout-and-training": {
+            "category": "Workout & Training",
+            "sample_title": "Why You Feel Tired After Workouts Instead of Energized",
+            "sample_slug": "why-you-feel-tired-after-workouts-instead-of-energized"
+        },
+        "weight-loss": {
+            "category": "Weight Loss",
+            "sample_title": "Protein in Peanuts Per 100g: A Great Number, But What About the Calories?",
+            "sample_slug": "protein-in-peanuts-per-100g-a-great-number-but-what-about-the-calories"
+        },
+        "muscle-building": {
+            "category": "Muscle Building",
+            "sample_title": "7 Back Exercises for Strength & Muscle Gain",
+            "sample_slug": "7-back-exercises-for-strength-muscle-gain"
+        },
+        "nutrition": {
+            "category": "Nutrition",
+            "sample_title": "Protein in 1 Egg: How Much Are You Really Getting?",
+            "sample_slug": "protein-in-1-egg-how-much-are-you-really-getting"
+        },
+        "indian-diet": {
+            "category": "Indian Diet",
+            "sample_title": "Protein in Moong Dal: Why Raw and Cooked Numbers Look So Different",
+            "sample_slug": "protein-in-moong-dal-why-raw-and-cooked-numbers-look-so-different"
+        },
+        "healthy-recipes": {
+            "category": "Healthy Recipes",
+            "sample_title": "Spinach and Feta Stuffed Peppers",
+            "sample_slug": "spinach-and-feta-stuffed-peppers"
+        },
+        "lifestyle-and-wellness": {
+            "category": "Lifestyle & Wellness",
+            "sample_title": "How to Fix a Slow Metabolism: What Actually Works (And the Myths to Ignore)",
+            "sample_slug": "how-to-fix-a-slow-metabolism-what-actually-works-and-the-myths-to-ignore"
+        },
+        "mindset-and-motivation": {
+            "category": "Mindset & Motivation",
+            "sample_title": "How to Maintain Normal Sugar Levels Naturally: Foods, Lifestyle Habits, and Tips",
+            "sample_slug": "how-to-maintain-normal-sugar-levels-naturally-foods-lifestyle-habits-and-tips"
+        },
+        "womens-fitness": {
+            "category": "Women's Fitness",
+            "sample_title": "Natural Ways to Increase Iron During Pregnancy (Doctor-Approved Angle)",
+            "sample_slug": "natural-ways-to-increase-iron-during-pregnancy-doctor-approved-angle"
+        },
+        "home-workouts": {
+            "category": "Home Workouts",
+            "sample_title": "Best Exercises to Strengthen Your Core At Home.",
+            "sample_slug": "best-exercises-to-strengthen-your-core-at-home"
+        }
+    },
+    "programs": [
+        {
+            "id": 1,
+            "title": "12 Week Fat Loss Transformation",
+            "slug": "12-week-fat-loss-transformation",
+            "description": "A complete 12-week transformation program designed to help you lose body fat, build lean muscle, and improve overall fitness with structured workouts and personalized nutrition.",
+            "image": "programs\/01KWFGX3A9ENJHAF8CZ0NT4V7N.jpeg",
+            "media_id": 39,
+            "category": "Fat Loss",
+            "duration": "12 Weeks",
+            "price": "4999.00",
+            "featured": false,
+            "status": true,
+            "sort_order": 0,
+            "seo_title": null,
+            "seo_description": null,
+            "created_at": "2026-07-01T19:01:15.000000Z",
+            "updated_at": "2026-08-04T16:25:19.000000Z"
+        },
+        {
+            "id": 2,
+            "title": "Lean Muscle Gain Program",
+            "slug": "lean-muscle-gain-program",
+            "description": "A progressive muscle-building program focused on increasing lean muscle mass with customized training plans, balanced nutrition, recovery strategies, and ongoing coaching support.",
+            "image": "programs\/01KWFJATWQ4Z7XQJV3E5KN7K33.jpg",
+            "media_id": 40,
+            "category": "Muscle Building",
+            "duration": "16 Weeks",
+            "price": "6999.00",
+            "featured": false,
+            "status": true,
+            "sort_order": 0,
+            "seo_title": null,
+            "seo_description": null,
+            "created_at": "2026-07-01T19:26:13.000000Z",
+            "updated_at": "2026-08-04T16:25:19.000000Z"
+        },
+        {
+            "id": 3,
+            "title": "Lean Muscle Builder",
+            "slug": "lean-muscle-builder",
+            "description": "Build lean muscle with a structured 16-week training and nutrition program designed by DK Singh.",
+            "image": "programs\/01KWFN3720NK3A44T47898JP1D.jpeg",
+            "media_id": 41,
+            "category": "Muscle Building",
+            "duration": "16 Weeks",
+            "price": "6999.00",
+            "featured": true,
+            "status": true,
+            "sort_order": 0,
+            "seo_title": "Lean Muscle Builder Program | DK Singh Fitness",
+            "seo_description": "Build lean muscle with a structured 16-week training and nutrition program designed by DK Singh.",
+            "created_at": "2026-07-01T20:14:29.000000Z",
+            "updated_at": "2026-08-04T16:25:19.000000Z"
+        }
+    ],
+    "services": [
+        {
+            "id": 1,
+            "title": "Personal Online Coaching",
+            "slug": "personal-online-coaching",
+            "description": "A personalized online coaching program including customized workouts, nutrition guidance, weekly check-ins and progress tracking.",
+            "features": [
+                {
+                    "feature": "Custom Workout Plan"
+                },
+                {
+                    "feature": "Nutrition Guidance"
+                },
+                {
+                    "feature": "Weekly Progress Tracking"
+                },
+                {
+                    "feature": "WhatsApp Support"
+                },
+                {
+                    "feature": "Video Consultation"
+                }
+            ],
+            "price": "4999.00",
+            "duration": "12 Weeks",
+            "button_text": "Enroll Now",
+            "image": "services\/01KWFS5V5H2Z2BPSKJE5DR2S3G.jpg",
+            "media_id": 58,
+            "featured": true,
+            "status": true,
+            "sort_order": 0,
+            "seo_title": null,
+            "seo_description": null,
+            "created_at": "2026-07-01T21:25:50.000000Z",
+            "updated_at": "2026-08-04T15:15:58.000000Z"
+        },
+        {
+            "id": 2,
+            "title": "Premium Transformation Coaching",
+            "slug": "premium-transformation-coaching",
+            "description": null,
+            "features": [
+                {
+                    "feature": "Fat Loss Program"
+                },
+                {
+                    "feature": "Muscle Gain Plan"
+                },
+                {
+                    "feature": "Daily Accountability"
+                },
+                {
+                    "feature": "Diet Monitoring"
+                },
+                {
+                    "feature": "Monthly Consultation"
+                }
+            ],
+            "price": "7999.00",
+            "duration": "16 Weeks",
+            "button_text": "Start Today",
+            "image": "services\/01KWFSBYDY1W052KQRKA6HZC46.jpg",
+            "media_id": 59,
+            "featured": true,
+            "status": true,
+            "sort_order": 0,
+            "seo_title": null,
+            "seo_description": null,
+            "created_at": "2026-07-01T21:29:10.000000Z",
+            "updated_at": "2026-08-04T15:15:58.000000Z"
+        },
+        {
+            "id": 3,
+            "title": "Diet & Nutrition Coaching",
+            "slug": "diet-nutrition-coaching",
+            "description": "Direct Chat Support with full support ",
+            "features": [
+                {
+                    "feature": "Personalized Meal Plan"
+                },
+                {
+                    "feature": "Supplement Guidance"
+                },
+                {
+                    "feature": "Weekly Adjustments"
+                },
+                {
+                    "feature": "Direct Chat Support"
+                }
+            ],
+            "price": "2999.00",
+            "duration": "8 Weeks",
+            "button_text": "Get Started",
+            "image": "services\/01KWFTC46WB3AE00T79DMNS8BF.jpg",
+            "media_id": 61,
+            "featured": true,
+            "status": true,
+            "sort_order": 0,
+            "seo_title": null,
+            "seo_description": null,
+            "created_at": "2026-07-01T21:32:07.000000Z",
+            "updated_at": "2026-10-08T18:40:33.000000Z"
+        }
+    ],
+    "plans": [
+        {
+            "id": 1,
+            "name": "Basic Plan",
+            "slug": "basic-plan",
+            "description": "Access to workout plans and fitness resources",
+            "price": "999.00",
+            "discount_price": "799.00",
+            "duration": "1 Month",
+            "billing_cycle": "month",
+            "badge": "Starter",
+            "button_text": "Join Now",
+            "button_link": null,
+            "access_type": "basic",
+            "thumbnail": null,
+            "sort_order": 1,
+            "features": [
+                {
+                    "feature": "Workout Plans"
+                },
+                {
+                    "feature": "Fitness Tracking"
+                },
+                {
+                    "feature": "Community Support"
+                }
+            ],
+            "featured": false,
+            "status": true,
+            "created_at": "2026-06-03T23:48:25.000000Z",
+            "updated_at": "2026-06-04T00:31:44.000000Z"
+        },
+        {
+            "id": 2,
+            "name": "Pro Plan",
+            "slug": "pro-plan",
+            "description": null,
+            "price": "2999.00",
+            "discount_price": "1999.00",
+            "duration": "1 Month",
+            "billing_cycle": "month",
+            "badge": "Most Popular",
+            "button_text": "Join Now",
+            "button_link": null,
+            "access_type": "pro",
+            "thumbnail": null,
+            "sort_order": 2,
+            "features": [
+                {
+                    "feature": "Workout Plans,"
+                },
+                {
+                    "feature": "Diet Plans"
+                },
+                {
+                    "feature": "Priority Support"
+                }
+            ],
+            "featured": false,
+            "status": true,
+            "created_at": "2026-06-03T23:50:34.000000Z",
+            "updated_at": "2026-06-04T00:31:17.000000Z"
+        },
+        {
+            "id": 3,
+            "name": "Elite Plan",
+            "slug": "elite-plan",
+            "description": null,
+            "price": "9999.00",
+            "discount_price": "6999.00",
+            "duration": "1 Month",
+            "billing_cycle": "month",
+            "badge": null,
+            "button_text": "Join Now",
+            "button_link": null,
+            "access_type": "elite",
+            "thumbnail": null,
+            "sort_order": 3,
+            "features": [
+                {
+                    "feature": "Workout Plans"
+                },
+                {
+                    "feature": "Diet Plans"
+                },
+                {
+                    "feature": "1:1 Coaching"
+                },
+                {
+                    "feature": "WhatsApp Support"
+                },
+                {
+                    "feature": "Google Meet Sessions"
+                }
+            ],
+            "featured": false,
+            "status": true,
+            "created_at": "2026-06-03T23:52:58.000000Z",
+            "updated_at": "2026-06-04T00:32:07.000000Z"
+        },
+        {
+            "id": 4,
+            "name": "Dk Body Building Plan",
+            "slug": "dk-body-building-plan",
+            "description": "Dk Body Building Plan for world class ethlit",
+            "price": "9000.00",
+            "discount_price": "200.00",
+            "duration": "1 year",
+            "billing_cycle": "year",
+            "badge": "Elite Body Building Coaching ",
+            "button_text": "Join Now",
+            "button_link": null,
+            "access_type": "basic",
+            "thumbnail": "plans\/01KWFW9N7J6TYRNXDBH5MJE0DN.jpg",
+            "sort_order": 1,
+            "features": [
+                {
+                    "feature": "1on only "
+                }
+            ],
+            "featured": false,
+            "status": true,
+            "created_at": "2026-07-01T22:20:21.000000Z",
+            "updated_at": "2026-07-01T22:20:21.000000Z"
+        }
+    ],
+    "products_count": 11,
+    "workout_plans": [
+        {
+            "id": 1,
+            "created_at": "2026-06-04T02:18:46.000000Z",
+            "updated_at": "2026-07-01T23:03:34.000000Z",
+            "title": "1 week Workout plan designed for weight loss ",
+            "slug": "1-week-workout-plan-designed-for-weight-loss",
+            "description": "Here's a personalized workout plan designed for weight loss, tailored to your specifications. This plan combines bodyweight resistance training and cardio. Aim to complete this workout 4-5 times a week, allowing rest days in between or mixing with light cardio on non-strength days.",
+            "content": "<h3>Weekly Workout Schedule<\/h3><p><strong>Day 1: Full Body Bodyweight Circuit<\/strong><\/p><ul><li><strong>Warm-Up (5-10 minutes)<\/strong>- Jumping jacks: 1 minute- High knees: 1 minute- Arm circles: 1 minute- Dynamic stretches (leg swings, torso twists)<\/li><li><strong>Circuit (3 rounds)<\/strong> Perform each exercise for 12-15 reps, resting 30-60 seconds between exercises. Rest for 1-2 minutes between rounds.- Push-ups- Squats- Plank to alternating shoulder tap- Lunges (alternating legs)- Bicycle crunches<\/li><li><strong>Cool Down (5-10 minutes)<\/strong>- Stretch major muscle groups, focusing on hamstrings, quadriceps, chest, and back.<\/li><\/ul><p><strong>Day 2: Cardio &amp; Core<\/strong><\/p><ul><li><strong>Warm-Up (5-10 minutes)<\/strong>- Light jogging or brisk walking- Dynamic stretches (leg swings, torso twists)<\/li><li><strong>Cardio (20-30 minutes)<\/strong>- HIIT: 30 seconds of sprinting or high knees, followed by 30 seconds of walking or slow jogging. Repeat for 20-30 minutes.<\/li><li><strong>Core Workout (3 rounds)<\/strong>- Plank: 30-60 seconds- Russian twists: 15-20 reps each side- Leg raises: 10-15 reps- Mountain climbers: 30 seconds<\/li><li><strong>Cool Down (5-10 minutes)<\/strong>- Stretch and focus on relaxing.<\/li><\/ul><p><strong>Day 3: Upper Body Focus<\/strong><\/p><ul><li><strong>Warm-Up (5-10 minutes)<\/strong>- Arm circles, dynamic shoulder stretches<\/li><li><strong>Upper Body Circuit (3 rounds)<\/strong>- Diamond push-ups: 8-12 reps- Tricep dips (using a sturdy surface): 10-15 reps- Incline push-ups (hands on elevated surface): 10-15 reps- Side plank: 30 seconds each side- Superman: 10-15 reps<\/li><li><strong>Cool Down (5-10 minutes)<\/strong>- Stretch arms, shoulders, chest, and back.<\/li><\/ul><p><strong>Day 4: Lower Body Focus<\/strong><\/p><ul><li><strong>Warm-Up (5-10 minutes)<\/strong>- Light jogging or brisk walking, leg swings<\/li><li><strong>Lower Body Circuit (3 rounds)<\/strong>- Squat jumps: 10-15 reps- Bulgarian split squats (back foot elevated): 10-12 reps each leg- Glute bridges: 12-15 reps- Calf raises (on a step for range): 15-20 reps- Side lunges: 10-12 reps each side<\/li><li><strong>Cool Down (5-10 minutes)<\/strong>- Focus on stretching hips, quads, hamstrings, and calves.<\/li><\/ul><p><strong>Day 5: Active Recovery or Light Cardio<\/strong><\/p><ul><li>Consider doing light activities such as walking, yoga, cycling, or swimming for 30-45 minutes.<\/li><\/ul><h3>Additional Tips<\/h3><ul><li><strong>Stay Hydrated:<\/strong> Drink plenty of water before, during, and after workouts.<\/li><li><strong>Nutrition:<\/strong> To support your weight loss goals, maintain a balanced diet rich in lean proteins, whole grains, fruits, and vegetables.<\/li><li><strong>Adjust Intensity:<\/strong> If any exercise feels too easy, increase the reps or decrease the rest time. If too hard, decrease the reps or take longer breaks.<\/li><li><strong>Listen to Your Body:<\/strong> Rest if you feel overly fatigued or experience discomfort.<\/li><li><strong>Track Progress:<\/strong> Consider tracking your workouts and body measurements to stay motivated.<\/li><\/ul><p>This plan can be adjusted based on your preferences and how your body responds. Good luck with your fitness journey<\/p><p><br><\/p>",
+            "difficulty": "Intermediate",
+            "category": "weight_gain",
+            "required_access": "public",
+            "video_type": "youtube",
+            "video_url": "https:\/\/www.youtube.com\/shorts\/Ra5UcqU2y1E",
+            "video_file": null,
+            "thumbnail": "workout-thumbnails\/01KWFYRT5XQ6PZRVXJ9DFS74QJ.jpg",
+            "featured": false,
+            "status": true,
+            "sort_order": 0,
+            "seo_title": null,
+            "seo_description": null
+        }
+    ],
+    "diet_plans": [
+        {
+            "id": 1,
+            "title": "Sustainable High-Protein Weight Loss Plan",
+            "created_at": "2026-06-04T03:07:39.000000Z",
+            "updated_at": "2026-07-02T00:10:42.000000Z",
+            "slug": "sustainable-high-protein-weight-loss-plan",
+            "description": "A flexible, nutrient-dense meal plan focused on high-volume eating and protein prioritization to support a modest caloric deficit without sacrificing muscle mass or energy.",
+            "content": "<p>### Breakfast (Fuel &amp; Muscle Protection)<br>* &nbsp; **Option 1:** 3 scrambled egg whites + 1 whole egg, 1 slice of whole-grain toast, and 1\/2 an avocado.<br>* &nbsp; **Option 2:** 1 cup of plain non-fat Greek yogurt, 1\/2 cup of mixed berries, and 1 tbsp of chia seeds.<br><br>### Lunch (High-Volume &amp; Sustained Energy)<br>* &nbsp; **Option 1:** 5 oz grilled chicken breast over a large bed of mixed greens, cucumbers, and tomatoes, drizzled with 2 tbsp of light vinaigrette.<br>* &nbsp; **Option 2:** 5 oz canned tuna (in water) mixed with 1 tbsp light mayo, wrapped in a whole-wheat tortilla with shredded lettuce.<br><br>### Afternoon Snack (The Hunger Bridge)<br>* &nbsp; **Option 1:** 1 medium apple with 1 tbsp of natural peanut butter.<br>* &nbsp; **Option 2:** 10\u201312 raw almonds and 1 low-fat string cheese.<br><br>### Dinner (Recovery &amp; Repair)<br>* &nbsp; **Option 1:** 5 oz baked salmon fillet, 1 cup of roasted broccoli, and 1\/2 cup of cooked quinoa.<br>* &nbsp; **Option 2:** 6 oz extra-lean ground turkey stir-fried with bell peppers, zucchini, and onions in 1 tsp of olive oil.<br><br>### Core Guidelines<br>1. Drink 2\u20133 liters of water daily to maintain hydration and manage false hunger cues.<br>2. Ensure a lean protein source is present at every meal to maximize satiety.<\/p>",
+            "goal": "Fat loss, lean muscle preservation, and sustainable lifestyle habit building",
+            "image": "diet-plans\/01KWG2KQDZW884Q3GEA2J47PK6.jpg",
+            "price": "250.00",
+            "status": true,
+            "featured": true,
+            "sort_order": 0,
+            "seo_title": "Sustainable High-Protein Weight Loss Plan",
+            "seo_description": "A flexible, nutrient-dense meal plan focused on high-volume eating and protein prioritization to support a modest caloric deficit without sacrificing muscle mass or energy.",
+            "category": "weight_loss",
+            "diet_type": "veg",
+            "required_access": "public"
+        }
+    ],
+    "leads_count": 1
+}

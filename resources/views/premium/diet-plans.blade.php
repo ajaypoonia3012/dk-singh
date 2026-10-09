@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>Premium Diet Plans</title>
@@ -27,9 +27,9 @@
 
     @endif
 
-    <div class="card shadow-sm mb-5">
+    <div class="card theme-shadow mb-5">
 
-        <div class="card-header bg-success text-white">
+        <div class="card-header bg-success theme-text-on-strong">
             Basic Diet Plans
         </div>
 
@@ -53,9 +53,9 @@
 
     @if($tier === 'pro' || $tier === 'elite')
 
-        <div class="card shadow-sm mb-5">
+        <div class="card theme-shadow mb-5">
 
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-primary theme-text-on-strong">
                 Pro Diet Plans
             </div>
 
@@ -81,9 +81,9 @@
 
     @if($tier === 'elite')
 
-        <div class="card shadow-sm mb-5">
+        <div class="card theme-shadow mb-5">
 
-            <div class="card-header bg-dark text-white">
+            <div class="card-header bg-dark theme-text-on-strong">
                 Elite Diet Plans
             </div>
 

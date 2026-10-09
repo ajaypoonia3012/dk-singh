@@ -19,8 +19,13 @@ class TransformationController extends Controller
 
     public function show($slug)
     {
-        $transformation = Transformation::where('slug', $slug)
-            ->where('status', true)
+        $transformation = Transformation::where('status', true)
+            ->where(function ($q) use ($slug) {
+                $q->where('slug', $slug);
+                if (is_numeric($slug)) {
+                    $q->orWhere('id', (int) $slug);
+                }
+            })
             ->firstOrFail();
 
         return view('transformations.show', compact('transformation'));

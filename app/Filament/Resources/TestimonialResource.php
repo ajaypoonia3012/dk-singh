@@ -10,14 +10,15 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-
 class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static ?string $navigationIcon = 'heroicon-o-star';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Website & Growth';
+
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {
@@ -69,11 +70,11 @@ class TestimonialResource extends Resource
                     ->schema([
 
                         Forms\Components\Select::make('media_id')
-    ->label('Client Photo')
-    ->relationship('media', 'name')
-    ->searchable()
-    ->preload()
-    ->required(),
+                            ->label('Client Photo')
+                            ->relationship('media', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
                     ]),
 
                 Forms\Components\Section::make('Publishing')
@@ -112,7 +113,7 @@ class TestimonialResource extends Resource
             ->columns([
 
                 Tables\Columns\ImageColumn::make('media.path')
-    ->disk('public')
+                    ->disk('public')
                     ->square()
                     ->height(60),
 

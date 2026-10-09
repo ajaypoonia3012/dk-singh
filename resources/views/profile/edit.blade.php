@@ -2,9 +2,9 @@
 
 @section('content')
 
-<section class="bg-[#f6f3eb] min-h-screen py-24">
+<x-theme.section class="theme-surface-muted min-h-screen">
 
-    <div class="max-w-7xl mx-auto px-6">
+    <x-theme.page-container>
 
         @if(auth()->user()->age)
 
@@ -14,99 +14,95 @@
 
                 <div>
 
-                    <p class="uppercase tracking-[3px] text-yellow-500 font-bold mb-4">
+                    <p class="theme-eyebrow mb-4">
                         Fitness Profile
                     </p>
 
-                    <h1 class="text-5xl font-black text-black mb-4">
+                    <h1 class="theme-section-heading text-5xl mb-4">
 
                         {{ auth()->user()->name }}
 
                     </h1>
 
-                    <p class="text-xl text-gray-600">
+                    <p class="theme-section-subtitle text-xl">
                         Your fitness transformation dashboard.
                     </p>
 
                 </div>
 
-                <a href="#edit-profile"
-                   class="bg-black text-white px-8 py-4 rounded-2xl font-bold">
-
+                <x-theme.button href="#edit-profile" variant="secondary">
                     Update Profile
-
-                </a>
+                </x-theme.button>
 
             </div>
 
             {{-- STATS --}}
             <div class="grid md:grid-cols-4 gap-8 mb-16">
 
-                <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                <x-theme.card class="theme-card-padding">
 
-                    <p class="text-gray-500 mb-3">
+                    <p class="theme-text-neutral mb-3">
                         BMI
                     </p>
 
-                    <h2 class="text-5xl font-black text-yellow-500">
+                    <h2 class="theme-section-heading theme-text-primary text-5xl">
 
                         {{ auth()->user()->bmi ?? '--' }}
 
                     </h2>
 
-                </div>
+                </x-theme.card>
 
-                <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                <x-theme.card class="theme-card-padding">
 
-                    <p class="text-gray-500 mb-3">
+                    <p class="theme-text-neutral mb-3">
                         Weight
                     </p>
 
-                    <h2 class="text-5xl font-black text-black">
+                    <h2 class="theme-section-heading text-5xl">
 
                         {{ auth()->user()->weight ?? '--' }} KG
 
                     </h2>
 
-                </div>
+                </x-theme.card>
 
-                <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                <x-theme.card class="theme-card-padding">
 
-                    <p class="text-gray-500 mb-3">
+                    <p class="theme-text-neutral mb-3">
                         Height
                     </p>
 
-                    <h2 class="text-5xl font-black text-black">
+                    <h2 class="theme-section-heading text-5xl">
 
                         {{ auth()->user()->height ?? '--' }} CM
 
                     </h2>
 
-                </div>
+                </x-theme.card>
 
-                <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                <x-theme.card class="theme-card-padding">
 
-                    <p class="text-gray-500 mb-3">
+                    <p class="theme-text-neutral mb-3">
                         Goal
                     </p>
 
-                    <h2 class="text-2xl font-black text-black">
+                    <h2 class="theme-section-heading text-2xl">
 
                         {{ auth()->user()->goal ?? '--' }}
 
                     </h2>
 
-                </div>
+                </x-theme.card>
 
             </div>
 
         @endif
 
         {{-- EDIT FORM --}}
-        <div id="edit-profile"
-             class="bg-white rounded-[36px] p-10 shadow-xl">
+        <x-theme.card id="edit-profile" class="theme-card-padding">
 
-            <h2 class="text-3xl font-black mb-10">
+            <h2 class="theme-section-heading text-3xl mb-10">
 
                 {{ auth()->user()->age
                     ? 'Update Health Profile'
@@ -127,106 +123,108 @@
 
                     <div>
 
-                        <label class="font-bold block mb-3">
+                        <x-theme.label for="name" class="block mb-3">
                             Full Name
-                        </label>
+                        </x-theme.label>
 
-                        <input
+                        <x-theme.input
+                            id="name"
                             type="text"
                             name="name"
                             value="{{ old('name', auth()->user()->name) }}"
-                            class="w-full rounded-2xl border border-gray-300 px-5 py-4">
+                            class="w-full px-5 py-4" />
 
                     </div>
 
                     <div>
 
-                        <label class="font-bold block mb-3">
+                        <x-theme.label for="email" class="block mb-3">
                             Email
-                        </label>
+                        </x-theme.label>
 
-                        <input
+                        <x-theme.input
+                            id="email"
                             type="email"
                             name="email"
                             value="{{ old('email', auth()->user()->email) }}"
-                            class="w-full rounded-2xl border border-gray-300 px-5 py-4">
+                            class="w-full px-5 py-4" />
 
                     </div>
 
                     <div>
 
-                        <label class="font-bold block mb-3">
+                        <x-theme.label for="weight" class="block mb-3">
                             Weight (KG)
-                        </label>
+                        </x-theme.label>
 
-                        <input
+                        <x-theme.input
+                            id="weight"
                             type="number"
                             step="0.01"
                             name="weight"
                             value="{{ old('weight', auth()->user()->weight) }}"
-                            class="w-full rounded-2xl border border-gray-300 px-5 py-4">
+                            class="w-full px-5 py-4" />
 
                     </div>
 
                     <div>
 
-                        <label class="font-bold block mb-3">
+                        <x-theme.label for="height" class="block mb-3">
                             Height (CM)
-                        </label>
+                        </x-theme.label>
 
-                        <input
+                        <x-theme.input
+                            id="height"
                             type="number"
                             step="0.01"
                             name="height"
                             value="{{ old('height', auth()->user()->height) }}"
-                            class="w-full rounded-2xl border border-gray-300 px-5 py-4">
+                            class="w-full px-5 py-4" />
 
                     </div>
 
                     <div>
 
-                        <label class="font-bold block mb-3">
+                        <x-theme.label for="goal" class="block mb-3">
                             Goal
-                        </label>
+                        </x-theme.label>
 
-                        <input
+                        <x-theme.input
+                            id="goal"
                             type="text"
                             name="goal"
                             value="{{ old('goal', auth()->user()->goal) }}"
-                            class="w-full rounded-2xl border border-gray-300 px-5 py-4">
+                            class="w-full px-5 py-4" />
 
                     </div>
 
                     <div>
 
-                        <label class="font-bold block mb-3">
+                        <x-theme.label for="age" class="block mb-3">
                             Age
-                        </label>
+                        </x-theme.label>
 
-                        <input
+                        <x-theme.input
+                            id="age"
                             type="number"
                             name="age"
                             value="{{ old('age', auth()->user()->age) }}"
-                            class="w-full rounded-2xl border border-gray-300 px-5 py-4">
+                            class="w-full px-5 py-4" />
 
                     </div>
 
                 </div>
 
-                <button
-                    type="submit"
-                    class="bg-yellow-500 hover:bg-yellow-400 text-black px-10 py-5 rounded-2xl font-black transition">
-
+                <x-theme.button type="submit">
                     Save Profile
-
-                </button>
+                </x-theme.button>
 
             </form>
 
-        </div>
+        </x-theme.card>
 
-    </div>
+    </x-theme.page-container>
 
-</section>
+</x-theme.section>
 
 @endsection

@@ -16,11 +16,11 @@ class DietCompletionController extends Controller
             'user_id',
             auth()->id()
         )
-        ->where(
-            'diet_plan_id',
-            $diet->id
-        )
-        ->exists();
+            ->where(
+                'diet_plan_id',
+                $diet->id
+            )
+            ->exists();
 
         if (! $exists) {
 

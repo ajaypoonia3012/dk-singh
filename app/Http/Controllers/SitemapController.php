@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog;
+use App\Models\BlogPost;
 use App\Models\Product;
 use App\Models\Program;
 use App\Models\Service;
@@ -11,7 +11,7 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::latest()->get();
+        $blogs = BlogPost::where('status', true)->latest('published_at')->get();
 
         $services = Service::latest()->get();
 
@@ -19,11 +19,14 @@ class SitemapController extends Controller
 
         $products = Product::latest()->get();
 
+        $exercises = \App\Models\Exercise::published()->latest()->get();
+
         $xml = view('sitemap', compact(
             'blogs',
             'services',
             'programs',
-            'products'
+            'products',
+            'exercises'
         ))->render();
 
         return response($xml, 200)

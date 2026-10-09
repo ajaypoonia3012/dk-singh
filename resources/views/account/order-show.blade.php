@@ -1,20 +1,20 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<div class="max-w-5xl mx-auto px-6 py-12">
+<div class="theme-page-container py-12">
 
 ```
 <h1 class="text-4xl font-black mb-8">
     Order Details
 </h1>
 
-<div class="bg-white rounded-3xl shadow-xl p-8">
+<div class="theme-card theme-radius theme-shadow theme-card-padding">
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 theme-grid-gap">
 
         <div>
-            <h3 class="font-bold text-gray-500 mb-2">
+            <h3 class="font-bold theme-text-neutral mb-2">
                 Order Number
             </h3>
 
@@ -24,7 +24,7 @@
         </div>
 
         <div>
-            <h3 class="font-bold text-gray-500 mb-2">
+            <h3 class="font-bold theme-text-neutral mb-2">
                 Invoice Number
             </h3>
 
@@ -34,7 +34,7 @@
         </div>
 
         <div>
-            <h3 class="font-bold text-gray-500 mb-2">
+            <h3 class="font-bold theme-text-neutral mb-2">
                 Order Date
             </h3>
 
@@ -44,7 +44,7 @@
         </div>
 
         <div>
-            <h3 class="font-bold text-gray-500 mb-2">
+            <h3 class="font-bold theme-text-neutral mb-2">
                 Payment Status
             </h3>
 
@@ -54,7 +54,7 @@
         </div>
 
         <div>
-            <h3 class="font-bold text-gray-500 mb-2">
+            <h3 class="font-bold theme-text-neutral mb-2">
                 Order Status
             </h3>
 
@@ -64,12 +64,12 @@
         </div>
 
         <div>
-            <h3 class="font-bold text-gray-500 mb-2">
+            <h3 class="font-bold theme-text-neutral mb-2">
                 Amount
             </h3>
 
             <p class="text-xl font-bold">
-                ₹{{ number_format($order->amount,2) }}
+                &#8377;{{ number_format($order->amount,2) }}
             </p>
         </div>
 
@@ -83,23 +83,23 @@
 
     @if($order->shipment)
 
-        <div class="space-y-4">
+        <div class="theme-stack-md">
 
             @foreach($order->shipment->events as $event)
 
-                <div class="border-l-4 border-yellow-500 pl-4">
+                <div class="border-l-4 theme-border pl-4">
 
                     <div class="font-bold">
                         {{ ucwords(str_replace('_',' ',$event->event_type)) }}
                     </div>
 
-                    <div class="text-gray-600 text-sm">
+                    <div class="theme-text-neutral text-sm">
                         {{ $event->event_time->format('d M Y h:i A') }}
                     </div>
 
                     @if($event->message)
 
-                        <div class="text-gray-700 mt-1">
+                        <div class="theme-text-neutral mt-1">
                             {{ $event->message }}
                         </div>
 
@@ -166,7 +166,7 @@
         <a
             href="{{ $order->shipment->tracking_url }}"
             target="_blank"
-            class="text-blue-600 font-bold"
+            class="theme-text-info font-bold"
         >
             Track Shipment
         </a>
@@ -177,14 +177,14 @@
 
     <a
         href="{{ route('invoice.download',$order->id) }}"
-        class="inline-block bg-yellow-500 hover:bg-yellow-400 px-6 py-3 rounded-xl font-bold"
+        class="inline-block theme-status-warning hover:theme-status-warning px-6 py-3 theme-radius font-bold"
     >
         Download Invoice
     </a>
 
     <a
         href="{{ route('account.orders') }}"
-        class="inline-block ml-4 border border-black px-6 py-3 rounded-xl font-bold"
+        class="inline-block ml-4 border theme-border px-6 py-3 theme-radius font-bold"
     >
         Back To Orders
     </a>

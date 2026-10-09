@@ -18,7 +18,11 @@ class DietPlanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-heart';
 
-    protected static ?string $navigationGroup = 'Commerce';
+    protected static ?string $navigationGroup = 'Fitness & Movement';
+
+    protected static ?string $navigationLabel = 'Diet Plans';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {

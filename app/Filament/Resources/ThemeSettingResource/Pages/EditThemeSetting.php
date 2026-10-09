@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ThemeSettingResource\Pages;
 
 use App\Filament\Resources\ThemeSettingResource;
+use App\Filament\Resources\ThemeSettingResource\Pages\Concerns\HandlesLoginAppearanceUploads;
 use App\Models\ThemeSetting;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EditThemeSetting extends EditRecord
 {
+    use HandlesLoginAppearanceUploads;
+
     protected static string $resource = ThemeSettingResource::class;
 
     protected function mutateFormDataBeforeFill(array $data): array
@@ -29,17 +32,17 @@ class EditThemeSetting extends EditRecord
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         /** @var ThemeSetting $record */
-        $relationalData = $record->fillGroupedConfigurationFromForm($data);
-
-        $record->fill($relationalData);
-        $record->save();
-
-        return $record;
+        return $this->persistThemeSetting($record, $data);
     }
 
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('openWebsiteBuilder')
+                ->label('🎨 Visual Theme & Builder')
+                ->url('/admin/website-builder')
+                ->color('warning')
+                ->icon('heroicon-o-paint-brush'),
             Actions\DeleteAction::make(),
         ];
     }

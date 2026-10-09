@@ -15,7 +15,7 @@ class MediaUploadService
         string $disk = 'public'
     ): ?string {
 
-        if (!$file) {
+        if (! $file) {
             return null;
         }
 
@@ -35,7 +35,7 @@ class MediaUploadService
         string $disk = 'public'
     ): ?string {
 
-        if (!$file) {
+        if (! $file) {
             return $existing;
         }
 
@@ -51,7 +51,7 @@ class MediaUploadService
      */
     public function url(?string $path): ?string
     {
-        if (!$path) {
+        if (! $path) {
             return null;
         }
 

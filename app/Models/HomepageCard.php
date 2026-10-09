@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class HomepageCard extends Model
 {
@@ -28,4 +29,9 @@ class HomepageCard extends Model
         'is_active' => 'boolean',
 
     ];
+
+    public function backgroundMedia(): BelongsTo
+    {
+        return $this->belongsTo(Media::class, 'background_media_id');
+    }
 }

@@ -13,12 +13,12 @@ class CoachNoteController extends Controller
             'user_id',
             auth()->id()
         )
-        ->where(
-            'is_visible',
-            true
-        )
-        ->latest()
-        ->get();
+            ->where(
+                'is_visible',
+                true
+            )
+            ->latest()
+            ->get();
 
         return view(
             'member.coach-notes.index',

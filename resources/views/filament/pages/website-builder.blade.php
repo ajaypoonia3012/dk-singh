@@ -1,4 +1,4 @@
-<x-filament-panels::page>
+<x-filament-panels::page :full-height="true">
 
     <livewire:builder.website-builder />
 

@@ -1,9 +1,3 @@
-@php
-    $products = \App\Models\Product::where('status', true)
-        ->orderBy('sort_order')
-        ->get();
-@endphp
-
 <section class="py-20 bg-white">
 
     <div class="max-w-7xl mx-auto px-8">
@@ -24,13 +18,23 @@
 
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+@php
+    $previewGridClass = match($selectedDevice ?? 'desktop') {
+        'mobile' => 'wb-grid-1 gap-6',
+        'tablet' => 'wb-grid-2 gap-6',
+        default => 'wb-grid-3 gap-8',
+    };
+@endphp
 
-            @forelse($products as $product)
+        <div class="{{ $previewGridClass }}">
+
+            @forelse($previewProducts as $product)
 
                 <div class="rounded-3xl overflow-hidden shadow-xl bg-white border border-gray-100 hover:shadow-2xl transition">
 
-                    @if($product->image)
+                    @if($product->id === $selectedProductId && $productImage)
+                        <img src="{{ $productImage->temporaryUrl() }}" alt="{{ $product->name }}" class="w-full h-64 object-cover">
+                    @elseif($product->image)
 
                         <img
                             src="{{ asset('storage/'.$product->image) }}"

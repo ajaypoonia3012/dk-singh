@@ -2,31 +2,33 @@
 
 @section('content')
 
-<section class="py-24 bg-[#f6f3eb] min-h-screen">
+<section class="theme-section theme-surface-muted min-h-screen">
 
 <div class="max-w-3xl mx-auto">
 
-<div class="bg-white rounded-3xl shadow-xl p-10">
+<div class="theme-card theme-radius theme-shadow theme-card-padding-lg">
 
+<p class="text-xs uppercase tracking-widest theme-text-primary font-bold mb-2">Product Payment</p>
 <h1 class="text-4xl font-black mb-6">
-Product Payment
+Product Checkout
 </h1>
 
 <h2 class="text-2xl font-bold mb-4">
 {{ $product->name }}
 </h2>
 
-<div class="text-4xl font-black text-yellow-500 mb-8">
-₹{{ number_format($product->price) }}
+<div class="text-4xl font-black theme-text-primary mb-8">
+&#8377;{{ number_format($product->price) }}
 </div>
 
-<div class="space-y-4 mb-8">
+<div class="theme-stack-md mb-8">
 
 <input
 type="text"
 id="customer_name"
 placeholder="Full Name"
-class="w-full border rounded-lg p-3"
+value="{{ auth()->user()->name ?? '' }}"
+class="theme-form-control w-full border theme-radius p-3"
 required
 >
 
@@ -34,14 +36,15 @@ required
 type="text"
 id="customer_phone"
 placeholder="Phone Number"
-class="w-full border rounded-lg p-3"
+value="{{ auth()->user()->phone ?? '' }}"
+class="theme-form-control w-full border theme-radius p-3"
 required
 >
 
 <textarea
 id="shipping_address"
 placeholder="Full Address"
-class="w-full border rounded-lg p-3"
+class="theme-form-control w-full border theme-radius p-3"
 required
 ></textarea>
 
@@ -49,7 +52,7 @@ required
 type="text"
 id="city"
 placeholder="City"
-class="w-full border rounded-lg p-3"
+class="theme-form-control w-full border theme-radius p-3"
 required
 >
 
@@ -57,7 +60,7 @@ required
 type="text"
 id="state"
 placeholder="State"
-class="w-full border rounded-lg p-3"
+class="theme-form-control w-full border theme-radius p-3"
 required
 >
 
@@ -65,7 +68,7 @@ required
 type="text"
 id="pincode"
 placeholder="Pincode"
-class="w-full border rounded-lg p-3"
+class="theme-form-control w-full border theme-radius p-3"
 required
 >
 
@@ -73,9 +76,9 @@ required
 
 <button
 id="rzp-button"
-class="bg-yellow-500 px-8 py-4 rounded-xl font-bold"
+class="theme-status-warning px-8 py-4 theme-radius font-bold"
 >
-Pay ₹{{ number_format($product->price) }}
+Pay &#8377;{{ number_format($product->price) }}
 </button>
 
 <form
@@ -163,7 +166,7 @@ id="razorpay_signature"
 
 var options = {
 
-key: "{{ env('RAZORPAY_KEY') }}",
+key: "{{ config('services.razorpay.key') }}",
 
 amount: "{{ $product->price * 100 }}",
 

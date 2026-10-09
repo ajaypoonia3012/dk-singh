@@ -21,12 +21,63 @@
 </url>
 
 <url>
-<loc>{{ url('/blogs') }}</loc>
+<loc>{{ url('/plans') }}</loc>
+</url>
+
+<url>
+<loc>{{ url('/fitness-hub') }}</loc>
+</url>
+
+<url>
+<loc>{{ url('/transformations') }}</loc>
+</url>
+
+<url>
+<loc>{{ url('/blog') }}</loc>
 </url>
 
 <url>
 <loc>{{ url('/products') }}</loc>
 </url>
+
+{{-- Healthline-Inspired Fitness Content Architecture Hub & Pillars --}}
+<url>
+<loc>{{ route('fitness.index') }}</loc>
+</url>
+
+<url>
+<loc>{{ route('fitness.exercise') }}</loc>
+</url>
+
+<url>
+<loc>{{ route('fitness.cardio') }}</loc>
+</url>
+
+<url>
+<loc>{{ route('fitness.strength-training') }}</loc>
+</url>
+
+<url>
+<loc>{{ route('fitness.yoga') }}</loc>
+</url>
+
+<url>
+<loc>{{ route('fitness.holistic-fitness') }}</loc>
+</url>
+
+<url>
+<loc>{{ route('fitness.wellness') }}</loc>
+</url>
+
+<url>
+<loc>{{ route('fitness.exercise-library') }}</loc>
+</url>
+
+@foreach($exercises as $exercise)
+<url>
+<loc>{{ route('fitness.exercise-detail', $exercise->slug) }}</loc>
+</url>
+@endforeach
 
 @foreach($programs as $program)
 <url>
@@ -42,7 +93,7 @@
 
 @foreach($blogs as $blog)
 <url>
-<loc>{{ route('blogs.show', $blog->slug) }}</loc>
+<loc>{{ route('blog.show', $blog->slug) }}</loc>
 </url>
 @endforeach
 

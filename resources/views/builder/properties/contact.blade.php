@@ -1,4 +1,4 @@
-﻿<div class="space-y-6">
+<div class="space-y-6">
 
     <h3 class="text-xl font-bold">
         Contact Settings
@@ -68,9 +68,10 @@
 
     <button
         wire:click="saveContact"
-        class="w-full bg-amber-500 hover:bg-amber-600 text-black py-3 rounded-lg font-bold">
+        class="w-full wb-btn-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm"
+        style="background: #f59e0b !important; color: #000000 !important; font-weight: 700 !important;">
 
-        💾 Save Contact
+        <span>💾</span> Save Contact
 
     </button>
 

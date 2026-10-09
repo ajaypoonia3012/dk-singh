@@ -1,0 +1,632 @@
+{
+    "phase_3_navigation": {
+        "intended_nav": {
+            "Home": {
+                "path": "\/",
+                "status": 200,
+                "resolves": true
+            },
+            "Fitness": {
+                "path": "\/fitness",
+                "status": 200,
+                "resolves": true
+            },
+            "Programs": {
+                "path": "\/programs",
+                "status": 200,
+                "resolves": true
+            },
+            "Coaching": {
+                "path": "\/services",
+                "status": 200,
+                "resolves": true
+            },
+            "Transformations": {
+                "path": "\/transformations",
+                "status": 200,
+                "resolves": true
+            },
+            "Blog": {
+                "path": "\/blog",
+                "status": 200,
+                "resolves": true
+            },
+            "About": {
+                "path": "\/about",
+                "status": 200,
+                "resolves": true
+            },
+            "Plans": {
+                "path": "\/plans",
+                "status": 200,
+                "resolves": true
+            },
+            "Products": {
+                "path": "\/products",
+                "status": 200,
+                "resolves": true
+            },
+            "Contact": {
+                "path": "\/contact",
+                "status": 200,
+                "resolves": true
+            }
+        },
+        "fitness_routes_distinction": {
+            "fitness_editorial_hub": {
+                "path": "\/fitness",
+                "role": "Main Editorial Hub & Mega-Menu Platform (Curated Exercise Guides, Cardio, Strength, Yoga, Holistic, Wellness, Exercise Library)",
+                "status": 200
+            },
+            "fitness_hub_portal": {
+                "path": "\/fitness-hub",
+                "role": "Free Workout Plans & Free Diet Plans Gateway (Client download\/tracking portal for WorkoutPlan and DietPlan records)",
+                "status": 200
+            },
+            "all_fitness_routes": {
+                "\/fitness": {
+                    "status": 200,
+                    "title": "Fitness & Nutrition Knowledge Hub | DK Singh Fitness",
+                    "h1": "Practical Fitness & Nutrition Guidance"
+                },
+                "\/fitness-hub": {
+                    "status": 200,
+                    "title": "Free Fitness & Nutrition Hub | DK Singh Fitness",
+                    "h1": "Free Fitness Resources"
+                },
+                "\/fitness-hub\/workouts": {
+                    "status": 200,
+                    "title": "Free Workout Plans & Routines | DK Singh Fitness",
+                    "h1": "Workout Library"
+                },
+                "\/fitness-hub\/diets": {
+                    "status": 200,
+                    "title": "Free Diet & Nutrition Plans | DK Singh Fitness",
+                    "h1": "Diet Library"
+                },
+                "\/fitness\/exercise": {
+                    "status": 200,
+                    "title": "Exercise Guides & Movement Tutorials | DK Singh Fitness",
+                    "h1": "Exercise Techniques & Tutorials"
+                },
+                "\/fitness\/wellness": {
+                    "status": 200,
+                    "title": "Wellness, Mind & Restorative Recovery Hub | DK Singh Fitness",
+                    "h1": "Mind, Recovery, Habits & Sustainable Vitality"
+                },
+                "\/fitness\/exercise-library": {
+                    "status": 200,
+                    "title": "Exercise Library & Movement Database | DK Singh Fitness",
+                    "h1": "DK Singh Exercise Library"
+                }
+            }
+        }
+    },
+    "phase_4_links": {
+        "crawled_urls_count": 237,
+        "internal_links_inspected": 26503,
+        "broken_links": [],
+        "broken_count": 0,
+        "redirects_found": [
+            {
+                "url": "\/workout-plans",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/diet-plans",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/4",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/3",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/2",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/1",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/1",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/2",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/3",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/4",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/5",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/12",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/11",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/10",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/9",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/7",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            },
+            {
+                "url": "\/checkout\/product\/6",
+                "status": 302,
+                "target": "http:\/\/localhost\/login"
+            }
+        ]
+    },
+    "phase_5_orphan_pages": {
+        "orphan_pages_detected": [
+            "\/workout-plans",
+            "\/diet-plans",
+            "\/sitemap.xml",
+            "\/blog\/protein-in-moong-dal-why-raw-and-cooked-numbers-look-so-different",
+            "\/blog\/protein-in-1-egg-how-much-are-you-really-getting",
+            "\/blog\/9-days-with-bappa-a-celebration-of-devotion-wisdom-low-carb-modak",
+            "\/blog\/sea-buckthorn-juice-benefits-nutrition-uses-how-to-drink-it-price-guide",
+            "\/blog\/how-to-lose-weight-without-giving-up-indian-food",
+            "\/blog\/how-much-protein-do-indians-actually-need",
+            "\/blog\/ai-powered-fitness-coaching-benefits-features-everything-you-need-to-know",
+            "\/blog\/why-most-diets-fail-and-how-personalized-nutrition-changes-everything",
+            "\/blog\/watermelon-seed-paneer-benefits-protein-recipe-nutrition-is-it-better-than-regul"
+        ],
+        "analysis": "Orphan pages evaluated for sitemap presence, navigation inclusion, and canonical indexing."
+    },
+    "phase_6_content_naming": {
+        "Homepage": {
+            "path": "\/",
+            "title": "DK Singh Fitness | Elite Online Fitness Coaching & Nutrition",
+            "h1": "Transform Your Body,\nElevate Your Mind",
+            "flags": []
+        },
+        "About DK Singh": {
+            "path": "\/about",
+            "title": "About DK Singh | Elite Fitness Coaching & Mission",
+            "h1": "Fitness Meets\n                    \n                        Transformation",
+            "flags": []
+        },
+        "Coaching Services": {
+            "path": "\/services",
+            "title": "Elite Coaching & Training Services | DK Singh Fitness",
+            "h1": "Coaching",
+            "flags": []
+        },
+        "Fitness Programs": {
+            "path": "\/programs",
+            "title": "Transformational Fitness Programs | DK Singh Fitness",
+            "h1": "Programs",
+            "flags": []
+        },
+        "Transformations": {
+            "path": "\/transformations",
+            "title": "Real Client Success Stories & Transformations | DK Singh Fitness",
+            "h1": "Real Client Transformations",
+            "flags": []
+        },
+        "Blog Hub": {
+            "path": "\/blog",
+            "title": "Fitness Blog | DK Singh Fitness & Nutrition Articles",
+            "h1": "Fitness Articles,\n            Nutrition Guides &\n            Real Transformations",
+            "flags": []
+        },
+        "Contact": {
+            "path": "\/contact",
+            "title": "Contact Coach DK Singh | Start Your Transformation",
+            "h1": "Start Your Transformation Today",
+            "flags": []
+        },
+        "Plans & Pricing": {
+            "path": "\/plans",
+            "title": "Membership & Coaching Plans | DK Singh Fitness",
+            "h1": "Choose Your\n                Fitness Plan",
+            "flags": []
+        },
+        "Supplements & Store": {
+            "path": "\/products",
+            "title": "Performance Supplements & Wellness Essentials | DK Singh Fitness",
+            "h1": "Products",
+            "flags": []
+        },
+        "Fitness Hub": {
+            "path": "\/fitness",
+            "title": "Fitness & Nutrition Knowledge Hub | DK Singh Fitness",
+            "h1": "Practical Fitness & Nutrition Guidance",
+            "flags": []
+        },
+        "Free Resources": {
+            "path": "\/fitness-hub",
+            "title": "Free Fitness & Nutrition Hub | DK Singh Fitness",
+            "h1": "Free Fitness Resources",
+            "flags": []
+        },
+        "Exercise Library": {
+            "path": "\/fitness\/exercise-library",
+            "title": "Exercise Library & Movement Database | DK Singh Fitness",
+            "h1": "DK Singh Exercise Library",
+            "flags": []
+        },
+        "Wellness": {
+            "path": "\/fitness\/wellness",
+            "title": "Wellness, Mind & Restorative Recovery Hub | DK Singh Fitness",
+            "h1": "Mind, Recovery, Habits & Sustainable Vitality",
+            "flags": []
+        }
+    },
+    "phase_7_seo": {
+        "Homepage": {
+            "path": "\/",
+            "title": "DK Singh Fitness | Elite Online Fitness Coaching & Nutrition",
+            "description": "Achieve sustainable fat loss and muscle hypertrophy with customized training and nutrition plans from DK Singh.",
+            "canonical": "http:\/\/localhost",
+            "robots": "index, follow (default)",
+            "og_title": "DK Singh Fitness | Elite Online Fitness Coaching &amp; Nutrition",
+            "og_description": "Achieve sustainable fat loss and muscle hypertrophy with customized training and nutrition plans from DK Singh.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "About DK Singh": {
+            "path": "\/about",
+            "title": "About DK Singh | Elite Fitness Coaching & Mission",
+            "description": "Discover DK Singh Fitness &amp; Nutrition: science-backed physique transformations, individualized workout regimens, and metabolic nutrition strategies.",
+            "canonical": "http:\/\/localhost\/about",
+            "robots": "index, follow (default)",
+            "og_title": "About DK Singh | Elite Fitness Coaching &amp;amp; Mission",
+            "og_description": "Discover DK Singh Fitness &amp;amp; Nutrition: science-backed physique transformations, individualized workout regimens, and metabolic nutrition strategies.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Coaching Services": {
+            "path": "\/services",
+            "title": "Elite Coaching & Training Services | DK Singh Fitness",
+            "description": "Explore 1-on-1 online fitness coaching, personalized hypertrophy regimens, fat loss programming, and customized diet strategies by DK Singh.",
+            "canonical": "http:\/\/localhost\/services",
+            "robots": "index, follow (default)",
+            "og_title": "Elite Coaching &amp;amp; Training Services | DK Singh Fitness",
+            "og_description": "Explore 1-on-1 online fitness coaching, personalized hypertrophy regimens, fat loss programming, and customized diet strategies by DK Singh.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Fitness Programs": {
+            "path": "\/programs",
+            "title": "Transformational Fitness Programs | DK Singh Fitness",
+            "description": "Browse science-based transformation programs for fat loss, muscle building, and athletic conditioning crafted by elite coach DK Singh.",
+            "canonical": "http:\/\/localhost\/programs",
+            "robots": "index, follow (default)",
+            "og_title": "Transformational Fitness Programs | DK Singh Fitness",
+            "og_description": "Browse science-based transformation programs for fat loss, muscle building, and athletic conditioning crafted by elite coach DK Singh.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Transformations": {
+            "path": "\/transformations",
+            "title": "Real Client Success Stories & Transformations | DK Singh Fitness",
+            "description": "Witness real client transformations: fat loss, muscle building, and lifestyle overhauls achieved through DK Singh Fitness protocols.",
+            "canonical": "http:\/\/localhost\/transformations",
+            "robots": "index, follow (default)",
+            "og_title": "Real Client Success Stories &amp;amp; Transformations | DK Singh Fitness",
+            "og_description": "Witness real client transformations: fat loss, muscle building, and lifestyle overhauls achieved through DK Singh Fitness protocols.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Blog Hub": {
+            "path": "\/blog",
+            "title": "Fitness Blog | DK Singh Fitness & Nutrition Articles",
+            "description": "Read evidence-based fitness guides, Indian diet plans, hypertrophy tips, and fat loss strategies written by coach DK Singh.",
+            "canonical": "http:\/\/localhost\/blog",
+            "robots": "index, follow (default)",
+            "og_title": "Fitness Blog | DK Singh Fitness &amp;amp; Nutrition Articles",
+            "og_description": "Read evidence-based fitness guides, Indian diet plans, hypertrophy tips, and fat loss strategies written by coach DK Singh.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Contact": {
+            "path": "\/contact",
+            "title": "Contact Coach DK Singh | Start Your Transformation",
+            "description": "Get in touch with DK Singh Fitness &amp; Nutrition. Inquire about 1-on-1 coaching, transformation programs, and personalized nutrition consultations.",
+            "canonical": "http:\/\/localhost\/contact",
+            "robots": "index, follow (default)",
+            "og_title": "Contact Coach DK Singh | Start Your Transformation",
+            "og_description": "Get in touch with DK Singh Fitness &amp;amp; Nutrition. Inquire about 1-on-1 coaching, transformation programs, and personalized nutrition consultations.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Plans & Pricing": {
+            "path": "\/plans",
+            "title": "Membership & Coaching Plans | DK Singh Fitness",
+            "description": "Choose your fitness plan: personalized workout splits, macro-tailored nutrition, and direct 1-on-1 accountability with DK Singh.",
+            "canonical": "http:\/\/localhost\/plans",
+            "robots": "index, follow (default)",
+            "og_title": "Membership &amp;amp; Coaching Plans | DK Singh Fitness",
+            "og_description": "Choose your fitness plan: personalized workout splits, macro-tailored nutrition, and direct 1-on-1 accountability with DK Singh.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Supplements & Store": {
+            "path": "\/products",
+            "title": "Performance Supplements & Wellness Essentials | DK Singh Fitness",
+            "description": "Shop genuine DK Singh fitness supplements, natural wellness powders, and training essentials designed to support your physique goals.",
+            "canonical": "http:\/\/localhost\/products",
+            "robots": "index, follow (default)",
+            "og_title": "Performance Supplements &amp;amp; Wellness Essentials | DK Singh Fitness",
+            "og_description": "Shop genuine DK Singh fitness supplements, natural wellness powders, and training essentials designed to support your physique goals.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Fitness Hub": {
+            "path": "\/fitness",
+            "title": "Fitness & Nutrition Knowledge Hub | DK Singh Fitness",
+            "description": "Explore practical, evidence-based fitness and nutrition guidance from DK Singh. Build strength, improve endurance, move better, and create a sustainable healthy lifestyle.",
+            "canonical": "http:\/\/localhost\/fitness",
+            "robots": "index, follow (default)",
+            "og_title": "Fitness &amp;amp; Nutrition Knowledge Hub | DK Singh Fitness",
+            "og_description": "Explore practical, evidence-based fitness and nutrition guidance from DK Singh. Build strength, improve endurance, move better, and create a sustainable healthy lifestyle.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Free Resources": {
+            "path": "\/fitness-hub",
+            "title": "Free Fitness & Nutrition Hub | DK Singh Fitness",
+            "description": "Access free workout routines, diet plans, fitness calculators, and transformation guides from DK Singh Fitness &amp; Nutrition.",
+            "canonical": "http:\/\/localhost\/fitness-hub",
+            "robots": "index, follow (default)",
+            "og_title": "Free Fitness &amp;amp; Nutrition Hub | DK Singh Fitness",
+            "og_description": "Access free workout routines, diet plans, fitness calculators, and transformation guides from DK Singh Fitness &amp;amp; Nutrition.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Exercise Library": {
+            "path": "\/fitness\/exercise-library",
+            "title": "Exercise Library & Movement Database | DK Singh Fitness",
+            "description": "Browse the comprehensive DK Singh Exercise Library with form cues, targeted muscle groups, difficulty ratings, and video tutorials.",
+            "canonical": "http:\/\/localhost\/fitness\/exercise-library",
+            "robots": "index, follow",
+            "og_title": "Exercise Library &amp;amp; Movement Database | DK Singh Fitness",
+            "og_description": "Browse the comprehensive DK Singh Exercise Library with form cues, targeted muscle groups, difficulty ratings, and video tutorials.",
+            "og_image": "http:\/\/localhost\/storage\/settings\/01KV8SE2X7DSRTJACX3XB2EEES.jpeg"
+        },
+        "Wellness": {
+            "path": "\/fitness\/wellness",
+            "title": "Wellness, Mind & Restorative Recovery Hub | DK Singh Fitness",
+            "description": "Evidence-based wellness, sleep recovery, stress resilience, mindful nutrition habits, and longevity protocols for sustainable health in India.",
+            "canonical": "http:\/\/localhost\/fitness\/wellness",
+            "robots": "index, follow (default)",
+            "og_title": "Wellness, Mind &amp;amp; Restorative Recovery Hub | DK Singh Fitness",
+            "og_description": "Evidence-based wellness, sleep recovery, stress resilience, mindful nutrition habits, and longevity protocols for sustainable health in India.",
+            "og_image": "http:\/\/localhost\/storage\/blogs\/digital-detox-guide-how-to-break-the-cycle-of-constant-notifications-and-reclaim.webp"
+        }
+    },
+    "phase_8_sitemap_robots": {
+        "sitemap_status": 200,
+        "sitemap_valid_xml": true,
+        "sitemap_urls_count": 309,
+        "sitemap_sample_urls": [
+            "http:\/\/localhost",
+            "http:\/\/localhost\/about",
+            "http:\/\/localhost\/contact",
+            "http:\/\/localhost\/programs",
+            "http:\/\/localhost\/services",
+            "http:\/\/localhost\/plans",
+            "http:\/\/localhost\/fitness-hub",
+            "http:\/\/localhost\/transformations",
+            "http:\/\/localhost\/blog",
+            "http:\/\/localhost\/products"
+        ],
+        "robots_txt_exists": true,
+        "robots_txt_content": "User-agent: *\n\nAllow: \/\n\nSitemap: http:\/\/127.0.0.1:8000\/sitemap.xml"
+    },
+    "phase_9_schema": {
+        "Homepage": {
+            "path": "\/",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "About DK Singh": {
+            "path": "\/about",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Coaching Services": {
+            "path": "\/services",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Fitness Programs": {
+            "path": "\/programs",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Transformations": {
+            "path": "\/transformations",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Blog Hub": {
+            "path": "\/blog",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Contact": {
+            "path": "\/contact",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Plans & Pricing": {
+            "path": "\/plans",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Supplements & Store": {
+            "path": "\/products",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Fitness Hub": {
+            "path": "\/fitness",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Free Resources": {
+            "path": "\/fitness-hub",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Exercise Library": {
+            "path": "\/fitness\/exercise-library",
+            "schemas_found": 1,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                }
+            ]
+        },
+        "Wellness": {
+            "path": "\/fitness\/wellness",
+            "schemas_found": 2,
+            "schemas": [
+                {
+                    "type": "Unknown",
+                    "valid_json": true,
+                    "name": null
+                },
+                {
+                    "type": "CollectionPage",
+                    "valid_json": true,
+                    "name": "DK Singh Wellness & Restorative Recovery Hub"
+                }
+            ]
+        }
+    },
+    "phase_10_articles": {
+        "total_posts": 249,
+        "published_posts": 249,
+        "missing_slugs": 0,
+        "missing_titles": 0,
+        "missing_category": 0,
+        "missing_media": 0,
+        "broken_media_files": 0,
+        "raw_html_excerpts": 0,
+        "duplicate_slugs": 0
+    },
+    "phase_12_media": {
+        "total_media_records": 376,
+        "missing_physical_files": 0,
+        "valid_physical_files": 376,
+        "orphaned_media_records": 0
+    },
+    "phase_13_payments": {
+        "razorpay_key_configured": true,
+        "stripe_configured": false,
+        "products_count": 11,
+        "orders_count": 11,
+        "plans_count": 4,
+        "checkout_route_status": 302
+    },
+    "phase_14_admin_security": {
+        "unauth_admin_status": 302,
+        "unauth_admin_redirect": "http:\/\/localhost\/admin\/login",
+        "unauth_builder_status": 302,
+        "admin_protected": true
+    },
+    "phase_15_secrets": {
+        "env_in_gitignore": "PASS (Protected)",
+        "env_example_exists": "PASS",
+        "secret_leak_status": "NOT FOUND"
+    }
+}

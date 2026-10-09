@@ -1,9 +1,3 @@
-@php
-    $programs = \App\Models\Program::where('status', true)
-        ->orderBy('sort_order')
-        ->get();
-@endphp
-
 <section class="py-20 bg-white">
 
     <div class="max-w-7xl mx-auto px-8">
@@ -30,13 +24,23 @@
 
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+@php
+    $previewGridClass = match($selectedDevice ?? 'desktop') {
+        'mobile' => 'wb-grid-1 gap-6',
+        'tablet' => 'wb-grid-2 gap-6',
+        default => 'wb-grid-3 gap-8',
+    };
+@endphp
 
-            @forelse($programs as $program)
+        <div class="{{ $previewGridClass }}">
+
+            @forelse($previewPrograms as $program)
 
                 <div class="rounded-3xl overflow-hidden shadow-xl bg-white border border-gray-100 hover:shadow-2xl transition">
 
-                    @if($program->image)
+                    @if($program->id === $selectedProgramId && $programImage)
+                        <img src="{{ $programImage->temporaryUrl() }}" alt="{{ $program->title }}" class="w-full h-56 object-cover">
+                    @elseif($program->image)
 
                         <img
                             src="{{ asset('storage/'.$program->image) }}"

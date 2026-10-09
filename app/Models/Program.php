@@ -25,9 +25,9 @@ class Program extends Model
     ];
 
     protected $casts = [
-        'featured'   => 'boolean',
-        'status'     => 'boolean',
-        'price'      => 'decimal:2',
+        'featured' => 'boolean',
+        'status' => 'boolean',
+        'price' => 'decimal:2',
         'sort_order' => 'integer',
     ];
 

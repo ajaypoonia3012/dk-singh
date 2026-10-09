@@ -27,21 +27,15 @@
 
                 <button
                     wire:click="selectBlog({{ $item->id }})"
-                    class="flex-1 text-left p-3 rounded-lg border transition
-                    {{ $selectedBlogId == $item->id
-                        ? 'bg-amber-500 text-white border-amber-500'
-                        : 'bg-white hover:bg-gray-50' }}">
+                    class="flex-1 text-left p-3 rounded-xl border transition wb-card-selector-btn {{ $selectedBlogId == $item->id ? 'active' : 'bg-white hover:bg-slate-50 border-slate-200' }}"
+                    style="{{ $selectedBlogId == $item->id ? 'background-color: #fef3c7 !important; border-color: #f59e0b !important; color: #78350f !important; font-weight: 700;' : '' }}">
 
-                    <div class="font-semibold">
-
-                        {{ $item->title }}
-
+                    <div class="font-bold text-xs truncate">
+                        {{ $item->title ?: 'Untitled Blog' }}
                     </div>
 
-                    <div class="text-xs opacity-70">
-
-                        {{ $item->category }}
-
+                    <div class="text-[11px] opacity-75 truncate">
+                        {{ $item->category ?: 'General' }}
                     </div>
 
                 </button>
@@ -197,9 +191,10 @@
 
         <button
             wire:click="saveBlog"
-            class="w-full bg-amber-500 hover:bg-amber-600 text-black py-3 rounded-lg font-bold">
+            class="w-full wb-btn-primary py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-sm"
+            style="background: #f59e0b !important; color: #000000 !important; font-weight: 700 !important;">
 
-            💾 Save Blog
+            <span>💾</span> Save Blog
 
         </button>
 

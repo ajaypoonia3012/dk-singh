@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Notification;
 
 class CoachNote extends Model
 {
@@ -25,8 +24,7 @@ class CoachNote extends Model
 
                 'title' => 'New Coach Feedback',
 
-                'message' =>
-                    'Your coach has provided new feedback. Please review it from your dashboard.',
+                'message' => 'Your coach has provided new feedback. Please review it from your dashboard.',
 
                 'is_read' => false,
 

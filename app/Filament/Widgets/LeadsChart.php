@@ -7,6 +7,8 @@ use Filament\Widgets\ChartWidget;
 
 class LeadsChart extends ChartWidget
 {
+    protected static ?int $sort = 4;
+
     protected static ?string $heading = 'Lead Analytics';
 
     protected function getData(): array

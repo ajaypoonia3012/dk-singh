@@ -1,10 +1,3 @@
-@php
-    $testimonials = \App\Models\Testimonial::where('status', 1)
-        ->orderBy('sort_order')
-        ->take(3)
-        ->get();
-@endphp
-
 <section class="bg-white py-20">
 
     <div class="max-w-7xl mx-auto px-6">
@@ -25,16 +18,26 @@
 
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-8">
+@php
+    $previewGridClass = match($selectedDevice ?? 'desktop') {
+        'mobile' => 'wb-grid-1 gap-6',
+        'tablet' => 'wb-grid-2 gap-6',
+        default => 'wb-grid-3 gap-8',
+    };
+@endphp
 
-            @forelse($testimonials as $item)
+        <div class="{{ $previewGridClass }}">
+
+            @forelse($previewTestimonials->take(3) as $item)
 
                 <div class="bg-white rounded-3xl shadow-xl p-8">
 
                     {{-- Profile Image --}}
                     <div class="flex justify-center mb-6">
 
-                        @if($item->image)
+                        @if($item->id === $selectedTestimonialId && $testimonialImage)
+                            <img src="{{ $testimonialImage->temporaryUrl() }}" class="w-24 h-24 rounded-full object-cover border-4 border-yellow-400" alt="{{ $item->name }}">
+                        @elseif($item->image)
 
                             <img
                                 src="{{ asset('storage/'.$item->image) }}"

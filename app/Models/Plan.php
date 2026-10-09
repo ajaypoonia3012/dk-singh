@@ -23,7 +23,7 @@ class Plan extends Model
         'sort_order',
         'features',
         'featured',
-        'status'
+        'status',
 
     ];
 

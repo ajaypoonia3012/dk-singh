@@ -14,8 +14,8 @@ class WeeklyCheckInController extends Controller
             'user_id',
             auth()->id()
         )
-        ->latest()
-        ->get();
+            ->latest()
+            ->get();
 
         return view(
             'member.check-ins.index',
@@ -54,11 +54,11 @@ class WeeklyCheckInController extends Controller
 
         ]);
 
-       return redirect()
-    ->route('member.progress')
-    ->with(
-        'success',
-        'Weekly check-in submitted successfully.'
-    );
+        return redirect()
+            ->route('member.progress')
+            ->with(
+                'success',
+                'Weekly check-in submitted successfully.'
+            );
     }
 }

@@ -62,6 +62,11 @@ class EditSetting extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('openWebsiteBuilder')
+                ->label('🎨 Visual Website Builder')
+                ->url('/admin/website-builder')
+                ->color('warning')
+                ->icon('heroicon-o-paint-brush'),
             Actions\DeleteAction::make(),
         ];
     }

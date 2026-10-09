@@ -9,6 +9,8 @@ use Filament\Widgets\TableWidget;
 
 class ExpiringMemberships extends TableWidget
 {
+    protected static ?int $sort = 8;
+
     protected static ?string $heading = 'Expiring Memberships';
 
     protected int|string|array $columnSpan = 'full';

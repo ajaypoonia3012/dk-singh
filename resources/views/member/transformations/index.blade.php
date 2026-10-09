@@ -1,14 +1,14 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<section class="min-h-screen bg-[#f6f3eb] py-20">
+<section class="min-h-screen theme-surface-muted theme-section">
 
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="theme-page-container">
 
         <div class="text-center mb-16">
 
-            <p class="uppercase tracking-[3px] text-yellow-500 font-bold mb-4">
+            <p class="uppercase tracking-[3px] theme-text-primary font-bold mb-4">
                 My Transformation Journey
             </p>
 
@@ -18,12 +18,12 @@
 
         </div>
 
-        <div class="grid lg:grid-cols-5 gap-6 mb-16">
+        <div class="grid lg:grid-cols-5 theme-content-gap mb-16">
 
     {{-- STARTING POINT --}}
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             Starting Point
         </p>
 
@@ -31,20 +31,20 @@
             {{ $oldest?->weight }} kg
         </h3>
 
-        <p class="text-gray-600">
+        <p class="theme-text-neutral">
             BMI {{ $oldest?->bmi }}
         </p>
 
-        <p class="text-sm text-gray-400 mt-3">
+        <p class="text-sm theme-text-neutral mt-3">
             {{ $oldest?->created_at?->format('d/m/Y') }}
         </p>
 
     </div>
 
     {{-- CURRENT PROGRESS --}}
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             Current Progress
         </p>
 
@@ -52,50 +52,50 @@
             {{ $latest?->weight }} kg
         </h3>
 
-        <p class="text-gray-600">
+        <p class="theme-text-neutral">
             BMI {{ $latest?->bmi }}
         </p>
 
-        <p class="text-sm text-gray-400 mt-3">
+        <p class="text-sm theme-text-neutral mt-3">
             {{ $latest?->created_at?->format('d/m/Y') }}
         </p>
 
     </div>
 
     {{-- WEIGHT LOST --}}
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             Weight Lost
         </p>
 
-        <h3 class="text-4xl font-black text-green-600">
+        <h3 class="text-4xl font-black theme-text-success">
             {{ number_format($weightLost,1) }} kg
         </h3>
 
     </div>
 
     {{-- BMI IMPROVEMENT --}}
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             BMI Improvement
         </p>
 
-        <h3 class="text-4xl font-black text-blue-600">
+        <h3 class="text-4xl font-black theme-text-info">
             {{ number_format($bmiImprovement,1) }}
         </h3>
 
     </div>
 
     {{-- JOURNEY DURATION --}}
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             Journey Duration
         </p>
 
-        <h3 class="text-4xl font-black text-yellow-500">
+        <h3 class="text-4xl font-black theme-text-primary">
 
             {{ $oldest && $latest
     ? (int) $oldest->created_at->startOfDay()->diffInDays(
@@ -105,7 +105,7 @@
 
         </h3>
 
-        <p class="text-gray-500 mt-2">
+        <p class="theme-text-neutral mt-2">
             Days
         </p>
 
@@ -117,13 +117,13 @@
 
 @if($logs->count() >= 2)
 
-<div class="bg-white rounded-3xl p-10 shadow-xl mb-12">
+<div class="theme-card theme-radius theme-card-padding-lg theme-shadow mb-12">
 
     <h2 class="text-4xl font-black mb-8 text-center">
         Before vs Current
     </h2>
 
-    <div class="grid md:grid-cols-2 gap-10">
+    <div class="grid md:grid-cols-2 theme-grid-gap">
 
         <div>
 
@@ -135,7 +135,7 @@
 
                 <img
                     src="{{ asset('storage/'.$oldest->front_photo) }}"
-                    class="rounded-3xl w-full shadow-xl">
+                    class="theme-radius w-full theme-shadow">
 
             @endif
 
@@ -159,7 +159,7 @@
 
                 <img
                     src="{{ asset('storage/'.$latest->front_photo) }}"
-                    class="rounded-3xl w-full shadow-xl">
+                    class="theme-radius w-full theme-shadow">
 
             @endif
 
@@ -182,11 +182,11 @@
 
 {{-- TRANSFORMATION SCOREBOARD --}}
 
-<div class="grid md:grid-cols-4 gap-6 mb-12">
+<div class="grid md:grid-cols-4 theme-content-gap mb-12">
 
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             Total Check-Ins
         </p>
 
@@ -196,41 +196,41 @@
 
     </div>
 
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             Weight Change
         </p>
 
-        <h3 class="text-5xl font-black text-green-600">
+        <h3 class="text-5xl font-black theme-text-success">
             {{ number_format($weightLost,1) }}
         </h3>
 
-        <p class="text-gray-500 mt-2">
+        <p class="theme-text-neutral mt-2">
             kg
         </p>
 
     </div>
 
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             BMI Change
         </p>
 
-        <h3 class="text-5xl font-black text-blue-600">
+        <h3 class="text-5xl font-black theme-text-info">
             {{ number_format($bmiImprovement,1) }}
         </h3>
 
     </div>
 
-    <div class="bg-white p-8 rounded-3xl shadow-xl">
+    <div class="theme-card theme-card-padding theme-radius theme-shadow">
 
-        <p class="uppercase text-xs tracking-[2px] text-gray-500 mb-3">
+        <p class="uppercase text-xs tracking-[2px] theme-text-neutral mb-3">
             Journey Days
         </p>
 
-        <h3 class="text-5xl font-black text-yellow-500">
+        <h3 class="text-5xl font-black theme-text-primary">
 
             {{ $oldest && $latest
                 ? (int) $oldest->created_at->startOfDay()->diffInDays(
@@ -252,23 +252,23 @@
 $milestones = [];
 
 if ($logs->count() >= 1) {
-    $milestones[] = '🏆 First Check-In';
+    $milestones[] = 'First Check-In';
 }
 
 if ($logs->count() >= 5) {
-    $milestones[] = '⭐ 5 Check-Ins Completed';
+    $milestones[] = '5 Check-Ins Completed';
 }
 
 if ($logs->count() >= 10) {
-    $milestones[] = '👑 10 Check-Ins Completed';
+    $milestones[] = '10 Check-Ins Completed';
 }
 
 if ($weightLost >= 5) {
-    $milestones[] = '💪 5kg Lost';
+    $milestones[] = '5kg Lost';
 }
 
 if ($weightLost >= 10) {
-    $milestones[] = '🔥 10kg Lost';
+    $milestones[] = '10kg Lost';
 }
 
 $journeyDays = $oldest && $latest
@@ -280,18 +280,18 @@ $journeyDays = $oldest && $latest
     : 0;
 
 if ($journeyDays >= 30) {
-    $milestones[] = '🚀 30 Day Journey';
+    $milestones[] = '30 Day Journey';
 }
 
 if ($journeyDays >= 90) {
-    $milestones[] = '🏅 90 Day Journey';
+    $milestones[] = '90 Day Journey';
 }
 
 @endphp
 
 @if(count($milestones))
 
-<div class="bg-white rounded-3xl p-10 shadow-xl mb-12">
+<div class="theme-card theme-radius theme-card-padding-lg theme-shadow mb-12">
 
     <h2 class="text-3xl font-black mb-8">
         Achievements & Milestones
@@ -301,8 +301,9 @@ if ($journeyDays >= 90) {
 
         @foreach($milestones as $milestone)
 
-            <div class="px-5 py-3 bg-yellow-50 border border-yellow-200 rounded-2xl font-semibold">
+            <div class="px-5 py-3 theme-surface-muted border theme-border theme-radius font-semibold">
 
+                <svg class="inline-block w-5 h-5 me-2 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15l-3.5 2 1-4-3-2.5 4.1-.3L12 6.5l1.4 3.7 4.1.3-3 2.5 1 4z" /></svg>
                 {{ $milestone }}
 
             </div>
@@ -319,7 +320,7 @@ if ($journeyDays >= 90) {
 
             @foreach($logs as $log)
 
-                <div class="bg-white rounded-3xl p-8 shadow-xl">
+                <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
                     <div class="flex justify-between items-center mb-8">
 
@@ -329,7 +330,7 @@ if ($journeyDays >= 90) {
 
                         </h2>
 
-                        <span class="text-gray-500">
+                        <span class="theme-text-neutral">
 
                             {{ $log->created_at->format('d M Y') }}
 
@@ -337,13 +338,13 @@ if ($journeyDays >= 90) {
 
                     </div>
 
-                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="grid md:grid-cols-3 theme-content-gap mb-8">
 
                         @if($log->front_photo)
 
                             <img
                                 src="{{ asset('storage/'.$log->front_photo) }}"
-                                class="rounded-2xl shadow-lg w-full">
+                                class="theme-radius theme-shadow w-full">
 
                         @endif
 
@@ -351,7 +352,7 @@ if ($journeyDays >= 90) {
 
                             <img
                                 src="{{ asset('storage/'.$log->side_photo) }}"
-                                class="rounded-2xl shadow-lg w-full">
+                                class="theme-radius theme-shadow w-full">
 
                         @endif
 
@@ -359,13 +360,13 @@ if ($journeyDays >= 90) {
 
                             <img
                                 src="{{ asset('storage/'.$log->back_photo) }}"
-                                class="rounded-2xl shadow-lg w-full">
+                                class="theme-radius theme-shadow w-full">
 
                         @endif
 
                     </div>
 
-                    <div class="grid md:grid-cols-4 gap-6">
+                    <div class="grid md:grid-cols-4 theme-content-gap">
 
                         <div>
                             <strong>Weight</strong>

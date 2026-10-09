@@ -1,16 +1,16 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<section class="min-h-screen bg-[#f6f3eb] py-20">
+<section class="min-h-screen theme-surface-muted theme-section">
 
-<div class="max-w-6xl mx-auto px-6">
+<div class="theme-page-container">
 
     <h1 class="text-5xl font-black mb-6">
         My Action Plan
     </h1>
 
-    <div class="bg-white rounded-[30px] p-8 shadow-xl mb-10">
+    <div class="theme-card theme-radius theme-card-padding theme-shadow mb-10">
 
         <h2 class="text-2xl font-bold mb-2">
             Progress
@@ -24,7 +24,7 @@
 
     @forelse($actionPlans as $plan)
 
-        <div class="bg-white rounded-[30px] p-8 shadow-xl mb-6">
+        <div class="theme-card theme-radius theme-card-padding theme-shadow mb-6">
 
             <div class="flex justify-between items-center">
 
@@ -36,7 +36,7 @@
 
                     @if($plan->description)
 
-                        <p class="text-gray-600 mt-3">
+                        <p class="theme-text-neutral mt-3">
                             {{ $plan->description }}
                         </p>
 
@@ -44,7 +44,7 @@
 
                     @if($plan->due_date)
 
-                        <p class="text-sm text-gray-500 mt-3">
+                        <p class="text-sm theme-text-neutral mt-3">
                             Due:
                             {{ $plan->due_date->format('d M Y') }}
                         </p>
@@ -57,7 +57,7 @@
 
                     @if($plan->is_completed)
 
-    <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full">
+    <span class="theme-status-success theme-text-success px-4 py-2 rounded-full">
         Completed
     </span>
 
@@ -70,7 +70,7 @@
         @csrf
 
         <button
-            class="bg-yellow-500 text-white px-4 py-2 rounded-full"
+            class="theme-status-warning theme-text-on-strong px-4 py-2 rounded-full"
         >
             Mark Complete
         </button>
@@ -87,7 +87,7 @@
 
     @empty
 
-        <div class="bg-white rounded-[30px] p-8 shadow-xl">
+        <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
             No action plans assigned yet.
 

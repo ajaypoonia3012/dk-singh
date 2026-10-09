@@ -13,8 +13,8 @@ class BillingController extends Controller
             'user_id',
             auth()->id()
         )
-        ->latest()
-        ->get();
+            ->latest()
+            ->get();
 
         return view(
             'member.billing',

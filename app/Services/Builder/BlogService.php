@@ -3,6 +3,7 @@
 namespace App\Services\Builder;
 
 use App\Models\Blog;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class BlogService
@@ -25,41 +26,46 @@ class BlogService
     }
 
     public function create(): Blog
-{
-    $title = 'New Blog ' . Str::random(6);
+    {
+        Gate::authorize('create', Blog::class);
 
-    return Blog::create([
+        $title = 'New Blog '.Str::random(6);
 
-        'title' => $title,
+        return Blog::create([
 
-        'slug' => Str::slug($title),
+            'title' => $title,
 
-        'content' => '',
+            'slug' => Str::slug($title),
 
-        'excerpt' => '',
+            'content' => '',
 
-        'category' => '',
+            'excerpt' => '',
 
-        'author' => 'DK Singh',
+            'category' => '',
 
-        'reading_time' => '5 min read',
+            'author' => 'DK Singh',
 
-        'featured_image' => null,
+            'reading_time' => '5 min read',
 
-        'featured' => false,
+            'featured_image' => null,
 
-        'status' => true,
+            'featured' => false,
 
-        'sort_order' => Blog::max('sort_order') + 1,
+            'status' => true,
 
-        'seo_title' => '',
+            'sort_order' => Blog::max('sort_order') + 1,
 
-        'seo_description' => '',
+            'seo_title' => '',
 
-    ]);
-}
+            'seo_description' => '',
+
+        ]);
+    }
+
     public function update(Blog $blog, array $data): Blog
     {
+        Gate::authorize('update', $blog);
+
         if (
             isset($data['title']) &&
             $blog->title !== $data['title']
@@ -74,6 +80,8 @@ class BlogService
 
     public function delete(Blog $blog): void
     {
+        Gate::authorize('delete', $blog);
+
         $blog->delete();
 
         Blog::orderBy('sort_order')
@@ -90,11 +98,13 @@ class BlogService
 
     public function duplicate(Blog $blog): Blog
     {
+        Gate::authorize('replicate', $blog);
+
         $copy = $blog->replicate();
 
         $copy->title .= ' Copy';
 
-        $copy->slug = Str::slug($copy->title);
+        $copy->slug = Str::slug($copy->title.' '.Str::random(6));
 
         $copy->sort_order = Blog::max('sort_order') + 1;
 
@@ -105,8 +115,10 @@ class BlogService
 
     public function toggleStatus(Blog $blog): Blog
     {
+        Gate::authorize('update', $blog);
+
         $blog->update([
-            'status' => !$blog->status,
+            'status' => ! $blog->status,
         ]);
 
         return $blog->fresh();
@@ -114,8 +126,10 @@ class BlogService
 
     public function toggleFeatured(Blog $blog): Blog
     {
+        Gate::authorize('update', $blog);
+
         $blog->update([
-            'featured' => !$blog->featured,
+            'featured' => ! $blog->featured,
         ]);
 
         return $blog->fresh();

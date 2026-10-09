@@ -8,14 +8,14 @@ use App\Models\WorkoutPlan;
 class WorkoutPlanController extends Controller
 {
     public function index()
-{
+    {
 
-    if (!auth()->check()) {
+        if (! auth()->check()) {
 
-        return redirect('/login');
-    }
+            return redirect('/login');
+        }
 
-        if (!auth()->user()->hasBasicAccess()) {
+        if (! auth()->user()->hasBasicAccess()) {
 
             return redirect('/plans')
                 ->with('error', 'Please purchase a membership.');
@@ -28,12 +28,12 @@ class WorkoutPlanController extends Controller
 
     public function show($id)
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
 
             return redirect('/login');
         }
 
-        if (!auth()->user()->hasBasicAccess()) {
+        if (! auth()->user()->hasBasicAccess()) {
 
             return redirect('/plans')
                 ->with('error', 'Please purchase a membership.');

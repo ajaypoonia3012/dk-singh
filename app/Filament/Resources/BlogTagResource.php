@@ -16,13 +16,13 @@ class BlogTagResource extends Resource
 {
     protected static ?string $model = BlogTag::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-hashtag';
 
-    protected static ?string $navigationGroup = 'Blog CMS';
+    protected static ?string $navigationGroup = 'Editorial Content';
 
     protected static ?string $navigationLabel = 'Tags';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -35,8 +35,7 @@ class BlogTagResource extends Resource
                         ->required()
                         ->live(onBlur: true)
                         ->afterStateUpdated(
-                            fn (Set $set, ?string $state) =>
-                                $set('slug', Str::slug($state))
+                            fn (Set $set, ?string $state) => $set('slug', Str::slug($state))
                         ),
 
                     Forms\Components\TextInput::make('slug')

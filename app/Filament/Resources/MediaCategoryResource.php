@@ -14,13 +14,13 @@ class MediaCategoryResource extends Resource
 {
     protected static ?string $model = MediaCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-folder';
+    protected static ?string $navigationIcon = 'heroicon-o-folder-open';
 
-    protected static ?string $navigationGroup = 'Website Builder';
+    protected static ?string $navigationGroup = 'Media & Assets';
 
     protected static ?string $navigationLabel = 'Media Categories';
 
-    protected static ?int $navigationSort = 0;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

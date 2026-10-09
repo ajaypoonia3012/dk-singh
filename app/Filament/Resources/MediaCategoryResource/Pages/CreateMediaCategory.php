@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\MediaCategoryResource\Pages;
 
 use App\Filament\Resources\MediaCategoryResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateMediaCategory extends CreateRecord

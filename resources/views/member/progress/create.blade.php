@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
@@ -14,39 +14,39 @@ Add Progress Check-In
 
 @csrf
 
-<div class="bg-white rounded-3xl shadow-xl p-8">
+<div class="theme-card theme-radius theme-shadow theme-card-padding">
 
 <input type="text"
        name="weight"
        placeholder="Weight"
-       class="border p-3 rounded-xl w-full mb-4">
+       class="theme-form-control border p-3 theme-radius w-full mb-4">
 
 
 
 <input type="text"
        name="body_fat"
        placeholder="Body Fat %"
-       class="border p-3 rounded-xl w-full mb-4">
+       class="theme-form-control border p-3 theme-radius w-full mb-4">
 
 <input type="text"
        name="chest"
        placeholder="Chest"
-       class="border p-3 rounded-xl w-full mb-4">
+       class="theme-form-control border p-3 theme-radius w-full mb-4">
 
 <input type="text"
        name="waist"
        placeholder="Waist"
-       class="border p-3 rounded-xl w-full mb-4">
+       class="theme-form-control border p-3 theme-radius w-full mb-4">
 
 <input type="text"
        name="arms"
        placeholder="Arms"
-       class="border p-3 rounded-xl w-full mb-4">
+       class="theme-form-control border p-3 theme-radius w-full mb-4">
 
 <input type="text"
        name="thighs"
        placeholder="Thighs"
-       class="border p-3 rounded-xl w-full mb-4">
+       class="theme-form-control border p-3 theme-radius w-full mb-4">
 
 <hr class="my-6">
 
@@ -54,42 +54,42 @@ Add Progress Check-In
 Transformation Photos
 </h2>
 
-<label class="block mb-2">
+<label class="theme-label block mb-2">
 Front Photo
 </label>
 
 <input
     type="file"
     name="front_photo"
-    class="border p-3 rounded-xl w-full mb-4">
+    class="theme-form-control border p-3 theme-radius w-full mb-4">
 
-<label class="block mb-2">
+<label class="theme-label block mb-2">
 Side Photo
 </label>
 
 <input
     type="file"
     name="side_photo"
-    class="border p-3 rounded-xl w-full mb-4">
+    class="theme-form-control border p-3 theme-radius w-full mb-4">
 
-<label class="block mb-2">
+<label class="theme-label block mb-2">
 Back Photo
 </label>
 
 <input
     type="file"
     name="back_photo"
-    class="border p-3 rounded-xl w-full mb-4">
+    class="theme-form-control border p-3 theme-radius w-full mb-4">
 
 
 
 <textarea
     name="notes"
-    class="border p-3 rounded-xl w-full mb-4"
+    class="theme-form-control border p-3 theme-radius w-full mb-4"
     placeholder="Notes"></textarea>
 
 <button
-    class="bg-black text-white px-8 py-3 rounded-xl">
+    class="theme-surface-strong theme-text-on-strong px-8 py-3 theme-radius">
 
     Save Check-In
 

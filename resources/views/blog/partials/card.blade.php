@@ -8,13 +8,13 @@
 
                 <img
                     src="{{ asset('storage/'.$post->media->path) }}"
-                    alt="{{ $post->title }}">
+                    alt="{{ $post->media->alt ?: $post->title }}">
 
             @else
 
                 <img
-                    src="https://placehold.co/1200x700?text=DK+Singh+Fitness"
-                    alt="{{ $post->title }}">
+                    src="{{ asset('images/dk-hero.jpg') }}"
+                    alt="{{ $post->media?->alt ?: $post->title }}">
 
             @endif
 
@@ -92,7 +92,7 @@
                 href="{{ route('blog.show',$post->slug) }}"
                 class="blog-btn text-decoration-none">
 
-                Read Article →
+                Read Article <svg class="inline-block w-4 h-4 ms-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" /></svg>
 
             </a>
 

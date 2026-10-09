@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\BlogPost;
 use App\Models\DietPlan;
+use App\Models\Exercise;
+use App\Models\Media;
 use App\Models\Membership;
 use App\Models\Order;
 use App\Models\Product;
@@ -32,6 +35,20 @@ class DashboardService
             'workouts' => WorkoutPlan::query()->count(),
             'diet_plans' => DietPlan::query()->count(),
             'products' => Product::query()->count(),
+        ];
+    }
+
+    public function getEditorialStats(): array
+    {
+        return [
+            'articles_total'     => BlogPost::query()->count(),
+            'articles_published' => BlogPost::query()->where('status', true)->count(),
+            'articles_drafts'    => BlogPost::query()->where('status', false)->count(),
+            'exercises'          => Exercise::query()->count(),
+            'media_count'        => Media::query()->count(),
+            'media_missing_alt'  => Media::query()->where(function ($q) {
+                $q->whereNull('alt')->orWhere('alt', '');
+            })->count(),
         ];
     }
 

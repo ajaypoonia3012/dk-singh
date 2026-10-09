@@ -46,7 +46,7 @@ class MediaPicker extends Component
 
     public function getSelectedMediaProperty()
     {
-        if (!$this->selectedMediaId) {
+        if (! $this->selectedMediaId) {
             return null;
         }
 

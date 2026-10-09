@@ -2,10 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Membership;
 use Closure;
 use Illuminate\Http\Request;
-
-use App\Models\Membership;
 
 class MembershipMiddleware
 {
@@ -17,7 +16,7 @@ class MembershipMiddleware
         |--------------------------------------------------------------------------
         */
 
-        if (!auth()->check()) {
+        if (! auth()->check()) {
 
             return redirect('/login');
 
@@ -35,7 +34,7 @@ class MembershipMiddleware
             ->latest()
             ->first();
 
-        if (!$membership) {
+        if (! $membership) {
 
             return redirect('/plans')
                 ->with('error', 'You need an active membership plan.');

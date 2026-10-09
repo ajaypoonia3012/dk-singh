@@ -13,6 +13,7 @@ use App\Models\CommunicationProvider;
 use App\Models\ContactLead;
 use App\Models\CourierProvider;
 use App\Models\DietPlan;
+use App\Models\Exercise;
 use App\Models\HomepageCard;
 use App\Models\Media;
 use App\Models\MediaCategory;
@@ -55,35 +56,51 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    private static mixed $sharedSetting = null;
+    private static mixed $sharedTheme = null;
+    private static bool $hasLoadedShared = false;
+
+    public static function clearSharedViewData(): void
+    {
+        self::$sharedSetting = null;
+        self::$sharedTheme = null;
+        self::$hasLoadedShared = false;
+    }
+
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
+        self::clearSharedViewData();
+
         $this->registerResourcePolicies();
         $this->configureRateLimiters();
         $this->configureSecureUploads();
 
         View::composer('*', function (IlluminateView $view): void {
-            static $loaded = false;
-            static $setting = null;
-            static $theme = null;
-
-            if (! $loaded) {
-                $setting = Schema::hasTable('settings')
-                    ? Cache::rememberForever(Setting::CACHE_KEY, fn () => Setting::query()->first())
+            if (! self::$hasLoadedShared) {
+                self::$sharedSetting = Schema::hasTable('settings')
+                    ? (Cache::get(Setting::CACHE_KEY) ?? Setting::query()->first())
                     : null;
-                $theme = Schema::hasTable('theme_settings')
-                    ? Cache::rememberForever(ThemeSetting::CACHE_KEY, fn () => ThemeSetting::query()->first())
+                self::$sharedTheme = Schema::hasTable('theme_settings')
+                    ? (Cache::get(ThemeSetting::CACHE_KEY) ?? ThemeSetting::query()->first())
                     : null;
-                $loaded = true;
+                self::$hasLoadedShared = true;
 
-                View::share('setting', $setting);
-                View::share('theme', $theme);
+                View::share('setting', self::$sharedSetting);
+                View::share('theme', self::$sharedTheme);
             }
 
-            $view->with('setting', $setting);
-            $view->with('theme', $theme);
+            $effectiveSetting = (self::$sharedSetting instanceof Setting)
+                ? self::$sharedSetting
+                : new Setting(['site_name' => config('app.name', 'DK Singh Fitness')]);
+            $effectiveTheme = (self::$sharedTheme instanceof ThemeSetting)
+                ? self::$sharedTheme
+                : new ThemeSetting;
+
+            $view->with('setting', $effectiveSetting);
+            $view->with('theme', $effectiveTheme);
         });
 
         View::composer('partials.navbar', function (IlluminateView $view): void {
@@ -114,6 +131,7 @@ class AppServiceProvider extends ServiceProvider
             ContactLead::class,
             CourierProvider::class,
             DietPlan::class,
+            Exercise::class,
             HomepageCard::class,
             Media::class,
             MediaCategory::class,

@@ -17,6 +17,7 @@ class BlogPost extends Model
         'media_id',
         'title',
         'slug',
+        'content_type',
         'excerpt',
         'content',
         'author',
@@ -59,6 +60,26 @@ class BlogPost extends Model
             BlogTag::class,
             'blog_post_tag'
         );
+    }
+
+    public function scopeType($query, string $type)
+    {
+        return $query->where('content_type', $type);
+    }
+
+    public function getTypeLabelAttribute(): string
+    {
+        return match ($this->content_type) {
+            'exercise_guide' => 'Exercise Guide',
+            'workout_guide' => 'Workout Guide',
+            'product_guide' => 'Product Guide',
+            'product_review' => 'Product Review',
+            'comparison' => 'Comparison',
+            'how_to' => 'How-To',
+            'beginner_guide' => 'Beginner Guide',
+            'fitness_faq' => 'Fitness FAQ',
+            default => 'Article',
+        };
     }
 
     protected static function boot()

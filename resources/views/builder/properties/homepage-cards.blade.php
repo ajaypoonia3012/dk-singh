@@ -28,47 +28,50 @@
                 {{-- Select Card --}}
                 <button
                     wire:click="selectHomepageCard({{ $card->id }})"
-                    class="flex-1 text-left p-3 rounded-lg border transition
-                    {{ $selectedHomepageCardId == $card->id
-                        ? 'bg-amber-500 text-white border-amber-500'
-                        : 'bg-white hover:bg-gray-50' }}">
+                    class="flex-1 text-left p-3 rounded-xl border transition wb-card-selector-btn {{ $selectedHomepageCardId == $card->id ? 'active' : 'bg-white hover:bg-slate-50 border-slate-200' }}"
+                    style="{{ $selectedHomepageCardId == $card->id ? 'background-color: #fef3c7 !important; border-color: #f59e0b !important; color: #78350f !important; font-weight: 700;' : '' }}">
 
-                    <div class="font-semibold">
-
-                        {{ $card->title }}
-
+                    <div class="font-bold text-xs truncate">
+                        {{ $card->title ?: 'Untitled Card' }}
                     </div>
 
-                    <div class="text-xs opacity-70">
-
-                        {{ $card->subtitle }}
-
+                    <div class="text-[11px] opacity-75 truncate">
+                        {{ $card->subtitle ?: 'No subtitle' }}
                     </div>
 
+                </button>
+
+                {{-- Duplicate --}}
+                <button
+                    wire:click="duplicateHomepageCard({{ $card->id }})"
+                    class="p-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-semibold text-slate-700 transition"
+                    title="Duplicate card">
+                    📋
                 </button>
 
                 {{-- Move Up --}}
                 <button
                     wire:click="moveHomepageCardUp({{ $card->id }})"
-                    class="px-3 py-3 rounded-lg border hover:bg-gray-100">
-
-                    ⬆
-
+                    class="w-8 h-8 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-700 transition"
+                    title="Move up">
+                    ▲
                 </button>
 
                 {{-- Move Down --}}
                 <button
                     wire:click="moveHomepageCardDown({{ $card->id }})"
-                    class="px-3 py-3 rounded-lg border hover:bg-gray-100">
-
-                    ⬇
-
+                    class="w-8 h-8 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-700 transition"
+                    title="Move down">
+                    ▼
                 </button>
 
-<button
-    wire:click="deleteHomepageCard({{ $card->id }})"
-    wire:confirm="Delete this Homepage Card?"
-    class="px-3 py-3 rounded-lg border border-red-500 text-red-600 hover:bg-red-50">
+                <button
+                    wire:click="deleteHomepageCard({{ $card->id }})"
+                    wire:confirm="Delete this Homepage Card?"
+                    class="w-8 h-8 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold transition"
+                    title="Delete card">
+                    🗑️
+                </button>
 
     🗑
 
@@ -190,14 +193,20 @@
     label="Card Image"
     target="homepage-card"
     :selected-media="$selectedMedia"
+    remove-action="removeHomepageCardImage"
 />
+
+        <div>
+            <label class="block text-sm font-semibold mb-2">Upload Card Image</label>
+            <input type="file" wire:model="homepageCardImage" accept="image/jpeg,image/png,image/webp" class="w-full rounded-lg border p-3">
+            @error('homepageCardImage') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+        </div>
 
         <button
             wire:click="saveHomepageCard"
-            class="w-full bg-amber-500 hover:bg-amber-600 text-black py-3 rounded-lg font-bold">
-
+            class="wb-btn-primary w-full py-3 rounded-xl font-black text-sm tracking-wide shadow-md transition"
+            style="background-color: #f59e0b !important; color: #000000 !important;">
             💾 Save Homepage Card
-
         </button>
 
     @endif

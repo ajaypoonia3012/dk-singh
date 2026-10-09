@@ -13,15 +13,15 @@ class NotificationController extends Controller
             'user_id',
             auth()->id()
         )
-        ->latest()
-        ->get();
+            ->latest()
+            ->get();
 
         $unreadCount = Notification::where(
             'user_id',
             auth()->id()
         )
-        ->where('is_read', false)
-        ->count();
+            ->where('is_read', false)
+            ->count();
 
         return view(
             'member.notifications.index',
@@ -39,7 +39,7 @@ class NotificationController extends Controller
         }
 
         $notification->update([
-            'is_read' => true
+            'is_read' => true,
         ]);
 
         return back();

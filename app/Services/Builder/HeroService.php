@@ -16,11 +16,11 @@ class HeroService
                 'button_text' => 'Join Now',
                 'button_text' => 'Join Now',
 
-'button_link' => '/plans',
+                'button_link' => '/plans',
 
-'view_button_text' => 'View Transformations',
+                'view_button_text' => 'View Transformations',
 
-'view_button_link' => '/transformations',
+                'view_button_link' => '/transformations',
                 'video' => null,
                 'overlay_color' => '#000000',
                 'overlay_opacity' => 40,

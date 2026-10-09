@@ -9,23 +9,39 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-
-            $table->string('hero_card_title')->nullable();
-            $table->text('hero_card_text')->nullable();
-
-            $table->text('programs_description')->nullable();
-            $table->text('services_description')->nullable();
-
-            $table->string('testimonials_title')->nullable();
-            $table->string('testimonials_heading')->nullable();
-            $table->text('testimonials_description')->nullable();
-
-            $table->text('contact_map_text')->nullable();
-
-            $table->string('bmi_label')->nullable();
-            $table->string('bmi_heading')->nullable();
-            $table->text('bmi_description')->nullable();
-
+            if (!Schema::hasColumn('settings', 'hero_card_title')) {
+                $table->text('hero_card_title')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'hero_card_text')) {
+                $table->text('hero_card_text')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'programs_description')) {
+                $table->text('programs_description')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'services_description')) {
+                $table->text('services_description')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'testimonials_title')) {
+                $table->text('testimonials_title')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'testimonials_heading')) {
+                $table->text('testimonials_heading')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'testimonials_description')) {
+                $table->text('testimonials_description')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'contact_map_text')) {
+                $table->text('contact_map_text')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'bmi_label')) {
+                $table->text('bmi_label')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'bmi_heading')) {
+                $table->text('bmi_heading')->nullable();
+            }
+            if (!Schema::hasColumn('settings', 'bmi_description')) {
+                $table->text('bmi_description')->nullable();
+            }
         });
     }
 

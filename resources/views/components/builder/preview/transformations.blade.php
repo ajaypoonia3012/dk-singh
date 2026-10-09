@@ -1,10 +1,3 @@
-@php
-    $transformations = \App\Models\Transformation::where('status', 1)
-        ->orderBy('sort_order')
-        ->take(3)
-        ->get();
-@endphp
-
 <section class="bg-white py-20">
 
     <div class="max-w-7xl mx-auto px-6">
@@ -29,9 +22,17 @@
 
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-8">
+@php
+    $previewGridClass = match($selectedDevice ?? 'desktop') {
+        'mobile' => 'wb-grid-1 gap-6',
+        'tablet' => 'wb-grid-2 gap-6',
+        default => 'wb-grid-3 gap-8',
+    };
+@endphp
 
-            @forelse($transformations as $item)
+        <div class="{{ $previewGridClass }}">
+
+            @forelse($previewTransformations->take(3) as $item)
 
                 <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
 
@@ -40,7 +41,7 @@
                         <div class="relative">
 
                             <img
-                                src="{{ asset('storage/'.$item->before_image) }}"
+                                src="{{ $item->id === $selectedTransformationId && $beforeImage ? $beforeImage->temporaryUrl() : asset('storage/'.$item->before_image) }}"
                                 class="w-full h-72 object-cover">
 
                             <span class="absolute top-3 left-3 bg-black text-white px-3 py-1 rounded-full text-xs">
@@ -54,7 +55,7 @@
                         <div class="relative">
 
                             <img
-                                src="{{ asset('storage/'.$item->after_image) }}"
+                                src="{{ $item->id === $selectedTransformationId && $afterImage ? $afterImage->temporaryUrl() : asset('storage/'.$item->after_image) }}"
                                 class="w-full h-72 object-cover">
 
                             <span class="absolute top-3 right-3 bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold">

@@ -4,18 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PlanResource\Pages;
 use App\Models\Plan;
-
 use Filament\Forms;
 use Filament\Forms\Form;
-
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
-
 use Filament\Tables;
 use Filament\Tables\Table;
-
-use Filament\Forms\Set;
 use Illuminate\Support\Str;
-
 
 class PlanResource extends Resource
 {
@@ -23,9 +18,11 @@ class PlanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
 
-    protected static ?string $navigationGroup = 'Commerce';
+    protected static ?string $navigationGroup = 'Members & Coaching';
 
-    protected static ?string $navigationLabel = 'Plans';
+    protected static ?string $navigationLabel = 'Membership Plans';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -36,22 +33,21 @@ class PlanResource extends Resource
                     ->schema([
 
                         Forms\Components\TextInput::make('name')
-    ->required()
-    ->live(onBlur: true)
-    ->afterStateUpdated(function (Set $set, ?string $state) {
-        $set('slug', Str::slug($state));
-    }),
+                            ->required()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('slug', Str::slug($state));
+                            }),
 
-Forms\Components\TextInput::make('slug')
-    ->required()
-    ->unique(ignoreRecord: true)
-    ->readOnly()
-    ->helperText('Automatically generated'),
-
+                        Forms\Components\TextInput::make('slug')
+                            ->required()
+                            ->unique(ignoreRecord: true)
+                            ->readOnly()
+                            ->helperText('Automatically generated'),
 
                         Forms\Components\Textarea::make('description')
                             ->rows(4)
-->required(),
+                            ->required(),
 
                         Forms\Components\TextInput::make('price')
                             ->numeric()
@@ -91,19 +87,19 @@ Forms\Components\TextInput::make('slug')
                             ->default('basic'),
 
                         Forms\Components\FileUpload::make('thumbnail')
-    ->image()
-    ->imageEditor()
-    ->imageEditorAspectRatios([
-        '4:5',
-    ])
-    ->imageCropAspectRatio('4:5')
-    ->imageResizeMode('cover')
-    ->imageResizeTargetWidth('800')
-    ->imageResizeTargetHeight('1000')
-    ->disk('public')
-    ->directory('plans')
-->panelAspectRatio('4:5')
-    ->imagePreviewHeight('220'),
+                            ->image()
+                            ->imageEditor()
+                            ->imageEditorAspectRatios([
+                                '4:5',
+                            ])
+                            ->imageCropAspectRatio('4:5')
+                            ->imageResizeMode('cover')
+                            ->imageResizeTargetWidth('800')
+                            ->imageResizeTargetHeight('1000')
+                            ->disk('public')
+                            ->directory('plans')
+                            ->panelAspectRatio('4:5')
+                            ->imagePreviewHeight('220'),
 
                         Forms\Components\Repeater::make('features')
                             ->schema([
@@ -114,9 +110,9 @@ Forms\Components\TextInput::make('slug')
                             ])
                             ->columns(1)
                             ->defaultItems(5)
-->collapsible()
-->reorderable()
-->cloneable(),
+                            ->collapsible()
+                            ->reorderable()
+                            ->cloneable(),
 
                         Forms\Components\Toggle::make('featured')
                             ->default(false),
@@ -139,31 +135,30 @@ Forms\Components\TextInput::make('slug')
         return $table
             ->columns([
 
-Tables\Columns\ImageColumn::make('thumbnail')
-    ->disk('public')
-    ->square()
-    ->height(60),
-
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->disk('public')
+                    ->square()
+                    ->height(60),
 
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('price')
-    ->money('INR')
-    ->sortable(),
+                    ->money('INR')
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('discount_price')
-    ->money('INR')
-    ->sortable(),
+                    ->money('INR')
+                    ->sortable(),
 
                 Tables\Columns\BadgeColumn::make('access_type')
-    ->colors([
-        'primary' => 'basic',
-        'warning' => 'pro',
-        'success' => 'elite',
-    ])
-    ->sortable(),
+                    ->colors([
+                        'primary' => 'basic',
+                        'warning' => 'pro',
+                        'success' => 'elite',
+                    ])
+                    ->sortable(),
 
                 Tables\Columns\IconColumn::make('featured')
                     ->boolean(),
@@ -179,22 +174,20 @@ Tables\Columns\ImageColumn::make('thumbnail')
                 Tables\Actions\DeleteAction::make(),
 
             ])
+            ->filters([
 
-->filters([
+                Tables\Filters\TernaryFilter::make('featured'),
 
-    Tables\Filters\TernaryFilter::make('featured'),
+                Tables\Filters\TernaryFilter::make('status'),
 
-    Tables\Filters\TernaryFilter::make('status'),
+                Tables\Filters\SelectFilter::make('access_type')
+                    ->options([
+                        'basic' => 'Basic',
+                        'pro' => 'Pro',
+                        'elite' => 'Elite',
+                    ]),
 
-    Tables\Filters\SelectFilter::make('access_type')
-        ->options([
-            'basic' => 'Basic',
-            'pro' => 'Pro',
-            'elite' => 'Elite',
-        ]),
-
-])
-
+            ])
 
             ->bulkActions([
 

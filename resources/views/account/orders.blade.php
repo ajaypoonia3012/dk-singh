@@ -1,14 +1,14 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<div class="max-w-7xl mx-auto px-6 py-12">
+<div class="theme-page-container py-12">
 
     <h1 class="text-4xl font-black mb-8">
         My Orders
     </h1>
 
-    <div class="bg-white rounded-3xl shadow-xl p-8">
+    <div class="theme-card theme-radius theme-shadow theme-card-padding">
 
         @if($orders->count())
 
@@ -51,7 +51,7 @@
                         <td class="p-4">
                             <a
  href="{{ route('account.orders.show',$order) }}"
- class="text-blue-600 font-bold"
+ class="theme-text-info font-bold"
 >
     {{ $order->order_number }}
 </a>
@@ -62,7 +62,7 @@
                         </td>
 
                         <td class="p-4">
-                            ₹{{ number_format($order->amount,2) }}
+                            &#8377;{{ number_format($order->amount,2) }}
                         </td>
 
                         <td class="p-4">
@@ -73,7 +73,7 @@
 
                             <a
                                 href="{{ route('invoice.download',$order->id) }}"
-                                class="text-blue-600 font-bold"
+                                class="theme-text-info font-bold"
                             >
                                 Download
                             </a>

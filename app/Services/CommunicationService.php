@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\CommunicationLog;
 use App\Models\CommunicationProvider;
 use App\Models\MessageTemplate;
-use App\Models\CommunicationLog;
 use App\Models\User;
 
 class CommunicationService
@@ -13,17 +13,16 @@ class CommunicationService
         string $event,
         User $user,
         array $data = []
-    ): bool
-    {
+    ): bool {
         $templates = MessageTemplate::where(
             'event',
             $event
         )
-        ->where(
-            'is_active',
-            true
-        )
-        ->get();
+            ->where(
+                'is_active',
+                true
+            )
+            ->get();
 
         foreach ($templates as $template) {
 
@@ -31,15 +30,15 @@ class CommunicationService
                 'type',
                 $template->channel
             )
-            ->where(
-                'is_active',
-                true
-            )
-            ->where(
-                'is_default',
-                true
-            )
-            ->first();
+                ->where(
+                    'is_active',
+                    true
+                )
+                ->where(
+                    'is_default',
+                    true
+                )
+                ->first();
 
             if (! $provider) {
                 continue;
@@ -54,14 +53,11 @@ class CommunicationService
 
                 'user_id' => $user->id,
 
-                'communication_provider_id' =>
-                    $provider->id,
+                'communication_provider_id' => $provider->id,
 
-                'channel' =>
-                    $template->channel,
+                'channel' => $template->channel,
 
-                'recipient' =>
-                    $template->channel === 'email'
+                'recipient' => $template->channel === 'email'
                         ? $user->email
                         : $user->whatsapp_number,
 
@@ -80,12 +76,11 @@ class CommunicationService
     private function replaceVariables(
         string $message,
         array $data
-    ): string
-    {
+    ): string {
         foreach ($data as $key => $value) {
 
             $message = str_replace(
-                '{' . $key . '}',
+                '{'.$key.'}',
                 $value,
                 $message
             );

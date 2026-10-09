@@ -1,12 +1,12 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<section class="min-h-screen bg-[#f6f3eb] py-20">
+<section class="min-h-screen theme-surface-muted theme-section">
 
     <div class="max-w-3xl mx-auto px-6">
 
-        <div class="bg-white rounded-3xl shadow-xl p-10">
+        <div class="theme-card theme-radius theme-shadow theme-card-padding-lg">
 
             <h1 class="text-4xl font-black mb-10">
                 Weekly Check-In
@@ -14,12 +14,12 @@
 
             <form method="POST"
                   action="{{ route('member.check-ins.store') }}"
-                  class="space-y-6">
+                  class="theme-stack-lg">
 
                 @csrf
 
                 <div>
-                    <label class="font-bold">
+                    <label class="theme-label font-bold">
                         Weight (kg)
                     </label>
 
@@ -28,11 +28,11 @@
                         step="0.1"
                         name="weight"
                         required
-                        class="w-full mt-2 rounded-xl border p-3">
+                        class="theme-form-control w-full mt-2 theme-radius border p-3">
                 </div>
 
                 <div>
-                    <label class="font-bold">
+                    <label class="theme-label font-bold">
                         Waist (cm)
                     </label>
 
@@ -41,11 +41,11 @@
                         step="0.1"
                         name="waist"
                         required
-                        class="w-full mt-2 rounded-xl border p-3">
+                        class="theme-form-control w-full mt-2 theme-radius border p-3">
                 </div>
 
                 <div>
-                    <label class="font-bold">
+                    <label class="theme-label font-bold">
                         Energy Level (1-10)
                     </label>
 
@@ -55,11 +55,11 @@
                         max="10"
                         name="energy_level"
                         required
-                        class="w-full mt-2 rounded-xl border p-3">
+                        class="theme-form-control w-full mt-2 theme-radius border p-3">
                 </div>
 
                 <div>
-                    <label class="font-bold">
+                    <label class="theme-label font-bold">
                         Mood (1-10)
                     </label>
 
@@ -69,11 +69,11 @@
                         max="10"
                         name="mood"
                         required
-                        class="w-full mt-2 rounded-xl border p-3">
+                        class="theme-form-control w-full mt-2 theme-radius border p-3">
                 </div>
 
                 <div>
-                    <label class="font-bold">
+                    <label class="theme-label font-bold">
                         Sleep Hours
                     </label>
 
@@ -82,23 +82,23 @@
                         step="0.5"
                         name="sleep_hours"
                         required
-                        class="w-full mt-2 rounded-xl border p-3">
+                        class="theme-form-control w-full mt-2 theme-radius border p-3">
                 </div>
 
                 <div>
-                    <label class="font-bold">
+                    <label class="theme-label font-bold">
                         Notes
                     </label>
 
                     <textarea
                         name="notes"
                         rows="4"
-                        class="w-full mt-2 rounded-xl border p-3"></textarea>
+                        class="theme-form-control w-full mt-2 theme-radius border p-3"></textarea>
                 </div>
 
                 <button
                     type="submit"
-                    class="bg-yellow-500 hover:bg-yellow-400 px-8 py-4 rounded-2xl font-bold">
+                    class="theme-status-warning hover:theme-status-warning px-8 py-4 theme-radius font-bold">
 
                     Submit Check-In
 

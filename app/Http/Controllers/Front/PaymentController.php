@@ -44,7 +44,12 @@ class PaymentController extends Controller
             'created_at' => now()->timestamp,
         ]);
 
-        return view('checkout.index', compact('plan', 'razorpayOrder'));
+        $selectedProgram = null;
+        if (request()->filled('program')) {
+            $selectedProgram = \App\Models\Program::where('slug', request('program'))->first();
+        }
+
+        return view('checkout.index', compact('plan', 'razorpayOrder', 'selectedProgram'));
     }
 
     public function success(Request $request, RazorpayService $razorpay): RedirectResponse

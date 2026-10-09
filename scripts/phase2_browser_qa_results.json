@@ -1,0 +1,56 @@
+{
+  "total_checks": 48,
+  "passed_checks": 48,
+  "console_errors": [],
+  "overflow_issues": [],
+  "cta_observations": [
+    {
+      "category": "Nutrition",
+      "url": "/blog/protein-in-1-egg-how-much-are-you-really-getting",
+      "status": 200,
+      "badge": "DK SINGH COACHING • PERSONALIZED NUTRITION",
+      "destination": "http://127.0.0.1:8000/services/diet-nutrition-coaching",
+      "destinationValid": true
+    },
+    {
+      "category": "Weight Management",
+      "url": "/blog/protein-in-peanuts-per-100g-a-great-number-but-what-about-the-calories",
+      "status": 200,
+      "badge": "DK SINGH COACHING • TRANSFORMATION PROGRAM",
+      "destination": "http://127.0.0.1:8000/programs/12-week-fat-loss-transformation",
+      "destinationValid": true
+    },
+    {
+      "category": "Exercise & Workouts",
+      "url": "/blog/why-you-feel-tired-after-workouts-instead-of-energized",
+      "status": 200,
+      "badge": "DK SINGH COACHING • STRUCTURED PROTOCOLS",
+      "destination": "http://127.0.0.1:8000/fitness-hub/workouts",
+      "destinationValid": true
+    },
+    {
+      "category": "Muscle Building",
+      "url": "/blog/7-back-exercises-for-strength-muscle-gain",
+      "status": 200,
+      "badge": "DK SINGH COACHING • HYPERTROPHY PROGRAM",
+      "destination": "http://127.0.0.1:8000/programs/lean-muscle-gain-program",
+      "destinationValid": true
+    },
+    {
+      "category": "Yoga & Mobility",
+      "url": "/blog/top-10-yoga-asanas-to-reduce-high-blood-pressure-naturally",
+      "status": 200,
+      "badge": "DK SINGH COACHING • MOBILITY & WELLNESS",
+      "destination": "http://127.0.0.1:8000/fitness/yoga",
+      "destinationValid": true
+    },
+    {
+      "category": "Wellness & Mindset",
+      "url": "/blog/how-to-fix-a-slow-metabolism-what-actually-works-and-the-myths-to-ignore",
+      "status": 200,
+      "badge": "DK SINGH COACHING • 1-ON-1 MENTORSHIP",
+      "destination": "http://127.0.0.1:8000/services/personal-online-coaching",
+      "destinationValid": true
+    }
+  ]
+}

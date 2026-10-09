@@ -5,18 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ActionPlanResource\Pages;
 use App\Models\ActionPlan;
 use App\Models\User;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class ActionPlanResource extends Resource
 {
@@ -24,11 +23,11 @@ class ActionPlanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
 
-    protected static ?string $navigationGroup = 'Coaching';
+    protected static ?string $navigationGroup = 'Members & Coaching';
 
     protected static ?string $navigationLabel = 'Action Plans';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

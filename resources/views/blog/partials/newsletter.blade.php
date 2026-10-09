@@ -1,4 +1,4 @@
-<section class="newsletter-box text-center">
+﻿<section class="newsletter-box text-center">
 
     <span class="badge bg-warning text-dark px-3 py-2 mb-3">
 
@@ -12,7 +12,7 @@
 
     </h2>
 
-    <p class="lead text-white-50 mb-5">
+    <p class="lead theme-text-on-strong-50 mb-5">
 
         Get workout plans, fat-loss tips, nutrition guides and exclusive transformation stories delivered directly to your inbox.
 
@@ -24,7 +24,7 @@
 
             <input
                 type="email"
-                class="form-control form-control-lg"
+                class="theme-form-control form-control form-control-lg"
                 placeholder="Enter your email address">
 
         </div>

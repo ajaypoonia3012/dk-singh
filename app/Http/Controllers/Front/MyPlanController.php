@@ -8,34 +8,34 @@ use App\Models\Order;
 class MyPlanController extends Controller
 {
     public function index()
-{
-    $membership = auth()->user()->activeMembership;
+    {
+        $membership = auth()->user()->activeMembership;
 
-    $daysRemaining = null;
+        $daysRemaining = null;
 
-    if ($membership) {
+        if ($membership) {
 
-        $daysRemaining = (int) now()->diffInDays(
-            $membership->expires_at,
-            false
+            $daysRemaining = (int) now()->diffInDays(
+                $membership->expires_at,
+                false
+            );
+        }
+
+        $orders = Order::where(
+            'user_id',
+            auth()->id()
+        )
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view(
+            'member.my-plan',
+            compact(
+                'membership',
+                'daysRemaining',
+                'orders'
+            )
         );
     }
-
-    $orders = \App\Models\Order::where(
-        'user_id',
-        auth()->id()
-    )
-    ->latest()
-    ->take(5)
-    ->get();
-
-    return view(
-        'member.my-plan',
-        compact(
-            'membership',
-            'daysRemaining',
-            'orders'
-        )
-    );
-}
 }

@@ -1,15 +1,15 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<div class="max-w-6xl mx-auto px-6 py-12">
+<div class="theme-page-container py-12">
 
     <h1 class="text-4xl font-black mb-8">
         My Profile
     </h1>
 @if(session('success'))
 
-<div class="bg-green-100 text-green-700 p-4 rounded-xl mb-6">
+<div class="theme-status-success theme-text-success p-4 theme-radius mb-6">
     {{ session('success') }}
 </div>
 
@@ -17,7 +17,7 @@
 
 @if($user->profile_completed)
 
-<div class="bg-white rounded-3xl shadow-xl p-8">
+<div class="theme-card theme-radius theme-shadow theme-card-padding">
 
     <h2 class="text-2xl font-bold mb-6">
         Profile Information
@@ -69,50 +69,50 @@
 
         @csrf
 
-        <div class="bg-white rounded-3xl shadow-xl p-8">
+        <div class="theme-card theme-radius theme-shadow theme-card-padding">
 
             <h2 class="text-2xl font-bold mb-6">
                 Personal Information
             </h2>
 
-            <div class="grid md:grid-cols-2 gap-6">
+            <div class="grid md:grid-cols-2 theme-content-gap">
 
                 <input
                     type="text"
                     name="phone"
                     value="{{ $user->phone }}"
                     placeholder="Phone"
-                    class="border rounded-xl p-3 w-full">
+                    class="border theme-radius p-3 w-full">
 
                 <input
                     type="text"
                     name="whatsapp_number"
                     value="{{ $user->whatsapp_number }}"
                     placeholder="WhatsApp Number"
-                    class="border rounded-xl p-3 w-full">
+                    class="border theme-radius p-3 w-full">
 
-<div class="grid md:grid-cols-2 gap-6 mt-6">
+<div class="grid md:grid-cols-2 theme-content-gap mt-6">
 
     <input
         type="text"
         name="city"
         value="{{ $user->city }}"
         placeholder="City"
-        class="border rounded-xl p-3 w-full">
+        class="border theme-radius p-3 w-full">
 
     <input
         type="text"
         name="country"
         value="{{ $user->country }}"
         placeholder="Country"
-        class="border rounded-xl p-3 w-full">
+        class="border theme-radius p-3 w-full">
 
 </div>
 
                 
 <select
     name="gender"
-    class="border rounded-xl p-3 w-full">
+    class="theme-form-control border theme-radius p-3 w-full">
 
     <option value="">Select Gender</option>
 
@@ -138,7 +138,7 @@
                     name="age"
                     value="{{ $user->age }}"
                     placeholder="Age"
-                    class="border rounded-xl p-3 w-full">
+                    class="border theme-radius p-3 w-full">
 
             </div>
 
@@ -148,21 +148,21 @@
                 Fitness Information
             </h2>
 
-            <div class="grid md:grid-cols-3 gap-6">
+            <div class="grid md:grid-cols-3 theme-content-gap">
 
                 <input
                     type="text"
                     name="height"
                     value="{{ $user->height }}"
                     placeholder="Height"
-                    class="border rounded-xl p-3">
+                    class="border theme-radius p-3">
 
                 <input
                     type="text"
                     name="weight"
                     value="{{ $user->weight }}"
                     placeholder="Weight"
-                    class="border rounded-xl p-3">
+                    class="border theme-radius p-3">
 
                 <input
     type="text"
@@ -170,7 +170,7 @@
     value="{{ $user->bmi }}"
     placeholder="BMI (Auto Calculated)"
     readonly
-    class="border rounded-xl p-3 bg-gray-100">
+    class="border theme-radius p-3 theme-surface-muted">
 
             </div>
 
@@ -178,7 +178,7 @@
 
                 <select
     name="goal"
-    class="border rounded-xl p-3 w-full">
+    class="theme-form-control border theme-radius p-3 w-full">
 
     <option value="">Select Goal</option>
 
@@ -214,7 +214,7 @@
 
                 <select
     name="activity_level"
-    class="border rounded-xl p-3 w-full">
+    class="theme-form-control border theme-radius p-3 w-full">
 
     <option value="">Select Activity Level</option>
 
@@ -251,17 +251,17 @@
             <textarea
                 name="diet_preference"
                 placeholder="Diet Preference"
-                class="border rounded-xl p-3 w-full mb-4">{{ $user->diet_preference }}</textarea>
+                class="theme-form-control border theme-radius p-3 w-full mb-4">{{ $user->diet_preference }}</textarea>
 
             <textarea
                 name="allergies"
                 placeholder="Allergies"
-                class="border rounded-xl p-3 w-full mb-4">{{ $user->allergies }}</textarea>
+                class="theme-form-control border theme-radius p-3 w-full mb-4">{{ $user->allergies }}</textarea>
 
             <textarea
                 name="medical_conditions"
                 placeholder="Medical Conditions"
-                class="border rounded-xl p-3 w-full">{{ $user->medical_conditions }}</textarea>
+                class="theme-form-control border theme-radius p-3 w-full">{{ $user->medical_conditions }}</textarea>
 
             <hr class="my-8">
 
@@ -272,13 +272,13 @@
             <textarea
                 name="bio"
                 placeholder="Bio"
-                class="border rounded-xl p-3 w-full">{{ $user->bio }}</textarea>
+                class="theme-form-control border theme-radius p-3 w-full">{{ $user->bio }}</textarea>
 
             <div class="mt-8">
 
                 <button
                     type="submit"
-                    class="bg-black text-white px-8 py-3 rounded-xl">
+                    class="theme-surface-strong theme-text-on-strong px-8 py-3 theme-radius">
 
                     Save Profile
 

@@ -47,7 +47,7 @@ class Media extends Model
      */
     public function getUrlAttribute(): string
     {
-        return asset('storage/' . ltrim($this->path, '/'));
+        return asset('storage/'.ltrim($this->path, '/'));
     }
 
     /**

@@ -9,6 +9,8 @@ use Filament\Widgets\TableWidget;
 
 class RecentMembers extends TableWidget
 {
+    protected static ?int $sort = 6;
+
     protected static ?string $heading = 'Recent Members';
 
     public function table(Table $table): Table

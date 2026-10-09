@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Builder;
 
-use Livewire\Component;
 use App\Models\WebsiteSection;
+use Livewire\Component;
 
 class SectionsPanel extends Component
 {

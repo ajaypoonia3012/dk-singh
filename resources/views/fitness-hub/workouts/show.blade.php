@@ -1,12 +1,14 @@
 @extends('layouts.app')
+@section('title', $workout->title . ' Workout Routine | DK Singh Fitness')
+@section('meta_description', Str::limit(strip_tags($workout->description ?? $workout->content ?? 'Complete workout breakdown and routine details for ' . $workout->title), 155))
 
 @section('content')
 
-<section class="bg-[#f6f3eb] py-24 min-h-screen">
+<section class="theme-surface-muted theme-section min-h-screen">
 
-<div class="max-w-6xl mx-auto px-6">
+<div class="theme-page-container">
 
-<div class="grid lg:grid-cols-3 gap-10">
+<div class="grid lg:grid-cols-3 theme-grid-gap">
 
 <div class="lg:col-span-2">
 
@@ -14,7 +16,8 @@
 
 <img
 src="{{ asset('storage/'.$workout->thumbnail) }}"
-class="w-full rounded-3xl mb-8">
+alt="{{ $workout->title }}"
+class="w-full theme-radius mb-8">
 
 @endif
 
@@ -24,7 +27,7 @@ class="w-full rounded-3xl mb-8">
 
 <div class="mb-6">
 
-<span class="bg-yellow-500 text-black px-4 py-2 rounded-full font-bold">
+<span class="theme-status-warning theme-text-secondary px-4 py-2 rounded-full font-bold">
 {{ $workout->difficulty }}
 </span>
 
@@ -36,7 +39,7 @@ class="w-full rounded-3xl mb-8">
 
 <iframe
 src="{{ str_replace('watch?v=','embed/',$workout->video_url) }}"
-class="w-full h-full rounded-3xl"
+class="w-full h-full theme-radius"
 allowfullscreen>
 </iframe>
 
@@ -44,7 +47,7 @@ allowfullscreen>
 
 @endif
 
-<div class="bg-white rounded-3xl p-10 shadow-xl">
+<div class="theme-card theme-radius theme-card-padding-lg theme-shadow">
 
 {!! $workout->content !!}
 
@@ -54,25 +57,33 @@ allowfullscreen>
 
 <div>
 
-<div class="bg-white rounded-3xl p-8 shadow-xl sticky top-32">
+<div class="theme-card theme-radius theme-card-padding theme-shadow sticky top-32">
 
-<h3 class="text-3xl font-black mb-6">
-Want Better Results?
+<span class="theme-text-primary uppercase tracking-[2px] font-bold text-xs mb-2 block">
+ACCELERATE RESULTS
+</span>
+
+<h3 class="text-2xl font-black mb-3">
+Ready for a Complete Transformation?
 </h3>
 
-<a href="/plans"
-class="block bg-yellow-500 text-black text-center py-4 rounded-2xl font-black mb-4">
-View Plans
+<p class="theme-text-neutral text-sm mb-6 leading-relaxed">
+This free routine is a great foundation. For a periodized 12-week training split, custom Indian calorie/macro targets, and weekly accountability with Coach DK Singh, explore the full program.
+</p>
+
+<a href="{{ route('programs.show', '12-week-fat-loss-transformation') }}"
+class="block theme-status-warning theme-text-secondary text-center py-3.5 theme-radius font-black mb-3 text-sm">
+Explore 12-Week Fat Loss &rarr;
 </a>
 
-<a href="/services"
-class="block bg-black text-white text-center py-4 rounded-2xl font-black mb-4">
-Book Coaching
+<a href="{{ route('contact', ['service' => 'personal-online-coaching']) }}"
+class="block theme-surface-strong theme-text-on-strong text-center py-3.5 theme-radius font-bold mb-3 text-sm">
+Apply for 1-on-1 Coaching
 </a>
 
-<a href="/products"
-class="block border border-black text-center py-4 rounded-2xl font-black">
-Shop Supplements
+<a href="{{ route('fitness.exercise-library') }}"
+class="block border theme-border text-center py-3 theme-radius font-semibold text-sm theme-text-neutral hover:theme-text-primary transition">
+Browse Exercise Library (25+)
 </a>
 
 </div>

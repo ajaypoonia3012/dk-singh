@@ -3,6 +3,7 @@
 namespace App\Services\Builder;
 
 use App\Models\Transformation;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class TransformationService
@@ -26,11 +27,13 @@ class TransformationService
 
     public function create(): Transformation
     {
+        Gate::authorize('create', Transformation::class);
+
         return Transformation::create([
 
             'name' => 'New Transformation',
 
-            'slug' => Str::slug('New Transformation'),
+            'slug' => Str::slug('New Transformation '.Str::random(6)),
 
             'before_image' => null,
 
@@ -76,8 +79,9 @@ class TransformationService
     public function update(
         Transformation $transformation,
         array $data
-    ): Transformation
-    {
+    ): Transformation {
+        Gate::authorize('update', $transformation);
+
         if (
             isset($data['name']) &&
             $transformation->name !== $data['name']
@@ -94,8 +98,9 @@ class TransformationService
 
     public function delete(
         Transformation $transformation
-    ): void
-    {
+    ): void {
+        Gate::authorize('delete', $transformation);
+
         $transformation->delete();
 
         Transformation::orderBy('sort_order')
@@ -112,13 +117,14 @@ class TransformationService
 
     public function duplicate(
         Transformation $transformation
-    ): Transformation
-    {
+    ): Transformation {
+        Gate::authorize('replicate', $transformation);
+
         $copy = $transformation->replicate();
 
         $copy->name .= ' Copy';
 
-        $copy->slug = Str::slug($copy->name);
+        $copy->slug = Str::slug($copy->name.' '.Str::random(6));
 
         $copy->sort_order =
             Transformation::max('sort_order') + 1;
@@ -130,10 +136,11 @@ class TransformationService
 
     public function toggleStatus(
         Transformation $transformation
-    ): Transformation
-    {
+    ): Transformation {
+        Gate::authorize('update', $transformation);
+
         $transformation->update([
-            'status' => !$transformation->status,
+            'status' => ! $transformation->status,
         ]);
 
         return $transformation->fresh();
@@ -141,10 +148,11 @@ class TransformationService
 
     public function toggleFeatured(
         Transformation $transformation
-    ): Transformation
-    {
+    ): Transformation {
+        Gate::authorize('update', $transformation);
+
         $transformation->update([
-            'featured' => !$transformation->featured,
+            'featured' => ! $transformation->featured,
         ]);
 
         return $transformation->fresh();

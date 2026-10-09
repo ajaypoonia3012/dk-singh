@@ -14,9 +14,11 @@ class TransformationResource extends Resource
 {
     protected static ?string $model = Transformation::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Website & Growth';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {

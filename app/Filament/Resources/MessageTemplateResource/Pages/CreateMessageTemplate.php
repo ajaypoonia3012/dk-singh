@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\MessageTemplateResource\Pages;
 
 use App\Filament\Resources\MessageTemplateResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateMessageTemplate extends CreateRecord

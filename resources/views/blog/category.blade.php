@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $category->name)
+@section('title', $category->name . ' Articles & Guides | DK Singh Fitness')
+@section('meta_description', Str::limit(strip_tags($category->description ?? 'Explore expert fitness and nutrition guides in ' . $category->name . ' on DK Singh Fitness.'), 155))
 
 @section('content')
 

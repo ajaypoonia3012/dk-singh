@@ -13,8 +13,8 @@ class MemberTransformationController extends Controller
             'user_id',
             auth()->id()
         )
-        ->latest()
-        ->get();
+            ->latest()
+            ->get();
 
         $latest = $logs->first();
 

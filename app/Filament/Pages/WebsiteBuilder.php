@@ -10,7 +10,9 @@ class WebsiteBuilder extends Page
 
     protected static ?string $navigationLabel = 'Website Builder';
 
-    protected static ?string $navigationGroup = 'Website Builder';
+    protected static ?string $navigationGroup = 'Website & Growth';
+
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $title = 'Website Builder';
 
@@ -19,4 +21,14 @@ class WebsiteBuilder extends Page
     protected ?string $maxContentWidth = 'full';
 
     protected static bool $shouldRegisterNavigation = true;
+
+    public function getHeading(): string
+    {
+        return '';
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
+    }
 }

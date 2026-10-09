@@ -3,12 +3,13 @@
 namespace App\Services\Builder;
 
 use App\Models\HomepageCard;
+use Illuminate\Support\Facades\Gate;
 
 class HomepageCardService
 {
     public function all()
     {
-        return HomepageCard::orderBy('sort_order')->get();
+        return HomepageCard::with('backgroundMedia')->orderBy('sort_order')->get();
     }
 
     public function find(int $id): HomepageCard
@@ -18,6 +19,8 @@ class HomepageCardService
 
     public function create(): HomepageCard
     {
+        Gate::authorize('create', HomepageCard::class);
+
         return HomepageCard::create([
 
             'title' => 'New Homepage Card',
@@ -45,6 +48,7 @@ class HomepageCardService
         HomepageCard $card,
         array $data
     ): HomepageCard {
+        Gate::authorize('update', $card);
 
         $card->update($data);
 
@@ -54,6 +58,7 @@ class HomepageCardService
     public function delete(
         HomepageCard $card
     ): void {
+        Gate::authorize('delete', $card);
 
         $card->delete();
 
@@ -73,6 +78,7 @@ class HomepageCardService
     public function duplicate(
         HomepageCard $card
     ): HomepageCard {
+        Gate::authorize('replicate', $card);
 
         $copy = $card->replicate();
 
@@ -89,10 +95,11 @@ class HomepageCardService
     public function toggle(
         HomepageCard $card
     ): HomepageCard {
+        Gate::authorize('update', $card);
 
         $card->update([
 
-            'is_active' => !$card->is_active
+            'is_active' => ! $card->is_active,
 
         ]);
 

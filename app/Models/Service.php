@@ -17,13 +17,13 @@ class Service extends Model
         'duration',
         'features',
 
-'button_text',
-'featured',
-'status',
+        'button_text',
+        'featured',
+        'status',
 
-'sort_order',
-'seo_title',
-'seo_description',
+        'sort_order',
+        'seo_title',
+        'seo_description',
 
     ];
 
@@ -31,8 +31,8 @@ class Service extends Model
 
         'features' => 'array',
 
-'featured' => 'boolean',
-'status' => 'boolean',
+        'featured' => 'boolean',
+        'status' => 'boolean',
 
     ];
 

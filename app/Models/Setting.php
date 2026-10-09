@@ -178,9 +178,57 @@ class Setting extends Model
         ];
     }
 
+    public static bool $isSyncing = false;
+
     protected static function booted(): void
     {
-        static::saved(fn () => Cache::forget(self::CACHE_KEY));
-        static::deleted(fn () => Cache::forget(self::CACHE_KEY));
+        static::saved(function (Setting $setting): void {
+            Cache::forget(self::CACHE_KEY);
+            \App\Providers\AppServiceProvider::clearSharedViewData();
+
+            if (static::$isSyncing) {
+                return;
+            }
+
+            static::$isSyncing = true;
+            try {
+                $syncData = [];
+                if ($setting->wasChanged('hero_title') || ($setting->wasRecentlyCreated && filled($setting->hero_title))) {
+                    $syncData['heading'] = $setting->hero_title;
+                }
+                if ($setting->wasChanged('hero_subtitle') || ($setting->wasRecentlyCreated && filled($setting->hero_subtitle))) {
+                    $syncData['subheading'] = $setting->hero_subtitle;
+                }
+                if ($setting->wasChanged('cta_button_text') || ($setting->wasRecentlyCreated && filled($setting->cta_button_text))) {
+                    $syncData['button_text'] = $setting->cta_button_text;
+                }
+                if ($setting->wasChanged('cta_button_link') || ($setting->wasRecentlyCreated && filled($setting->cta_button_link))) {
+                    $syncData['button_link'] = $setting->cta_button_link;
+                }
+                if ($setting->wasChanged('followers_label') || ($setting->wasRecentlyCreated && filled($setting->followers_label))) {
+                    $syncData['followers_label'] = $setting->followers_label;
+                }
+                if ($setting->wasChanged('years_label') || ($setting->wasRecentlyCreated && filled($setting->years_label))) {
+                    $syncData['years_label'] = $setting->years_label;
+                }
+                if ($setting->wasChanged('transformations_label') || ($setting->wasRecentlyCreated && filled($setting->transformations_label))) {
+                    $syncData['transformations_label'] = $setting->transformations_label;
+                }
+
+                if (! empty($syncData)) {
+                    $hero = HeroSetting::first();
+                    if ($hero) {
+                        $hero->update($syncData);
+                    }
+                }
+            } finally {
+                static::$isSyncing = false;
+            }
+        });
+
+        static::deleted(function (): void {
+            Cache::forget(self::CACHE_KEY);
+            \App\Providers\AppServiceProvider::clearSharedViewData();
+        });
     }
 }

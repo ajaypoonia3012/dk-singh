@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\WorkoutPlan;
+use App\Models\BlogPost;
 use App\Models\DietPlan;
-use App\Models\Blog;
-use App\Models\Transformation;
 use App\Models\Program;
 use App\Models\Service;
+use App\Models\Transformation;
+use App\Models\WorkoutPlan;
 
 class FitnessHubController extends Controller
 {
@@ -24,8 +24,9 @@ class FitnessHubController extends Controller
             ->take(6)
             ->get();
 
-        $blogs = Blog::latest()
-            ->take(12)
+        $blogs = BlogPost::where('status', true)
+            ->latest('published_at')
+            ->take(6)
             ->get();
 
         $transformations = Transformation::latest()

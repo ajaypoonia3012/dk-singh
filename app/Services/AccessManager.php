@@ -12,9 +12,9 @@ class AccessManager
     protected static array $levels = [
 
         'public' => 0,
-        'basic'  => 1,
-        'pro'    => 2,
-        'elite'  => 3,
+        'basic' => 1,
+        'pro' => 2,
+        'elite' => 3,
 
     ];
 
@@ -38,8 +38,8 @@ class AccessManager
         }
 
         return strtolower(
-    $membership->plan->access_type ?? 'public'
-);
+            $membership->plan->access_type ?? 'public'
+        );
     }
 
     /**

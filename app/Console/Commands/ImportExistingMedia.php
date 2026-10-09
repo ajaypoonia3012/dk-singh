@@ -34,6 +34,7 @@ class ImportExistingMedia extends Command
 
             if (Media::where('path', $path)->exists()) {
                 $skipped++;
+
                 continue;
             }
 

@@ -16,10 +16,10 @@ class OrderingService
             '<',
             $model->sort_order
         )
-        ->orderByDesc('sort_order')
-        ->first();
+            ->orderByDesc('sort_order')
+            ->first();
 
-        if (!$previous) {
+        if (! $previous) {
             return false;
         }
 
@@ -44,10 +44,10 @@ class OrderingService
             '>',
             $model->sort_order
         )
-        ->orderBy('sort_order')
-        ->first();
+            ->orderBy('sort_order')
+            ->first();
 
-        if (!$next) {
+        if (! $next) {
             return false;
         }
 

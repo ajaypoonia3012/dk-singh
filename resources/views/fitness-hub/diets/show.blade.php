@@ -1,12 +1,14 @@
 @extends('layouts.app')
+@section('title', $diet->title . ' Nutrition Plan | DK Singh Fitness')
+@section('meta_description', Str::limit(strip_tags($diet->content ?? 'Nutrition guidelines, macronutrient breakdown, and meal schedule for ' . $diet->title), 155))
 
 @section('content')
 
-<section class="bg-[#f6f3eb] py-24 min-h-screen">
+<section class="theme-surface-muted theme-section min-h-screen">
 
-<div class="max-w-6xl mx-auto px-6">
+<div class="theme-page-container">
 
-<div class="grid lg:grid-cols-3 gap-10">
+<div class="grid lg:grid-cols-3 theme-grid-gap">
 
 <div class="lg:col-span-2">
 
@@ -16,13 +18,13 @@
 
 <div class="mb-6">
 
-<span class="bg-yellow-500 text-black px-4 py-2 rounded-full font-bold">
+<span class="theme-status-warning theme-text-secondary px-4 py-2 rounded-full font-bold">
 {{ $diet->goal }}
 </span>
 
 </div>
 
-<div class="bg-white rounded-3xl p-10 shadow-xl">
+<div class="theme-card theme-radius theme-card-padding-lg theme-shadow">
 
 {!! $diet->content !!}
 
@@ -32,25 +34,33 @@
 
 <div>
 
-<div class="bg-white rounded-3xl p-8 shadow-xl sticky top-32">
+<div class="theme-card theme-radius theme-card-padding theme-shadow sticky top-32">
 
-<h3 class="text-3xl font-black mb-6">
-Need Personalized Nutrition?
+<span class="theme-text-primary uppercase tracking-[2px] font-bold text-xs mb-2 block">
+PERSONALIZED DIET
+</span>
+
+<h3 class="text-2xl font-black mb-3">
+Need a Custom Indian Meal Plan?
 </h3>
 
-<a href="/plans"
-class="block bg-yellow-500 text-black text-center py-4 rounded-2xl font-black mb-4">
-View Plans
+<p class="theme-text-neutral text-sm mb-6 leading-relaxed">
+Everyone's metabolic rate and food tolerances differ. Get an authentic Indian meal plan tailored to your exact weight, food choices (pure veg, eggetarian, or non-veg), and schedule with Coach DK Singh.
+</p>
+
+<a href="{{ route('services.show', 'diet-nutrition-coaching') }}"
+class="block theme-status-warning theme-text-secondary text-center py-3.5 theme-radius font-black mb-3 text-sm">
+Explore Diet & Nutrition Coaching &rarr;
 </a>
 
-<a href="/services"
-class="block bg-black text-white text-center py-4 rounded-2xl font-black mb-4">
-Book Coaching
+<a href="{{ route('contact', ['service' => 'diet-nutrition-coaching']) }}"
+class="block theme-surface-strong theme-text-on-strong text-center py-3.5 theme-radius font-bold mb-3 text-sm">
+Ask Coach a Nutrition Question
 </a>
 
-<a href="/products"
-class="block border border-black text-center py-4 rounded-2xl font-black">
-Shop Supplements
+<a href="{{ route('programs.show', '12-week-fat-loss-transformation') }}"
+class="block border theme-border text-center py-3 theme-radius font-semibold text-sm theme-text-neutral hover:theme-text-primary transition">
+View 12-Week Transformation Program
 </a>
 
 </div>

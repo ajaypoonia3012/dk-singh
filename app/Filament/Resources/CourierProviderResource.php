@@ -14,9 +14,13 @@ class CourierProviderResource extends Resource
 {
     protected static ?string $model = CourierProvider::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-truck';
+    protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
 
     protected static ?string $navigationGroup = 'Commerce';
+
+    protected static ?string $navigationLabel = 'Courier Providers';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

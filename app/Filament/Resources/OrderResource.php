@@ -4,12 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Models\Order;
-
 use Filament\Forms;
 use Filament\Forms\Form;
-
 use Filament\Resources\Resource;
-
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -17,24 +14,29 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
-protected static ?string $navigationGroup = 'Commerce';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+
+    protected static ?string $navigationGroup = 'Commerce';
+
+    protected static ?string $navigationLabel = 'Orders';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
 
-               Forms\Components\TextInput::make('user_id')
-    ->disabled(),
+                Forms\Components\TextInput::make('user_id')
+                    ->disabled(),
 
                 Forms\Components\TextInput::make('item_type'),
 
-               Forms\Components\TextInput::make('item_id')
-    ->disabled(),
+                Forms\Components\TextInput::make('item_id')
+                    ->disabled(),
 
                 Forms\Components\TextInput::make('amount')
-    ->disabled(),
+                    ->disabled(),
 
                 Forms\Components\Select::make('payment_status')
                     ->options([
@@ -46,101 +48,101 @@ protected static ?string $navigationGroup = 'Commerce';
                 Forms\Components\TextInput::make('payment_gateway'),
 
                 Forms\Components\TextInput::make('payment_id'),
-Forms\Components\Select::make('order_status')
-    ->options([
-        'pending' => 'Pending',
-        'packed' => 'Packed',
-        'shipped' => 'Shipped',
-        'delivered' => 'Delivered',
-        'cancelled' => 'Cancelled',
-    ]),
+                Forms\Components\Select::make('order_status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'packed' => 'Packed',
+                        'shipped' => 'Shipped',
+                        'delivered' => 'Delivered',
+                        'cancelled' => 'Cancelled',
+                    ]),
 
-Forms\Components\TextInput::make('courier'),
+                Forms\Components\TextInput::make('courier'),
 
-Forms\Components\TextInput::make('tracking_number'),
+                Forms\Components\TextInput::make('tracking_number'),
 
-Forms\Components\Textarea::make('shipping_address'),
+                Forms\Components\Textarea::make('shipping_address'),
 
-Forms\Components\TextInput::make('city'),
+                Forms\Components\TextInput::make('city'),
 
-Forms\Components\TextInput::make('state'),
+                Forms\Components\TextInput::make('state'),
 
-Forms\Components\TextInput::make('pincode'),
+                Forms\Components\TextInput::make('pincode'),
 
             ]);
     }
 
-   public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
 
-Tables\Columns\TextColumn::make('order_number')
-    ->searchable()
-    ->sortable(),
+                Tables\Columns\TextColumn::make('order_number')
+                    ->searchable()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('customer_name')
-                ->searchable()
-                ->sortable(),
+                Tables\Columns\TextColumn::make('customer_name')
+                    ->searchable()
+                    ->sortable(),
 
-            Tables\Columns\TextColumn::make('customer_email')
-                ->searchable(),
+                Tables\Columns\TextColumn::make('customer_email')
+                    ->searchable(),
 
-            Tables\Columns\TextColumn::make('item_type')
-                ->badge(),
+                Tables\Columns\TextColumn::make('item_type')
+                    ->badge(),
 
-            Tables\Columns\TextColumn::make('item_id')
-                ->label('Item')
-                ->formatStateUsing(function ($state, $record) {
+                Tables\Columns\TextColumn::make('item_id')
+                    ->label('Item')
+                    ->formatStateUsing(function ($state, $record) {
 
-                    if ($record->item_type === 'product') {
+                        if ($record->item_type === 'product') {
 
-                        return optional(
-                            $record->product
-                        )->name ?? 'Deleted Product';
+                            return optional(
+                                $record->product
+                            )->name ?? 'Deleted Product';
 
-                    }
+                        }
 
-                    if ($record->item_type === 'plan') {
+                        if ($record->item_type === 'plan') {
 
-                        return optional(
-                            $record->plan
-                        )->name ?? 'Deleted Plan';
+                            return optional(
+                                $record->plan
+                            )->name ?? 'Deleted Plan';
 
-                    }
+                        }
 
-                    return $state;
+                        return $state;
 
-                }),
+                    }),
 
-            Tables\Columns\TextColumn::make('amount')
-                ->money('INR'),
+                Tables\Columns\TextColumn::make('amount')
+                    ->money('INR'),
 
-            Tables\Columns\TextColumn::make('payment_status')
-                ->badge(),
+                Tables\Columns\TextColumn::make('payment_status')
+                    ->badge(),
 
-            Tables\Columns\TextColumn::make('order_status')
-                ->badge(),
+                Tables\Columns\TextColumn::make('order_status')
+                    ->badge(),
 
-            Tables\Columns\TextColumn::make('courier'),
+                Tables\Columns\TextColumn::make('courier'),
 
-            Tables\Columns\TextColumn::make('tracking_number'),
+                Tables\Columns\TextColumn::make('tracking_number'),
 
-            Tables\Columns\TextColumn::make('created_at')
-                ->dateTime('d M Y'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('d M Y'),
 
-        ])
-        ->filters([
-            //
-        ])
-        ->actions([
-            Tables\Actions\EditAction::make(),
-        ])
-                ->bulkActions([
-            Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
-            ]),
-        ]);
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getRelations(): array

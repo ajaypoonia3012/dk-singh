@@ -1,0 +1,118 @@
+{
+    "phase_1": {
+        "total_routes": 221,
+        "public_routes_count": 98,
+        "admin_routes_count": 102,
+        "auth_routes_count": 21,
+        "canonical_models": {
+            "General Settings": {
+                "class": "App\\Models\\Setting",
+                "table": "settings",
+                "count": 1
+            },
+            "Theme Design System": {
+                "class": "App\\Models\\ThemeSetting",
+                "table": "theme_settings",
+                "count": 1
+            },
+            "Homepage Hero": {
+                "class": "App\\Models\\HeroSetting",
+                "table": "hero_settings",
+                "count": 1
+            },
+            "Homepage Sections": {
+                "class": "App\\Models\\WebsiteSection",
+                "table": "website_sections",
+                "count": 8
+            },
+            "Homepage Feature Cards": {
+                "class": "App\\Models\\HomepageCard",
+                "table": "homepage_cards",
+                "count": 4
+            },
+            "Media Assets": {
+                "class": "App\\Models\\Media",
+                "table": "media",
+                "count": 376
+            },
+            "Editorial Blog Articles": {
+                "class": "App\\Models\\BlogPost",
+                "table": "blog_posts",
+                "count": 249
+            },
+            "Editorial Categories": {
+                "class": "App\\Models\\BlogCategory",
+                "table": "blog_categories",
+                "count": 11
+            },
+            "Editorial Tags": {
+                "class": "App\\Models\\BlogTag",
+                "table": "blog_tags",
+                "count": 21
+            },
+            "Exercises & Library": {
+                "class": "App\\Models\\Exercise",
+                "table": "exercises",
+                "count": 25
+            },
+            "Coaching Programs": {
+                "class": "App\\Models\\Program",
+                "table": "programs",
+                "count": 3
+            },
+            "Coaching Services": {
+                "class": "App\\Models\\Service",
+                "table": "services",
+                "count": 3
+            },
+            "Client Transformations": {
+                "class": "App\\Models\\Transformation",
+                "table": "transformations",
+                "count": 1
+            },
+            "Client Testimonials": {
+                "class": "App\\Models\\Testimonial",
+                "table": "testimonials",
+                "count": 5
+            },
+            "E-Commerce Products": {
+                "class": "App\\Models\\Product",
+                "table": "products",
+                "count": 11
+            },
+            "Pricing \/ Plans": {
+                "class": "App\\Models\\Plan",
+                "table": "plans",
+                "count": 4
+            },
+            "Free Workout Plans": {
+                "class": "App\\Models\\WorkoutPlan",
+                "table": "workout_plans",
+                "count": 1
+            },
+            "Free Diet Plans": {
+                "class": "App\\Models\\DietPlan",
+                "table": "diet_plans",
+                "count": 1
+            },
+            "Orders & Invoices": {
+                "class": "App\\Models\\Order",
+                "table": "orders",
+                "count": 11
+            }
+        },
+        "legacy_models": {
+            "Blog": {
+                "class": "App\\Models\\Blog",
+                "count": 1,
+                "status": "Legacy single-record archive; superseded by BlogPost (249 records)"
+            }
+        }
+    },
+    "phase_2": {
+        "section_visibility_sync": "PASS",
+        "section_order_sync": "FAIL",
+        "theme_setting_sync": "PASS",
+        "restored_cleanly": true
+    }
+}

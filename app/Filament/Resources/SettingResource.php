@@ -19,11 +19,11 @@ class SettingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static ?string $navigationGroup = 'Business';
+    protected static ?string $navigationGroup = 'Settings & System';
 
-    protected static ?string $navigationLabel = 'Site Settings';
+    protected static ?string $navigationLabel = 'Site Settings & SEO';
 
-    protected static ?int $navigationSort = 90;
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -84,6 +84,15 @@ class SettingResource extends Resource
                     ->description('Primary homepage messaging and supporting imagery.')
                     ->icon('heroicon-o-photo')
                     ->schema([
+                        Forms\Components\Placeholder::make('builder_notice')
+                            ->label('')
+                            ->content(new \Illuminate\Support\HtmlString(
+                                '<div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs flex flex-wrap items-center justify-between gap-2">'
+                                . '<div><strong class="text-amber-900 dark:text-amber-300">Single Source of Truth:</strong> <span class="text-slate-600 dark:text-zinc-300">Homepage copy, hero buttons, and section layout can also be visually edited and previewed in real-time.</span></div>'
+                                . '<a href="/admin/website-builder" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs shadow-xs transition">Open Website Builder →</a>'
+                                . '</div>'
+                            ))
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('hero_title')->maxLength(160),
                         Forms\Components\Textarea::make('hero_subtitle')->rows(3)->maxLength(500)->columnSpanFull(),
                         self::imageUpload('hero_image', 'Hero image', 'Large landscape image recommended.'),

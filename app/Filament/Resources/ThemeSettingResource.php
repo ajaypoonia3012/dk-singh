@@ -3,12 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ThemeSettingResource\Pages;
+use App\Models\Media;
 use App\Models\ThemeSetting;
+use App\Services\ThemePaletteRegistry;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,11 +22,11 @@ class ThemeSettingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-swatch';
 
-    protected static ?string $navigationGroup = 'Business';
+    protected static ?string $navigationGroup = 'Settings & System';
 
-    protected static ?string $navigationLabel = 'Design System';
+    protected static ?string $navigationLabel = 'Design System & Themes';
 
-    protected static ?int $navigationSort = 91;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -32,6 +35,7 @@ class ThemeSettingResource extends Resource
                 ->persistTabInQueryString()
                 ->columnSpanFull()
                 ->tabs([
+                    self::paletteTab(),
                     self::identityTab(),
                     self::typographyTab(),
                     self::componentsTab(),
@@ -39,9 +43,50 @@ class ThemeSettingResource extends Resource
                     self::homepageTab(),
                     self::engagementTab(),
                     self::motionTab(),
+                    self::loginAppearanceTab(),
                     self::advancedTab(),
                 ]),
         ]);
+    }
+
+    private static function paletteTab(): Tab
+    {
+        $palettes = app(ThemePaletteRegistry::class);
+
+        return Tab::make('Theme Palette')
+            ->icon('heroicon-o-squares-2x2')
+            ->schema([
+                Section::make('Theme Palette')
+                    ->description('Apply a complete design preset, then continue customizing any individual setting below.')
+                    ->icon('heroicon-o-sparkles')
+                    ->schema([
+                        Forms\Components\Placeholder::make('builder_theme_notice')
+                            ->label('')
+                            ->content(new \Illuminate\Support\HtmlString(
+                                '<div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs flex flex-wrap items-center justify-between gap-2">'
+                                . '<div><strong class="text-amber-900 dark:text-amber-300">Single Source of Truth:</strong> <span class="text-slate-600 dark:text-zinc-300">Theme tokens and presets can also be previewed interactively with live component simulation.</span></div>'
+                                . '<a href="/admin/website-builder" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs shadow-xs transition">Open Visual Theme Builder →</a>'
+                                . '</div>'
+                            ))
+                            ->columnSpanFull(),
+                        Forms\Components\Radio::make('theme_palette')
+                            ->label('Choose a palette')
+                            ->options($palettes->options())
+                            ->descriptions($palettes->descriptions())
+                            ->columns(['default' => 1, 'md' => 2, 'xl' => 3])
+                            ->live()
+                            ->afterStateUpdated(function (Set $set, ?string $state) use ($palettes): void {
+                                if (blank($state)) {
+                                    return;
+                                }
+
+                                foreach ($palettes->tokens($state) as $field => $value) {
+                                    $set($field, $value);
+                                }
+                            })
+                            ->helperText('Selecting a palette updates the existing fields immediately. Saving still uses the normal Theme Settings pipeline.'),
+                    ]),
+            ]);
     }
 
     private static function identityTab(): Tab
@@ -240,6 +285,115 @@ class ThemeSettingResource extends Resource
                         Forms\Components\Toggle::make('page_loader_enabled')->default(false)->inline(false),
                     ])->columns(3),
             ]);
+    }
+
+    private static function loginAppearanceTab(): Tab
+    {
+        return Tab::make('Login Appearance')
+            ->icon('heroicon-o-lock-closed')
+            ->schema([
+                self::loginAppearanceSection('Public Login', 'public_login'),
+                self::loginAppearanceSection('Admin Login', 'admin_login'),
+            ]);
+    }
+
+    private static function loginAppearanceSection(string $label, string $prefix): Section
+    {
+        return Section::make($label)
+            ->description('Configure the login background using the existing theme and Media Library.')
+            ->schema([
+                Forms\Components\Select::make("{$prefix}_background_mode")
+                    ->label('Background mode')
+                    ->options([
+                        'theme' => 'Theme / default',
+                        'solid' => 'Solid color',
+                        'image' => 'Background image',
+                        'gradient' => 'Animated gradient',
+                        'image-overlay' => 'Image + animated overlay',
+                        'none' => 'None / minimal',
+                    ])
+                    ->required()
+                    ->live(),
+                self::color("{$prefix}_background_color", 'Solid background', '#111111'),
+                self::mediaSelect("{$prefix}_background_media_id"),
+                Forms\Components\FileUpload::make("{$prefix}_background_upload")
+                    ->label('Upload new image')
+                    ->helperText('Upload an image here to add it to the Media Library and select it automatically when you save.')
+                    ->storeFiles(false)
+                    ->image()
+                    ->acceptedFileTypes([
+                        'image/jpeg',
+                        'image/png',
+                        'image/webp',
+                        'image/gif',
+                    ])
+                    ->maxSize(20 * 1024)
+                    ->imagePreviewHeight('160')
+                    ->openable(),
+                Forms\Components\Select::make("{$prefix}_background_fit")
+                    ->label('Image fit')
+                    ->options(['cover' => 'Cover', 'contain' => 'Contain'])
+                    ->required(),
+                Forms\Components\Select::make("{$prefix}_background_position")
+                    ->label('Image position')
+                    ->options([
+                        'center' => 'Center',
+                        'top' => 'Top',
+                        'bottom' => 'Bottom',
+                        'left' => 'Left',
+                        'right' => 'Right',
+                    ])
+                    ->required(),
+                self::color("{$prefix}_overlay_color", 'Overlay color', '#000000'),
+                Forms\Components\TextInput::make("{$prefix}_overlay_opacity")
+                    ->label('Overlay opacity')
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(100)
+                    ->suffix('%')
+                    ->required(),
+                Forms\Components\Select::make("{$prefix}_animation")
+                    ->label('Animation')
+                    ->options([
+                        'none' => 'None',
+                        'gradient' => 'Animated gradient',
+                        'orbs' => 'Slow floating orbs',
+                        'image-zoom' => 'Subtle image movement / zoom',
+                    ])
+                    ->required(),
+                Forms\Components\TextInput::make("{$prefix}_animation_speed")
+                    ->label('Animation speed')
+                    ->numeric()
+                    ->minValue(8)
+                    ->maxValue(60)
+                    ->suffix('seconds')
+                    ->required(),
+                Forms\Components\TextInput::make("{$prefix}_animation_intensity")
+                    ->label('Animation intensity')
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(100)
+                    ->suffix('%')
+                    ->required(),
+            ])->columns(['default' => 1, 'md' => 2]);
+    }
+
+    private static function mediaSelect(string $name): Forms\Components\Select
+    {
+        return Forms\Components\Select::make($name)
+            ->label('Background image')
+            ->options(fn (): array => Media::query()
+                ->where('active', true)
+                ->where('type', 'image')
+                ->orderBy('name')
+                ->get()
+                ->mapWithKeys(fn (Media $media): array => [$media->id => $media->display_name])
+                ->all())
+            ->searchable()
+            ->preload()
+            ->nullable()
+            ->exists(Media::class, 'id')
+            ->helperText('Select an image already managed by the Media Library.');
     }
 
     private static function advancedTab(): Tab

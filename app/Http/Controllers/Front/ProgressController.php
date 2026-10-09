@@ -3,200 +3,211 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\ProgressLog;
+use Illuminate\Http\Request;
 
 class ProgressController extends Controller
 {
     public function index()
-{
-    $logs = ProgressLog::where(
-        'user_id',
-        auth()->id()
-    )
-    ->latest()
-    ->get();
+    {
+        $logs = ProgressLog::where(
+            'user_id',
+            auth()->id()
+        )
+            ->latest()
+            ->get();
 
+        $chartLogs = $logs->reverse()->values();
 
-$chartLogs = $logs->reverse()->values();
+        $weightLabels = $chartLogs
+            ->pluck('created_at')
+            ->map(fn ($date) => $date->format('d M'))
+            ->toArray();
 
-$weightLabels = $chartLogs
-    ->pluck('created_at')
-    ->map(fn ($date) => $date->format('d M'))
-    ->toArray();
+        $weightData = $chartLogs
+            ->pluck('weight')
+            ->toArray();
 
-$weightData = $chartLogs
-    ->pluck('weight')
-    ->toArray();
+        $latest = $logs->first();
 
-    $latest = $logs->first();
+        $oldest = $logs->last();
 
-$oldest = $logs->last();
+        $startingBMI = $oldest?->bmi;
 
-$startingBMI = $oldest?->bmi;
+        $currentBMI = $latest?->bmi;
 
-$currentBMI = $latest?->bmi;
+        $bmiChange = null;
 
-$bmiChange = null;
+        if ($startingBMI && $currentBMI) {
 
-if ($startingBMI && $currentBMI) {
+            $bmiChange = round(
+                $startingBMI - $currentBMI,
+                1
+            );
+        }
 
-    $bmiChange = round(
-        $startingBMI - $currentBMI,
-        1
-    );
-}
+        $startingBodyFat = $oldest?->body_fat;
 
-$startingBodyFat = $oldest?->body_fat;
+        $currentBodyFat = $latest?->body_fat;
 
-$currentBodyFat = $latest?->body_fat;
+        $bodyFatLost = null;
 
-$bodyFatLost = null;
+        if ($startingBodyFat && $currentBodyFat) {
 
-if ($startingBodyFat && $currentBodyFat) {
+            $bodyFatLost = round(
+                $startingBodyFat - $currentBodyFat,
+                1
+            );
+        }
 
-    $bodyFatLost = round(
-        $startingBodyFat - $currentBodyFat,
-        1
-    );
-}
+        $startingWeight = $logs->last()?->weight;
 
-    $startingWeight = $logs->last()?->weight;
+        $currentWeight = $latest?->weight;
 
-    $currentWeight = $latest?->weight;
+        $weightLost = null;
 
-    $weightLost = null;
+        if ($startingWeight && $currentWeight) {
 
-    if ($startingWeight && $currentWeight) {
+            $weightLost = $startingWeight - $currentWeight;
+        }
 
-    $weightLost = $startingWeight - $currentWeight;
-}
+        $alreadySubmittedToday = ProgressLog::where(
+            'user_id',
+            auth()->id()
+        )
+            ->whereDate('created_at', today())
+            ->exists();
 
-$alreadySubmittedToday = ProgressLog::where(
-    'user_id',
-    auth()->id()
-)
-->whereDate('created_at', today())
-->exists();
+        return view(
+            'member.progress.index',
+            compact(
+                'logs',
+                'latest',
 
-    return view(
-        'member.progress.index',
-        compact(
-    'logs',
-    'latest',
+                'startingWeight',
+                'currentWeight',
+                'weightLost',
 
-    'startingWeight',
-    'currentWeight',
-    'weightLost',
-
-    'startingBMI',
-    'currentBMI',
-    'bmiChange',
-'weightLabels',
-'weightData',
-    'startingBodyFat',
-    'currentBodyFat',
-    'bodyFatLost',
-'alreadySubmittedToday'
-)
-    );
-}
+                'startingBMI',
+                'currentBMI',
+                'bmiChange',
+                'weightLabels',
+                'weightData',
+                'startingBodyFat',
+                'currentBodyFat',
+                'bodyFatLost',
+                'alreadySubmittedToday'
+            )
+        );
+    }
 
     public function create()
-{
-    return view(
-        'member.progress.create'
-    );
-}
+    {
+        return view(
+            'member.progress.create'
+        );
+    }
 
     public function store(Request $request)
-{
-$alreadySubmittedToday = ProgressLog::where(
-    'user_id',
-    auth()->id()
-)
-->whereDate('created_at', today())
-->exists();
+    {
+        $request->validate([
+            'weight' => 'required|numeric|min:20|max:500',
+            'body_fat' => 'nullable|numeric|min:1|max:100',
+            'chest' => 'nullable|numeric|min:10|max:300',
+            'waist' => 'nullable|numeric|min:10|max:300',
+            'arms' => 'nullable|numeric|min:5|max:150',
+            'thighs' => 'nullable|numeric|min:10|max:200',
+            'front_photo' => 'nullable|image|mimes:jpeg,png,webp,jpg|max:5120',
+            'side_photo' => 'nullable|image|mimes:jpeg,png,webp,jpg|max:5120',
+            'back_photo' => 'nullable|image|mimes:jpeg,png,webp,jpg|max:5120',
+            'notes' => 'nullable|string|max:2000',
+        ]);
 
-if ($alreadySubmittedToday) {
+        $alreadySubmittedToday = ProgressLog::where(
+            'user_id',
+            auth()->id()
+        )
+            ->whereDate('created_at', today())
+            ->exists();
 
-    return redirect()
-        ->route('member.progress')
-        ->with(
-            'error',
-            'You have already submitted a check-in today.'
-        );
-}
-$user = auth()->user();
-$frontPhoto = null;
-$sidePhoto = null;
-$backPhoto = null;
-$bmi = null;
+        if ($alreadySubmittedToday) {
 
-if ($user->height && $request->weight) {
+            return redirect()
+                ->route('member.progress')
+                ->with(
+                    'error',
+                    'You have already submitted a check-in today.'
+                );
+        }
+        $user = auth()->user();
+        $frontPhoto = null;
+        $sidePhoto = null;
+        $backPhoto = null;
+        $bmi = null;
 
-    $heightInMeters = $user->height / 100;
+        if ($user->height && $request->weight) {
 
-    $bmi = round(
-        $request->weight /
-        ($heightInMeters * $heightInMeters),
-        1
-    );
-}
-if ($request->hasFile('front_photo')) {
+            $heightInMeters = $user->height / 100;
 
-    $frontPhoto = $request
-        ->file('front_photo')
-        ->store('progress', 'public');
-}
+            $bmi = round(
+                $request->weight /
+                ($heightInMeters * $heightInMeters),
+                1
+            );
+        }
+        if ($request->hasFile('front_photo')) {
 
-if ($request->hasFile('side_photo')) {
+            $frontPhoto = $request
+                ->file('front_photo')
+                ->store('progress', 'public');
+        }
 
-    $sidePhoto = $request
-        ->file('side_photo')
-        ->store('progress', 'public');
-}
+        if ($request->hasFile('side_photo')) {
 
-if ($request->hasFile('back_photo')) {
+            $sidePhoto = $request
+                ->file('side_photo')
+                ->store('progress', 'public');
+        }
 
-    $backPhoto = $request
-        ->file('back_photo')
-        ->store('progress', 'public');
-}
+        if ($request->hasFile('back_photo')) {
 
-ProgressLog::create([
+            $backPhoto = $request
+                ->file('back_photo')
+                ->store('progress', 'public');
+        }
 
-    'user_id' => auth()->id(),
+        ProgressLog::create([
 
-    'weight' => $request->weight,
-    'bmi' => $bmi,
-    'body_fat' => $request->body_fat,
+            'user_id' => auth()->id(),
 
-    'chest' => $request->chest,
-    'waist' => $request->waist,
-    'arms' => $request->arms,
-    'thighs' => $request->thighs,
+            'weight' => $request->weight,
+            'bmi' => $bmi,
+            'body_fat' => $request->body_fat,
 
-    'front_photo' => $frontPhoto,
-    'side_photo' => $sidePhoto,
-    'back_photo' => $backPhoto,
+            'chest' => $request->chest,
+            'waist' => $request->waist,
+            'arms' => $request->arms,
+            'thighs' => $request->thighs,
 
-    'notes' => $request->notes,
-]);
-$user->update([
+            'front_photo' => $frontPhoto,
+            'side_photo' => $sidePhoto,
+            'back_photo' => $backPhoto,
 
-    'weight' => $request->weight,
+            'notes' => $request->notes,
+        ]);
+        $user->update([
 
-    'bmi' => $bmi,
+            'weight' => $request->weight,
 
-]);
+            'bmi' => $bmi,
 
-return redirect()
-    ->route('member.progress')
-    ->with(
-        'success',
-        'Progress Logged Successfully'
-    );
-}
+        ]);
 
+        return redirect()
+            ->route('member.progress')
+            ->with(
+                'success',
+                'Progress Logged Successfully'
+            );
+    }
 }

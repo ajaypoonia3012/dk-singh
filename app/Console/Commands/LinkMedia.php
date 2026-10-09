@@ -2,15 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
-use App\Services\Media\MediaLinker;
-
-use App\Models\Service;
-use App\Models\Program;
 use App\Models\Product;
+use App\Models\Program;
+use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\Transformation;
+use App\Services\Media\MediaLinker;
+use Illuminate\Console\Command;
 
 class LinkMedia extends Command
 {

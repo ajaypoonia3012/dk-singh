@@ -4,16 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MediaResource\Pages;
 use App\Models\Media;
-use App\Models\MediaCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Intervention\Image\ImageManager;
+use Illuminate\Database\Eloquent\Builder;
 use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class MediaResource extends Resource
 {
@@ -21,9 +20,11 @@ class MediaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
-    protected static ?string $navigationGroup = 'Website Builder';
+    protected static ?string $navigationGroup = 'Media & Assets';
 
     protected static ?string $navigationLabel = 'Media Library';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 1;
 
@@ -42,22 +43,22 @@ class MediaResource extends Resource
                     ->columnSpanFull()
                     ->afterStateUpdated(function ($state, Set $set) {
 
-                        if (!$state) {
+                        if (! $state) {
                             return;
                         }
 
                         $absolute = storage_path('app/public/'.$state);
 
-                        if (!file_exists($absolute)) {
+                        if (! file_exists($absolute)) {
                             return;
                         }
 
-                        $image = (new ImageManager(new Driver()))
+                        $image = (new ImageManager(new Driver))
                             ->read($absolute);
 
                         $set('file_name', basename($state));
 
-                        if (!$set('name')) {
+                        if (! $set('name')) {
                             $set(
                                 'name',
                                 pathinfo($state, PATHINFO_FILENAME)
@@ -92,7 +93,9 @@ class MediaResource extends Resource
                 Forms\Components\Hidden::make('height'),
                 Forms\Components\Hidden::make('type'),
 
-                Forms\Components\TextInput::make('alt'),
+                Forms\Components\TextInput::make('alt')
+                    ->label('Alt Text')
+                    ->helperText('Describe the image for screen readers and SEO.'),
 
                 Forms\Components\TextInput::make('title'),
 
@@ -122,16 +125,54 @@ class MediaResource extends Resource
 
                 Tables\Columns\ImageColumn::make('path')
                     ->disk('public')
-                    ->square(),
+                    ->square()
+                    ->height(56),
 
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('semibold'),
 
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Category')
                     ->badge()
                     ->sortable(),
+
+                // Dimensions — width × height
+                Tables\Columns\TextColumn::make('dimensions')
+                    ->label('Dimensions')
+                    ->getStateUsing(fn ($record) => ($record->width && $record->height)
+                        ? "{$record->width} × {$record->height}"
+                        : '—'
+                    )
+                    ->color('gray'),
+
+                // Human-readable file size
+                Tables\Columns\TextColumn::make('size')
+                    ->label('File Size')
+                    ->getStateUsing(fn ($record) => $record->size
+                        ? number_format($record->size / 1024, 1) . ' KB'
+                        : '—'
+                    )
+                    ->sortable()
+                    ->color('gray'),
+
+                // Alt text status badge
+                Tables\Columns\IconColumn::make('alt_status')
+                    ->label('Alt Text')
+                    ->icon(fn ($record) => ($record->alt && trim($record->alt) !== '')
+                        ? 'heroicon-o-check-circle'
+                        : 'heroicon-o-exclamation-circle'
+                    )
+                    ->color(fn ($record) => ($record->alt && trim($record->alt) !== '')
+                        ? 'success'
+                        : 'danger'
+                    )
+                    ->tooltip(fn ($record) => ($record->alt && trim($record->alt) !== '')
+                        ? $record->alt
+                        : 'Missing alt text — accessibility risk'
+                    )
+                    ->getStateUsing(fn () => true),
 
                 Tables\Columns\IconColumn::make('featured')
                     ->boolean(),
@@ -140,15 +181,27 @@ class MediaResource extends Resource
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->dateTime('d M Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
             ])
 
             ->filters([
 
                 Tables\Filters\SelectFilter::make('media_category_id')
-                    ->relationship('category', 'name'),
+                    ->relationship('category', 'name')
+                    ->label('Category'),
+
+                Tables\Filters\TernaryFilter::make('active')
+                    ->label('Active'),
+
+                Tables\Filters\Filter::make('missing_alt')
+                    ->label('Missing Alt Text')
+                    ->query(fn (Builder $query) => $query->where(function ($q) {
+                        $q->whereNull('alt')->orWhere('alt', '');
+                    }))
+                    ->toggle(),
 
             ])
 
@@ -169,12 +222,17 @@ class MediaResource extends Resource
             ]);
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'file_name', 'alt', 'title'];
+    }
+
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMedia::route('/'),
+            'index'  => Pages\ListMedia::route('/'),
             'create' => Pages\CreateMedia::route('/create'),
-            'edit' => Pages\EditMedia::route('/{record}/edit'),
+            'edit'   => Pages\EditMedia::route('/{record}/edit'),
         ];
     }
 }

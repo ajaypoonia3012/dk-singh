@@ -1,22 +1,24 @@
 @extends('layouts.app')
+@section('title', 'Free Fitness & Nutrition Hub | DK Singh Fitness')
+@section('meta_description', 'Access free workout routines, diet plans, fitness calculators, and transformation guides from DK Singh Fitness & Nutrition.')
 
 @section('content')
 
-<section class="py-24 bg-[#f6f3eb] min-h-screen">
+<section class="theme-section theme-surface-muted min-h-screen">
 
-<div class="max-w-7xl mx-auto px-6">
+<div class="theme-page-container">
 
 <div class="text-center mb-20">
 
-<p class="text-yellow-500 uppercase tracking-[4px] font-bold mb-4">
+<p class="theme-text-primary uppercase tracking-[4px] font-bold mb-4">
 FITNESS HUB
 </p>
 
-<h1 class="text-6xl font-black text-black mb-6">
+<h1 class="text-6xl font-black theme-text-secondary mb-6">
 Free Fitness Resources
 </h1>
 
-<p class="text-xl text-gray-600 max-w-3xl mx-auto">
+<p class="text-xl theme-text-neutral max-w-3xl mx-auto">
 Free workouts, diet plans, articles and transformation stories.
 Learn first. Join coaching when you're ready.
 </p>
@@ -28,20 +30,21 @@ Learn first. Join coaching when you're ready.
 <div class="mb-24">
 
 <h2 class="text-4xl font-black mb-10">
-🔥 Free Workout Plans
+<svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg> Free Workout Plans
 </h2>
 
-<div class="grid md:grid-cols-3 gap-8">
+<div class="grid md:grid-cols-3 theme-grid-gap">
 
 @foreach($workouts as $workout)
 
 <a href="{{ route('fitness-hub.workouts.show',$workout->slug) }}"
-class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition block">
+class="theme-card theme-radius overflow-hidden theme-shadow hover:theme-shadow transition block">
 
 @if($workout->thumbnail)
 
 <img
 src="{{ asset('storage/'.$workout->thumbnail) }}"
+alt="{{ $workout->title }}"
 class="w-full h-64 object-cover">
 
 @endif
@@ -52,7 +55,7 @@ class="w-full h-64 object-cover">
 {{ $workout->title }}
 </h3>
 
-<p class="text-gray-600">
+<p class="theme-text-neutral">
 {{ Str::limit($workout->description,120) }}
 </p>
 
@@ -67,7 +70,7 @@ class="w-full h-64 object-cover">
 <div class="text-center mt-10">
 
     <a href="{{ route('fitness-hub.workouts.index') }}"
-       class="bg-black text-white px-8 py-4 rounded-2xl font-bold">
+       class="theme-surface-strong theme-text-on-strong px-8 py-4 theme-radius font-bold">
 
         View All Workouts
 
@@ -83,21 +86,21 @@ class="w-full h-64 object-cover">
 <div class="mb-24">
 
 <h2 class="text-4xl font-black mb-10">
-🥗 Free Diet Plans
+<svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg> Free Diet Plans
 </h2>
 
-<div class="grid md:grid-cols-3 gap-8">
+<div class="grid md:grid-cols-3 theme-grid-gap">
 
 @foreach($diets as $diet)
 
 <a href="{{ route('fitness-hub.diets.show',$diet->slug) }}"
-class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition block">
+class="theme-card theme-radius theme-card-padding theme-shadow hover:theme-shadow transition block">
 
 <h3 class="text-2xl font-black mb-3">
 {{ $diet->title }}
 </h3>
 
-<p class="text-gray-600">
+<p class="theme-text-neutral">
 {{ Str::limit($diet->description,120) }}
 </p>
 
@@ -110,7 +113,7 @@ class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition block">
 <div class="text-center mt-10">
 
     <a href="{{ route('fitness-hub.diets.index') }}"
-       class="bg-black text-white px-8 py-4 rounded-2xl font-bold">
+       class="theme-surface-strong theme-text-on-strong px-8 py-4 theme-radius font-bold">
 
         View All Diet Plans
 
@@ -127,15 +130,15 @@ class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition block">
 <div class="mb-24">
 
 <h2 class="text-4xl font-black mb-10">
-📝 Fitness Articles
+<svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg> Fitness Articles
 </h2>
 
-<div class="grid md:grid-cols-3 gap-8">
+<div class="grid md:grid-cols-3 theme-grid-gap">
 
 @foreach($blogs as $blog)
 
 <a href="/blog/{{ $blog->slug }}"
-class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition block">
+class="theme-card theme-radius theme-card-padding theme-shadow hover:theme-shadow transition block">
 
 <h3 class="text-2xl font-black mb-3">
 {{ $blog->title }}
@@ -154,20 +157,21 @@ class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition block">
 <div>
 
 <h2 class="text-4xl font-black mb-10">
-🏆 Success Stories
+<svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg> Success Stories
 </h2>
 
-<div class="grid md:grid-cols-3 gap-8">
+<div class="grid md:grid-cols-3 theme-grid-gap">
 
 @foreach($transformations as $transformation)
 
-<a href="/transformations/{{ $transformation->id }}"
-class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition block">
+<a href="{{ route('transformations.show', $transformation->slug ?: $transformation->id) }}"
+class="theme-card theme-radius overflow-hidden theme-shadow hover:theme-shadow transition block">
 
 @if($transformation->image)
 
 <img
 src="{{ asset('storage/'.$transformation->image) }}"
+alt="{{ $transformation->name ?? 'Client' }} Transformation"
 class="w-full h-64 object-cover">
 
 @endif
@@ -192,15 +196,15 @@ class="w-full h-64 object-cover">
 
 <div class="mt-24">
 
-    <div class="bg-black rounded-[40px] p-16 text-center">
+    <div class="theme-surface-strong theme-radius p-16 text-center">
 
-        <h2 class="text-5xl font-black text-white mb-6">
+        <h2 class="text-5xl font-black theme-text-on-strong mb-6">
 
             Ready For Faster Results?
 
         </h2>
 
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10">
+        <p class="text-xl theme-text-neutral max-w-3xl mx-auto mb-10">
 
             Free resources are a great start.
             Get personalized coaching, nutrition guidance,
@@ -208,24 +212,24 @@ class="w-full h-64 object-cover">
 
         </p>
 
-        <div class="flex flex-wrap justify-center gap-5">
+        <div class="flex flex-wrap justify-center theme-content-gap">
 
             <a href="/programs"
-               class="bg-yellow-500 text-black px-8 py-4 rounded-2xl font-black">
+               class="theme-status-warning theme-text-secondary px-8 py-4 theme-radius font-black">
 
                 View Programs
 
             </a>
 
             <a href="/services"
-               class="border border-white text-white px-8 py-4 rounded-2xl font-black">
+               class="border theme-border theme-text-on-strong px-8 py-4 theme-radius font-black">
 
                 View Services
 
             </a>
 
             <a href="/plans"
-               class="border border-yellow-500 text-yellow-500 px-8 py-4 rounded-2xl font-black">
+               class="border theme-border theme-text-primary px-8 py-4 theme-radius font-black">
 
                 View Membership Plans
 

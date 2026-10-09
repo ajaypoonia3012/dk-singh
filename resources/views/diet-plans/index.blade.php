@@ -1,39 +1,41 @@
 @extends('layouts.app')
+@section('title', 'Custom Nutrition & Diet Plans | DK Singh Fitness')
+@section('meta_description', 'Customized nutrition and meal plans designed for fat loss, muscle gain, athletic performance, and sustainable lifestyle.')
 
 @section('content')
 
-<section class="py-24 bg-[#f8f5ef] min-h-screen">
+<section class="theme-section theme-surface-muted min-h-screen">
 
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="theme-page-container">
 
         <div class="text-center mb-20">
 
-            <p class="text-yellow-500 uppercase tracking-[3px] font-bold mb-4">
+            <p class="theme-text-primary uppercase tracking-[3px] font-bold mb-4">
                 Nutrition Plans
             </p>
 
-            <h1 class="text-5xl font-black text-black mb-6">
+            <h1 class="text-5xl font-black theme-text-secondary mb-6">
                 Diet Plans
             </h1>
 
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p class="text-xl theme-text-neutral max-w-3xl mx-auto">
                 Customized meal plans designed for fat loss,
                 muscle gain, performance, and healthy lifestyle.
             </p>
 
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 theme-grid-gap">
 
             @foreach($dietPlans as $dietPlan)
 
                 <a
                     href="{{ route('diet-plans.show', $dietPlan->id) }}"
-                    class="bg-white rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-2 transition p-8 block">
+                    class="theme-card theme-radius theme-shadow hover:theme-shadow hover:-translate-y-2 transition theme-card-padding block">
 
                     <div class="mb-5">
 
-                        <span class="bg-yellow-500 text-black px-4 py-2 rounded-full text-sm font-black">
+                        <span class="theme-status-warning theme-text-secondary px-4 py-2 rounded-full text-sm font-black">
 
                             {{ $dietPlan->goal }}
 
@@ -41,11 +43,11 @@
 
                     </div>
 
-                    <h3 class="text-3xl font-black text-black mb-4">
+                    <h3 class="text-3xl font-black theme-text-secondary mb-4">
                         {{ $dietPlan->title }}
                     </h3>
 
-                    <p class="text-gray-600 leading-8">
+                    <p class="theme-text-neutral leading-8">
                         {{ $dietPlan->description }}
                     </p>
 

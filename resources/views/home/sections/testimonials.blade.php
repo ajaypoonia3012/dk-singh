@@ -28,40 +28,56 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             @foreach($testimonials as $testimonial)
-
+                @php
+                    $hasAvatar = filled($testimonial->image) && file_exists(public_path('storage/' . $testimonial->image));
+                    $initials = '';
+                    if (!empty($testimonial->name)) {
+                        $words = preg_split('/\s+/', trim($testimonial->name));
+                        $initials = strtoupper(substr($words[0] ?? '', 0, 1) . (isset($words[1]) ? substr($words[1], 0, 1) : ''));
+                    }
+                    $initials = $initials ?: 'DK';
+                @endphp
                 <div
                     data-aos="zoom-in"
-                    class="group bg-[#f6f3eb] rounded-[32px] p-10 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-500">
+                    class="group bg-[#f6f3eb] rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition duration-300 flex flex-col justify-between">
 
-                    <div class="flex text-yellow-500 text-[22px] mb-6 tracking-[2px]">
-                        ★★★★★
+                    <div>
+                        <div class="flex text-yellow-500 text-base mb-3 tracking-[2px]">
+                            ★★★★★
+                        </div>
+
+                        <p class="text-gray-700 leading-relaxed text-sm md:text-base mb-6 font-normal">
+                            “{{ Str::limit(trim(strip_tags($testimonial->review ?? $testimonial->content)), 160) }}”
+                        </p>
                     </div>
 
-                    <p class="text-gray-600 leading-[34px] text-[17px] mb-10 font-medium">
-                        "{{ $testimonial->review }}"
-                    </p>
+                    <div class="flex items-center gap-3.5 pt-4 border-t border-gray-200/60 mt-auto">
+                        @if($hasAvatar)
+                            <img
+                                src="{{ asset('storage/' . $testimonial->image) }}"
+                                alt="{{ $testimonial->name ? $testimonial->name . ' - Client Testimonial' : 'DK Singh Fitness Client' }}"
+                                loading="lazy"
+                                decoding="async"
+                                class="w-12 h-12 rounded-full object-cover border-2 border-yellow-500 shrink-0"
+                            >
+                        @else
+                            <div
+                                class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm tracking-wide shrink-0 border-2 bg-slate-900 text-yellow-400 border-yellow-500/50"
+                                aria-hidden="true"
+                            >
+                                {{ $initials }}
+                            </div>
+                        @endif
 
-                    <div class="flex items-center gap-4">
-
-                        <img
-                            src="{{ $testimonial->image ? asset('storage/' . $testimonial->image) : asset('images/user-placeholder.jpg') }}"
-                            alt="{{ $testimonial->title }}"
-                            loading="lazy"
-                            decoding="async"
-                            class="w-16 h-16 rounded-full object-cover border-4 border-yellow-500">
-
-                        <div>
-
-                            <h3 class="text-[22px] font-black text-[#111111]">
+                        <div class="min-w-0">
+                            <h3 class="text-base font-bold text-[#111111] truncate">
                                 {{ $testimonial->name }}
                             </h3>
 
-                            <p class="text-yellow-600 font-bold text-sm uppercase tracking-[1px]">
-                                {{ $testimonial->designation }}
+                            <p class="text-yellow-600 font-bold text-xs uppercase tracking-wider truncate">
+                                {{ $testimonial->designation ?: 'Verified Client' }}
                             </p>
-
                         </div>
-
                     </div>
 
                 </div>

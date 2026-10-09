@@ -16,9 +16,11 @@ class HomepageCardResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Website & Growth';
 
     protected static ?string $navigationLabel = 'Homepage Cards';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {

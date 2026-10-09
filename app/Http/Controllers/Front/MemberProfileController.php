@@ -12,7 +12,7 @@ class MemberProfileController extends Controller
         return view(
             'member.profile',
             [
-                'user' => auth()->user()
+                'user' => auth()->user(),
             ]
         );
     }
@@ -20,18 +20,18 @@ class MemberProfileController extends Controller
     public function update(Request $request)
     {
         $user = auth()->user();
-$bmi = null;
+        $bmi = null;
 
-if ($request->height && $request->weight) {
+        if ($request->height && $request->weight) {
 
-    $heightInMeters = $request->height / 100;
+            $heightInMeters = $request->height / 100;
 
-    $bmi = round(
-        $request->weight /
-        ($heightInMeters * $heightInMeters),
-        1
-    );
-}
+            $bmi = round(
+                $request->weight /
+                ($heightInMeters * $heightInMeters),
+                1
+            );
+        }
         $user->update([
 
             'phone' => $request->phone,
@@ -55,7 +55,7 @@ if ($request->height && $request->weight) {
             'country' => $request->country,
 
             'bio' => $request->bio,
-'profile_completed' => true,
+            'profile_completed' => true,
 
         ]);
 

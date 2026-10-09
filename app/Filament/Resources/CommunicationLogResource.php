@@ -15,7 +15,11 @@ class CommunicationLogResource extends Resource
 {
     protected static ?string $model = CommunicationLog::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clock';
+
+    protected static ?string $navigationGroup = 'Communications';
+
+    protected static ?int $navigationSort = 3;
 
     public static function getEloquentQuery(): Builder
     {

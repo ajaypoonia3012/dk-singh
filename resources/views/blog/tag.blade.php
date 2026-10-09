@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', $tag->name)
+@section('title', '#' . $tag->name . ' Fitness Guides | DK Singh Fitness')
+@section('meta_description', 'Read guides, tips, and articles tagged with #' . $tag->name . ' on DK Singh Fitness & Nutrition.')
 
 @section('content')
 

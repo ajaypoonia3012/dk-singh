@@ -14,23 +14,23 @@ class ProfileCompletedMiddleware
      * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-{
-    if (!auth()->check()) {
+    {
+        if (! auth()->check()) {
 
-        return redirect('/login');
+            return redirect('/login');
 
+        }
+
+        if (! auth()->user()->profile_completed) {
+
+            return redirect('/member/profile')
+                ->with(
+                    'error',
+                    'Please complete your profile first.'
+                );
+
+        }
+
+        return $next($request);
     }
-
-    if (!auth()->user()->profile_completed) {
-
-        return redirect('/member/profile')
-            ->with(
-                'error',
-                'Please complete your profile first.'
-            );
-
-    }
-
-    return $next($request);
-}
 }

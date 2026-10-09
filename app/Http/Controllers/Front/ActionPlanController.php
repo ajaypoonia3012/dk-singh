@@ -13,8 +13,8 @@ class ActionPlanController extends Controller
             'user_id',
             auth()->id()
         )
-        ->latest()
-        ->get();
+            ->latest()
+            ->get();
 
         $completed = $actionPlans
             ->where('is_completed', true)

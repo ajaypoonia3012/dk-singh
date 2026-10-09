@@ -95,7 +95,7 @@ class TestimonialService
     public function toggleStatus(Testimonial $testimonial): Testimonial
     {
         $testimonial->update([
-            'status' => !$testimonial->status,
+            'status' => ! $testimonial->status,
         ]);
 
         return $testimonial->fresh();
@@ -104,7 +104,7 @@ class TestimonialService
     public function toggleFeatured(Testimonial $testimonial): Testimonial
     {
         $testimonial->update([
-            'featured' => !$testimonial->featured,
+            'featured' => ! $testimonial->featured,
         ]);
 
         return $testimonial->fresh();

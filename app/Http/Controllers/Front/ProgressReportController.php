@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Membership;
-use App\Models\WeeklyCheckIn;
 use App\Models\CoachNote;
-use App\Models\WorkoutCompletion;
-use App\Models\WorkoutPlan;
 use App\Models\DietCompletion;
 use App\Models\DietPlan;
+use App\Models\Membership;
+use App\Models\WeeklyCheckIn;
+use App\Models\WorkoutCompletion;
+use App\Models\WorkoutPlan;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProgressReportController extends Controller
@@ -27,33 +27,33 @@ class ProgressReportController extends Controller
             'user_id',
             $user->id
         )
-        ->oldest()
-        ->first();
+            ->oldest()
+            ->first();
 
         $latestCheckIn = WeeklyCheckIn::where(
             'user_id',
             $user->id
         )
-        ->latest()
-        ->first();
+            ->latest()
+            ->first();
 
         $checkIns = WeeklyCheckIn::where(
             'user_id',
             $user->id
         )
-        ->orderBy('created_at')
-        ->get();
+            ->orderBy('created_at')
+            ->get();
 
         $latestCoachNote = CoachNote::where(
             'user_id',
             $user->id
         )
-        ->where(
-            'is_visible',
-            true
-        )
-        ->latest()
-        ->first();
+            ->where(
+                'is_visible',
+                true
+            )
+            ->latest()
+            ->first();
 
         $completedWorkouts = WorkoutCompletion::where(
             'user_id',

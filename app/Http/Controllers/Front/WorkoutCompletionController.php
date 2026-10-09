@@ -16,11 +16,11 @@ class WorkoutCompletionController extends Controller
             'user_id',
             auth()->id()
         )
-        ->where(
-            'workout_plan_id',
-            $workout->id
-        )
-        ->exists();
+            ->where(
+                'workout_plan_id',
+                $workout->id
+            )
+            ->exists();
 
         if (! $exists) {
 

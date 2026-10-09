@@ -1,5 +1,7 @@
-﻿.env
+.env
 .env.*
+!.env.example
+!.env.production.example
 /vendor
 /node_modules
 /public/build
@@ -10,6 +12,7 @@
 /storage/framework/sessions/*
 /storage/framework/testing/*
 /storage/framework/views/*
+/storage/backups/*
 /bootstrap/cache/*
 .phpunit.result.cache
 npm-debug.log*
@@ -19,10 +22,12 @@ Thumbs.db
 .idea
 .vscode
 
-# Backup files
+# Backup and scratch files
 *.bak
 *.backup
 *.old
 *.tmp
-
 project-backups/
+_phase*backup*/
+phase*backup*/
+scratch/

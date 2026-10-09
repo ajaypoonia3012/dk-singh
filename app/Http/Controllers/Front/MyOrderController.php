@@ -13,12 +13,12 @@ class MyOrderController extends Controller
             'user_id',
             auth()->id()
         )
-        ->where(
-            'item_type',
-            'product'
-        )
-        ->latest()
-        ->get();
+            ->where(
+                'item_type',
+                'product'
+            )
+            ->latest()
+            ->get();
 
         return view(
             'account.orders',

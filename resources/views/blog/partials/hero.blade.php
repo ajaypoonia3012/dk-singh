@@ -1,4 +1,4 @@
-<section class="blog-hero">
+﻿<section class="blog-hero">
 
     <div style="max-width:700px;">
 
@@ -16,7 +16,7 @@
 
         </h1>
 
-        <p class="lead text-white mb-5">
+        <p class="lead theme-text-on-strong mb-5">
 
             Discover science-based fitness advice, workout plans,
             nutrition strategies and real transformation stories.
@@ -31,7 +31,7 @@
             <div class="input-group input-group-lg">
 
                 <input
-                    class="form-control"
+                    class="theme-form-control form-control"
                     name="search"
                     placeholder="Search articles..."
                     value="{{ request('search') }}">

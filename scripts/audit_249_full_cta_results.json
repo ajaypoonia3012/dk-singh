@@ -1,0 +1,36 @@
+{
+    "total_posts": 249,
+    "content_integrity_issues": [],
+    "cta_breakdown": {
+        "DK Singh Coaching \u2022 Personalized Nutrition": 135,
+        "DK Singh Coaching \u2022 Transformation Program": 25,
+        "DK Singh Coaching \u2022 1-on-1 Mentorship": 58,
+        "DK Singh Coaching \u2022 Structured Protocols": 28,
+        "DK Singh Coaching \u2022 Mobility & Wellness": 2,
+        "DK Singh Coaching \u2022 Hypertrophy Program": 1
+    },
+    "destination_counts": {
+        "http:\/\/127.0.0.1:8000\/services\/diet-nutrition-coaching": 1,
+        "http:\/\/localhost\/services\/diet-nutrition-coaching": 134,
+        "http:\/\/localhost\/programs\/12-week-fat-loss-transformation": 25,
+        "http:\/\/localhost\/services\/personal-online-coaching": 58,
+        "http:\/\/localhost\/fitness-hub\/workouts": 28,
+        "http:\/\/localhost\/fitness\/yoga": 2,
+        "http:\/\/localhost\/programs\/lean-muscle-gain-program": 1
+    },
+    "verified_urls": {
+        "http:\/\/127.0.0.1:8000\/services\/diet-nutrition-coaching": 200,
+        "http:\/\/127.0.0.1:8000\/fitness-hub\/diets": 200,
+        "http:\/\/localhost\/services\/diet-nutrition-coaching": 200,
+        "http:\/\/localhost\/fitness-hub\/diets": 200,
+        "http:\/\/localhost\/programs\/12-week-fat-loss-transformation": 200,
+        "http:\/\/localhost\/programs": 200,
+        "http:\/\/localhost\/services\/personal-online-coaching": 200,
+        "http:\/\/localhost\/fitness": 200,
+        "http:\/\/localhost\/fitness-hub\/workouts": 200,
+        "http:\/\/localhost\/programs\/lean-muscle-gain-program": 200,
+        "http:\/\/localhost\/fitness\/yoga": 200
+    },
+    "broken_links": [],
+    "rendered_errors": 0
+}

@@ -4,12 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContactLeadResource\Pages;
 use App\Models\ContactLead;
-
 use Filament\Forms;
 use Filament\Forms\Form;
-
 use Filament\Resources\Resource;
-
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -17,13 +14,13 @@ class ContactLeadResource extends Resource
 {
     protected static ?string $model = ContactLead::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static ?string $navigationIcon = 'heroicon-o-inbox-arrow-down';
 
-    protected static ?string $navigationGroup = 'CRM';
+    protected static ?string $navigationGroup = 'Members & Coaching';
 
-    protected static ?string $navigationLabel = 'Inquiries';
+    protected static ?string $navigationLabel = 'Inquiries & Leads';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {
@@ -156,8 +153,7 @@ class ContactLeadResource extends Resource
                     ->label('WhatsApp')
                     ->icon('heroicon-o-chat-bubble-left-right')
                     ->color('success')
-                    ->url(fn ($record) =>
-                        'https://wa.me/' . preg_replace('/[^0-9]/', '', $record->phone)
+                    ->url(fn ($record) => 'https://wa.me/'.preg_replace('/[^0-9]/', '', $record->phone)
                     )
                     ->openUrlInNewTab(),
 
@@ -165,16 +161,14 @@ class ContactLeadResource extends Resource
                     ->label('Call')
                     ->icon('heroicon-o-phone')
                     ->color('primary')
-                    ->url(fn ($record) =>
-                        'tel:' . $record->phone
+                    ->url(fn ($record) => 'tel:'.$record->phone
                     ),
 
                 Tables\Actions\Action::make('email')
                     ->label('Email')
                     ->icon('heroicon-o-envelope')
                     ->color('warning')
-                    ->url(fn ($record) =>
-                        'mailto:' . $record->email
+                    ->url(fn ($record) => 'mailto:'.$record->email
                     ),
 
                 Tables\Actions\DeleteAction::make(),

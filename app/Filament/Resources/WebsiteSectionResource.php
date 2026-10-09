@@ -14,7 +14,7 @@ class WebsiteSectionResource extends Resource
 {
     protected static ?string $model = WebsiteSection::class;
 
-protected static bool $shouldRegisterNavigation = false;
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $navigationGroup = 'Website Builder';
 

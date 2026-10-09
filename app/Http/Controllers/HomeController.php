@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
-use App\Models\Transformation;
-use App\Models\Testimonial;
 use App\Models\Service;
+use App\Models\Testimonial;
+use App\Models\Transformation;
 
 class HomeController extends Controller
 {
@@ -17,13 +17,13 @@ class HomeController extends Controller
 
         $testimonials = Testimonial::latest()->get();
 
-	$services = Service::latest()->get();
+        $services = Service::latest()->get();
 
         return view('home.index', compact(
-    'programs',
-    'transformations',
-    'testimonials',
-    'services'
-));
+            'programs',
+            'transformations',
+            'testimonials',
+            'services'
+        ));
     }
 }

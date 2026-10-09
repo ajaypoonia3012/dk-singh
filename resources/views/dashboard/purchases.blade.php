@@ -1,9 +1,9 @@
-
+﻿
 @extends('layouts.app')
 
 @section('content')
 
-<section class="py-24 bg-[#f6f3eb] min-h-screen">
+<section class="theme-section theme-surface-muted min-h-screen">
 
     <div class="max-w-7xl mx-auto px-5">
 
@@ -13,21 +13,21 @@
 
         @if($membership)
 
-            <div class="bg-black text-white rounded-[30px] p-10 mt-12">
+            <div class="theme-surface-strong theme-text-on-strong theme-radius theme-card-padding-lg mt-12">
 
                 <h2 class="text-4xl font-bold">
                     Active Membership
                 </h2>
 
-                <div class="grid md:grid-cols-3 gap-10 mt-10">
+                <div class="grid md:grid-cols-3 theme-grid-gap mt-10">
 
                     <div>
 
-                        <p class="text-gray-400">
+                        <p class="theme-text-neutral">
                             Status
                         </p>
 
-                        <h3 class="text-3xl font-bold text-green-400">
+                        <h3 class="text-3xl font-bold theme-text-success">
                             Active
                         </h3>
 
@@ -35,7 +35,7 @@
 
                     <div>
 
-                        <p class="text-gray-400">
+                        <p class="theme-text-neutral">
                             Start Date
                         </p>
 
@@ -49,7 +49,7 @@
 
                     <div>
 
-                        <p class="text-gray-400">
+                        <p class="theme-text-neutral">
                             Expiry Date
                         </p>
 
@@ -73,11 +73,11 @@
                 Order History
             </h2>
 
-            <div class="mt-10 bg-white rounded-[30px] shadow-xl overflow-hidden">
+            <div class="mt-10 theme-card theme-radius theme-shadow overflow-hidden">
 
                 <table class="w-full">
 
-                    <thead class="bg-black text-white">
+                    <thead class="theme-surface-strong theme-text-on-strong">
 
                         <tr>
 
@@ -119,7 +119,7 @@
 
                                 <td class="p-5">
 
-                                    ₹{{ $order->amount }}
+                                    &#8377;{{ $order->amount }}
 
                                 </td>
 

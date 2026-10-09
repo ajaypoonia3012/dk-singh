@@ -11,16 +11,13 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: #f6f3eb;
-    color: #111111;
     overflow-x: hidden;
 }
 
 /* CONTAINER */
 
 .container-premium {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply px-4 sm:px-6 lg:px-8;
 }
 
 /* NAV LINKS */
@@ -34,8 +31,7 @@ body {
 }
 
 .nav-link:hover{
-
-    color: var(--primary-color);
+    color: var(--navbar-hover);
 
 }
 .mobile-link{
@@ -47,19 +43,14 @@ body {
 }
 
 .mobile-link:hover{
-
-    color: var(--primary-color);
+    color: var(--navbar-hover);
 
 }
 
 /* BUTTONS */
 
 .btn-primary {
-
-    background: var(--primary-color);
-    color: var(--secondary-color);
-
-    @apply font-bold px-8 py-4 rounded-2xl transition duration-300 shadow-lg hover:scale-105;
+    @apply font-bold;
 
 }
 
@@ -69,11 +60,8 @@ body {
 
 }
 .btn-primary-small {
-
-    background: var(--primary-color);
-    color: var(--secondary-color);
-
-    @apply px-6 py-3 rounded-2xl font-bold transition duration-300 shadow-lg hover:scale-105;
+    padding: calc(0.75rem * var(--spacing-scale)) calc(1.5rem * var(--spacing-scale));
+    @apply font-bold;
 
 }
 
@@ -84,19 +72,19 @@ body {
 }
 
 .btn-outline {
-    @apply border-2 border-black hover:bg-black hover:text-white text-black font-bold px-8 py-4 rounded-2xl transition duration-300;
+    @apply font-bold;
 }
 
 /* CARDS */
 
 .card-premium {
-    @apply bg-white rounded-[32px] shadow-xl hover:shadow-2xl transition duration-500 hover:-translate-y-2 border border-gray-200;
+    @apply transition duration-500 hover:-translate-y-2;
 }
 
 /* SECTION SPACING */
 
 .section-padding {
-    @apply py-16 md:py-24;
+    /* Spacing is supplied by the shared theme primitive. */
 }
 
 /* TITLES */
@@ -156,7 +144,8 @@ body {
 input,
 textarea,
 select {
-    @apply focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300;
+    @apply transition duration-300;
+    accent-color: var(--primary-color);
 }
 
 /* MOBILE OPTIMIZATION */

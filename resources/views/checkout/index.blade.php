@@ -3,26 +3,36 @@
 
 @section('content')
 
-<section class="py-24 bg-[#f6f3eb] min-h-screen">
+<section class="theme-section theme-surface-muted min-h-screen">
 
-    <div class="max-w-5xl mx-auto px-6">
+    <div class="theme-page-container">
 
         <div class="grid lg:grid-cols-2 gap-14">
 
             {{-- LEFT --}}
             <div>
 
-                <p class="uppercase tracking-[3px] text-yellow-500 font-bold mb-4">
+                @if(!empty($selectedProgram))
+                    <div class="mb-6 p-4 theme-radius theme-card border theme-border flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider theme-text-primary">Target Curriculum</span>
+                            <p class="text-xl font-bold theme-text-secondary">{{ $selectedProgram->title }} ({{ $selectedProgram->duration }})</p>
+                        </div>
+                        <span class="text-xs uppercase font-semibold theme-text-neutral">Enrolling With</span>
+                    </div>
+                @endif
+
+                <p class="uppercase tracking-[3px] theme-text-primary font-bold mb-4">
                     Membership Checkout
                 </p>
 
-                <h1 class="text-5xl font-black text-black mb-6">
+                <h1 class="text-5xl font-black theme-text-secondary mb-6">
 
                     {{ $plan->name }}
 
                 </h1>
 
-                <p class="text-gray-600 text-lg leading-8 mb-10">
+                <p class="theme-text-neutral text-lg leading-8 mb-10">
 
                     {{ $plan->description }}
 
@@ -33,29 +43,29 @@
 
                     @if($plan->discount_price)
 
-                        <span class="text-6xl font-black text-yellow-500">
+                        <span class="text-6xl font-black theme-text-primary">
 
-                            ₹{{ number_format($plan->discount_price) }}
+                            &#8377;{{ number_format($plan->discount_price) }}
 
                         </span>
 
-                        <span class="line-through text-2xl text-gray-400">
+                        <span class="line-through text-2xl theme-text-neutral">
 
-                            ₹{{ number_format($plan->price) }}
+                            &#8377;{{ number_format($plan->price) }}
 
                         </span>
 
                     @else
 
-                        <span class="text-6xl font-black text-yellow-500">
+                        <span class="text-6xl font-black theme-text-primary">
 
-                            ₹{{ number_format($plan->price) }}
+                            &#8377;{{ number_format($plan->price) }}
 
                         </span>
 
                     @endif
 
-                    <span class="mb-2 text-lg text-gray-500">
+                    <span class="mb-2 text-lg theme-text-neutral">
 
                         /{{ strtolower($plan->billing_cycle) }}
 
@@ -70,11 +80,11 @@
 
                         <div class="flex items-start gap-4">
 
-                            <div class="text-yellow-500 text-xl">
-                                ✔
+                            <div class="theme-text-primary text-xl">
+                                <svg class="inline-block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m5 12 4 4L19 6" /></svg>
                             </div>
 
-                            <span class="text-gray-700 text-lg">
+                            <span class="theme-text-neutral text-lg">
 
                                 {{ is_array($feature)
                                     ? $feature['feature']
@@ -92,7 +102,7 @@
             </div>
 
             {{-- RIGHT --}}
-            <div class="bg-white rounded-[36px] shadow-xl p-10 border border-gray-200">
+            <div class="theme-card theme-radius theme-shadow theme-card-padding-lg border theme-border">
 
                 <h2 class="text-3xl font-black mb-8">
                     Complete Purchase
@@ -103,14 +113,14 @@
                     <div class="space-y-5">
 
                         <a href="/login"
-                           class="w-full bg-black text-white py-5 rounded-2xl font-bold text-center block hover:bg-gray-800 transition">
+                           class="theme-button theme-button-secondary w-full text-center">
 
                             Login to Continue
 
                         </a>
 
                         <a href="/register"
-                           class="w-full border-2 border-black py-5 rounded-2xl font-bold text-center block hover:bg-black hover:text-white transition">
+                           class="w-full border-2 theme-border py-5 theme-radius font-bold text-center block hover:theme-surface-strong hover:theme-text-on-strong transition">
 
                             Create Account
 
@@ -122,9 +132,9 @@
 
                     {{-- RAZORPAY BUTTON --}}
                     <button id="rzp-button"
-                        class="w-full bg-yellow-500 hover:bg-yellow-400 text-black py-5 rounded-2xl font-black text-lg transition">
+                        class="w-full theme-status-warning hover:theme-status-warning theme-text-secondary py-5 theme-radius font-black text-lg transition">
 
-                        Pay ₹{{ number_format($plan->discount_price ?? $plan->price) }}
+                        Pay &#8377;{{ number_format($plan->discount_price ?? $plan->price) }}
 
                     </button>
 
@@ -172,7 +182,7 @@
 
     var options = {
 
-        "key": "{{ env('RAZORPAY_KEY') }}",
+        "key": "{{ config('services.razorpay.key') }}",
 
         "amount": "{{ ($plan->discount_price ?? $plan->price) * 100 }}",
 
@@ -186,24 +196,17 @@
 
         handler: function (response) {
 
-    document.getElementById('razorpay_payment_id').value =
-        response.razorpay_payment_id;
+            document.getElementById('razorpay_payment_id').value =
+                response.razorpay_payment_id;
 
-    document.getElementById('razorpay_order_id').value =
-        response.razorpay_order_id;
+            document.getElementById('razorpay_order_id').value =
+                response.razorpay_order_id;
 
-    document.getElementById('razorpay_signature').value =
-        response.razorpay_signature;
+            document.getElementById('razorpay_signature').value =
+                response.razorpay_signature;
 
-    document.getElementById('payment-form').submit();
-
-    setTimeout(function () {
-
-        window.location.href = "/member/dashboard";
-
-    }, 2000);
-
-},
+            document.getElementById('payment-form').submit();
+        },
     };
 
     var rzp1 = new Razorpay(options);

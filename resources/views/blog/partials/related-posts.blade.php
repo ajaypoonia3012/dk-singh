@@ -1,4 +1,4 @@
-@if($relatedPosts->count())
+﻿@if($relatedPosts->count())
 
 <section class="mt-5">
 

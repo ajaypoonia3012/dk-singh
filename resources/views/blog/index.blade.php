@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title','Fitness Blog')
+@section('title', 'Fitness Blog | DK Singh Fitness & Nutrition Articles')
+@section('meta_description', 'Read evidence-based fitness guides, Indian diet plans, hypertrophy tips, and fat loss strategies written by coach DK Singh.')
 
 @section('content')
 

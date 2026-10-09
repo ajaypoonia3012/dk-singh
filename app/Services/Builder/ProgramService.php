@@ -3,6 +3,7 @@
 namespace App\Services\Builder;
 
 use App\Models\Program;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class ProgramService
@@ -26,11 +27,13 @@ class ProgramService
 
     public function create(): Program
     {
+        Gate::authorize('create', Program::class);
+
         return Program::create([
 
             'title' => 'New Program',
 
-            'slug' => Str::slug('New Program'),
+            'slug' => Str::slug('New Program '.Str::random(6)),
 
             'description' => 'Program Description',
 
@@ -57,6 +60,8 @@ class ProgramService
 
     public function update(Program $program, array $data): Program
     {
+        Gate::authorize('update', $program);
+
         if (
             isset($data['title']) &&
             $program->title !== $data['title']
@@ -71,6 +76,8 @@ class ProgramService
 
     public function delete(Program $program): void
     {
+        Gate::authorize('delete', $program);
+
         $program->delete();
 
         Program::orderBy('sort_order')
@@ -87,11 +94,13 @@ class ProgramService
 
     public function duplicate(Program $program): Program
     {
+        Gate::authorize('replicate', $program);
+
         $copy = $program->replicate();
 
         $copy->title .= ' Copy';
 
-        $copy->slug = Str::slug($copy->title);
+        $copy->slug = Str::slug($copy->title.' '.Str::random(6));
 
         $copy->sort_order = Program::max('sort_order') + 1;
 
@@ -102,8 +111,10 @@ class ProgramService
 
     public function toggleStatus(Program $program): Program
     {
+        Gate::authorize('update', $program);
+
         $program->update([
-            'status' => !$program->status
+            'status' => ! $program->status,
         ]);
 
         return $program->fresh();
@@ -111,8 +122,10 @@ class ProgramService
 
     public function toggleFeatured(Program $program): Program
     {
+        Gate::authorize('update', $program);
+
         $program->update([
-            'featured' => !$program->featured
+            'featured' => ! $program->featured,
         ]);
 
         return $program->fresh();

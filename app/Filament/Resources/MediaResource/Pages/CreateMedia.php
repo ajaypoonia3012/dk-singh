@@ -4,8 +4,8 @@ namespace App\Filament\Resources\MediaResource\Pages;
 
 use App\Filament\Resources\MediaResource;
 use Filament\Resources\Pages\CreateRecord;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class CreateMedia extends CreateRecord
 {
@@ -13,11 +13,11 @@ class CreateMedia extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $absolute = storage_path('app/public/' . $data['path']);
+        $absolute = storage_path('app/public/'.$data['path']);
 
         if (file_exists($absolute)) {
 
-            $image = (new ImageManager(new Driver()))->read($absolute);
+            $image = (new ImageManager(new Driver))->read($absolute);
 
             $data['file_name'] = basename($data['path']);
 

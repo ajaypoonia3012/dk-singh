@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasGroupedConfiguration;
+use App\Services\ThemePaletteRegistry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -13,6 +14,8 @@ class ThemeSetting extends Model
     public const CACHE_KEY = 'site.theme';
 
     protected $fillable = [
+
+        'theme_palette',
 
         'primary_color',
         'secondary_color',
@@ -68,6 +71,27 @@ class ThemeSetting extends Model
         'dark_text',
         'custom_css',
         'custom_js',
+
+        'public_login_background_mode',
+        'public_login_background_color',
+        'public_login_background_media_id',
+        'public_login_background_fit',
+        'public_login_background_position',
+        'public_login_overlay_color',
+        'public_login_overlay_opacity',
+        'public_login_animation',
+        'public_login_animation_speed',
+        'public_login_animation_intensity',
+        'admin_login_background_mode',
+        'admin_login_background_color',
+        'admin_login_background_media_id',
+        'admin_login_background_fit',
+        'admin_login_background_position',
+        'admin_login_overlay_color',
+        'admin_login_overlay_opacity',
+        'admin_login_animation',
+        'admin_login_animation_speed',
+        'admin_login_animation_intensity',
 
         'show_hero',
 
@@ -135,6 +159,7 @@ class ThemeSetting extends Model
     protected function groupedConfigurationDefaults(): array
     {
         return [
+            'theme_palette' => null,
             'success_color' => '#22c55e',
             'warning_color' => '#f59e0b',
             'danger_color' => '#ef4444',
@@ -183,6 +208,26 @@ class ThemeSetting extends Model
             'dark_text' => '#f9fafb',
             'custom_css' => null,
             'custom_js' => null,
+            'public_login_background_mode' => 'theme',
+            'public_login_background_color' => '#111111',
+            'public_login_background_media_id' => null,
+            'public_login_background_fit' => 'cover',
+            'public_login_background_position' => 'center',
+            'public_login_overlay_color' => '#000000',
+            'public_login_overlay_opacity' => 35,
+            'public_login_animation' => 'none',
+            'public_login_animation_speed' => 18,
+            'public_login_animation_intensity' => 20,
+            'admin_login_background_mode' => 'theme',
+            'admin_login_background_color' => '#111111',
+            'admin_login_background_media_id' => null,
+            'admin_login_background_fit' => 'cover',
+            'admin_login_background_position' => 'center',
+            'admin_login_overlay_color' => '#000000',
+            'admin_login_overlay_opacity' => 45,
+            'admin_login_animation' => 'none',
+            'admin_login_animation_speed' => 18,
+            'admin_login_animation_intensity' => 20,
         ];
     }
 
@@ -205,12 +250,74 @@ class ThemeSetting extends Model
             'scroll_reveal_enabled' => 'boolean',
             'dark_mode_enabled' => 'boolean',
             'dark_mode_toggle' => 'boolean',
+            'public_login_background_media_id' => 'integer',
+            'public_login_overlay_opacity' => 'integer',
+            'public_login_animation_speed' => 'integer',
+            'public_login_animation_intensity' => 'integer',
+            'admin_login_background_media_id' => 'integer',
+            'admin_login_overlay_opacity' => 'integer',
+            'admin_login_animation_speed' => 'integer',
+            'admin_login_animation_intensity' => 'integer',
         ];
     }
 
+    public static bool $isSyncing = false;
+
     protected static function booted(): void
     {
-        static::saved(fn () => Cache::forget(self::CACHE_KEY));
-        static::deleted(fn () => Cache::forget(self::CACHE_KEY));
+        static::saved(function (ThemeSetting $theme): void {
+            Cache::forget(self::CACHE_KEY);
+            \App\Providers\AppServiceProvider::clearSharedViewData();
+
+            if (static::$isSyncing) {
+                return;
+            }
+
+            static::$isSyncing = true;
+            try {
+                $sectionMap = [
+                    'show_hero' => 'hero',
+                    'show_programs' => 'programs',
+                    'show_services' => 'services',
+                    'show_products' => 'products',
+                    'show_blogs' => 'blogs',
+                    'show_transformations' => 'transformations',
+                    'show_plans' => 'plans',
+                    'show_about' => 'about',
+                    'show_bmi' => 'bmi',
+                    'show_homepage_cards' => 'homepage_cards',
+                    'show_testimonials' => 'testimonials',
+                    'show_contact' => 'contact',
+                ];
+
+                foreach ($sectionMap as $field => $sectionName) {
+                    if ($theme->wasChanged($field) || ($theme->wasRecentlyCreated && $theme->$field !== null)) {
+                        $websiteSection = WebsiteSection::where('section', $sectionName)->first();
+                        if ($websiteSection) {
+                            $websiteSection->update(['enabled' => (bool) $theme->$field]);
+                        }
+                    }
+                }
+            } finally {
+                static::$isSyncing = false;
+            }
+        });
+
+        static::deleted(function (): void {
+            Cache::forget(self::CACHE_KEY);
+            \App\Providers\AppServiceProvider::clearSharedViewData();
+        });
+    }
+
+    public function applyPalette(string $palette, ?ThemePaletteRegistry $registry = null): static
+    {
+        $registry ??= app(ThemePaletteRegistry::class);
+
+        $this->fill([
+            'theme_palette' => $palette,
+            ...$registry->tokens($palette),
+        ]);
+
+        return $this;
     }
 }

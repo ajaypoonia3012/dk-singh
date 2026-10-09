@@ -1,22 +1,24 @@
 @extends('layouts.app')
+@section('title', $dietPlan->title . ' Nutrition Guide | DK Singh Fitness')
+@section('meta_description', Str::limit(strip_tags($dietPlan->content ?? 'Comprehensive nutrition protocol and meal strategy for ' . $dietPlan->title), 155))
 
 @section('content')
 
-<section class="bg-[#f6f3eb] py-24 min-h-screen">
+<section class="theme-surface-muted theme-section min-h-screen">
 
-    <div class="max-w-5xl mx-auto px-6">
+    <div class="theme-page-container">
 
         <div class="mb-16 text-center">
 
-            <p class="uppercase tracking-[3px] text-yellow-500 font-bold mb-4">
+            <p class="uppercase tracking-[3px] theme-text-primary font-bold mb-4">
                 Premium Nutrition Plan
             </p>
 
-            <h1 class="text-5xl font-black text-black mb-6">
+            <h1 class="text-5xl font-black theme-text-secondary mb-6">
                 {{ $dietPlan->title }}
             </h1>
 
-            <span class="bg-yellow-500 text-black px-5 py-2 rounded-full font-black">
+            <span class="theme-status-warning theme-text-secondary px-5 py-2 rounded-full font-black">
 
                 {{ $dietPlan->goal }}
 
@@ -24,9 +26,9 @@
 
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-[36px] p-12 shadow-2xl">
+        <div class="theme-card border theme-border theme-radius p-12 theme-shadow">
 
-            <div class="prose prose-lg max-w-none text-gray-700 leading-9">
+            <div class="prose prose-lg max-w-none theme-text-neutral leading-9">
 
                 {!! $dietPlan->content !!}
 
@@ -36,7 +38,7 @@
 
         @if(session('success'))
 
-<div class="bg-green-100 text-green-700 p-4 rounded-xl mb-6">
+<div class="theme-status-success theme-text-success p-4 theme-radius mb-6">
 
     {{ session('success') }}
 
@@ -54,7 +56,7 @@
         @csrf
 
         <button
-            class="bg-green-600 hover:bg-green-500 text-white px-10 py-5 rounded-2xl font-black">
+            class="theme-status-success hover:theme-status-success theme-text-on-strong px-10 py-5 theme-radius font-black">
 
             Mark Diet Completed
 
@@ -66,7 +68,7 @@
 
         <a
             href="/contact"
-            class="bg-yellow-500 hover:bg-yellow-400 text-black px-10 py-5 rounded-2xl font-black inline-block">
+            class="theme-status-warning hover:theme-status-warning theme-text-secondary px-10 py-5 theme-radius font-black inline-block">
 
             Get Personalized Diet Plan
 
@@ -78,7 +80,7 @@
 
     <a
         href="/login"
-        class="bg-yellow-500 text-black px-10 py-5 rounded-2xl font-black">
+        class="theme-status-warning theme-text-secondary px-10 py-5 theme-radius font-black">
 
         Login To Continue
 

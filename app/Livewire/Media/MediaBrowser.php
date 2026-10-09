@@ -11,9 +11,9 @@ class MediaBrowser extends Component
     public ?int $selected = null;
 
     public function select($id)
-{
-    $this->selected = $id;
-}
+    {
+        $this->selected = $id;
+    }
 
     #[On('media-created')]
     public function refreshLibrary()
@@ -22,12 +22,12 @@ class MediaBrowser extends Component
     }
 
     public function render()
-{
-    return view(
-        'livewire.media.media-browser',
-        [
-            'media' => Media::latest()->get(),
-        ]
-    );
-}
+    {
+        return view(
+            'livewire.media.media-browser',
+            [
+                'media' => Media::latest()->get(),
+            ]
+        );
+    }
 }

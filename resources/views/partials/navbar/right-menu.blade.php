@@ -1,19 +1,15 @@
-<div class="hidden lg:flex items-center gap-5 text-sm">
+<div class="hidden lg:flex items-center gap-3 xl:gap-4 text-sm shrink-0">
 
     @guest
 
         <a href="/login"
-           class="hover:text-[var(--primary-color)] transition duration-300 font-semibold">
-
+           class="theme-navbar-link transition duration-300 font-semibold">
             {{ $setting?->login_label ?: 'Login' }}
-
         </a>
 
         <a href="/register"
            class="btn-primary-small">
-
             {{ $setting?->register_label ?: $setting?->cta_button_text ?: 'Join Now' }}
-
         </a>
 
     @endguest
@@ -23,8 +19,8 @@
         @if(auth()->user()->account_type === 'admin')
 
             <a href="/admin"
-               class="btn-primary-small">
-                {{ $setting?->admin_panel_label ?: 'Admin Panel' }}
+               class="btn-primary-small !py-1.5 !px-3 !text-xs font-semibold">
+                {{ $setting?->admin_panel_label ?: 'Dashboard' }}
             </a>
 
         @elseif(auth()->user()->activeMembership)
@@ -54,9 +50,9 @@
 
                     @if(($unreadNotifications ?? 0) > 0)
 
-                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full px-1.5 py-0.5">
+                        <x-theme.badge status="danger" class="absolute -top-2 -right-2 text-[10px] px-1.5 py-0.5">
                             {{ $unreadNotifications }}
-                        </span>
+                        </x-theme.badge>
 
                     @endif
 
@@ -66,7 +62,7 @@
 
         @endif
 
-        <span class="text-black font-bold">
+        <span class="theme-text-secondary font-bold">
             {{ auth()->user()->name }}
         </span>
 
@@ -75,7 +71,7 @@
 
             <button
                 type="submit"
-                class="hover:text-red-500 transition duration-300"
+                class="theme-link-danger transition duration-300"
             >
                 {{ $setting?->logout_label ?: 'Logout' }}
             </button>

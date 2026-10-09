@@ -1,8 +1,8 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<div class="max-w-5xl mx-auto px-6 py-12">
+<div class="theme-page-container py-12">
 
     <h1 class="text-4xl font-black mb-8">
         My Plan
@@ -10,7 +10,7 @@
 
     @if($membership)
 
-    <div class="bg-white rounded-3xl shadow-xl p-8">
+    <div class="theme-card theme-radius theme-shadow theme-card-padding">
 
         <div class="flex justify-between items-start">
 
@@ -22,7 +22,7 @@
 
                 <div class="mt-2">
 
-                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                    <span class="theme-status-success theme-text-success px-3 py-1 rounded-full text-sm font-semibold">
                         Active Membership
                     </span>
 
@@ -32,7 +32,7 @@
 
             <div class="text-right">
 
-                <p class="text-sm text-gray-500">
+                <p class="text-sm theme-text-neutral">
                     Membership ID
                 </p>
 
@@ -46,7 +46,7 @@
 
         <hr class="my-6">
 
-        <div class="grid md:grid-cols-2 gap-6">
+        <div class="grid md:grid-cols-2 theme-content-gap">
 
             <div>
 
@@ -83,7 +83,7 @@
 
                     <p>
                         <strong>Last Payment:</strong>
-                        ₹{{ number_format($orders->first()->amount, 2) }}
+                        &#8377;{{ number_format($orders->first()->amount, 2) }}
                     </p>
 
                     <p>
@@ -108,7 +108,7 @@
             @foreach($membership->plan->features as $feature)
 
                 <li>
-                    ✓ {{ $feature['feature'] ?? '' }}
+                    <svg class="inline-block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m5 12 4 4L19 6" /></svg> {{ $feature['feature'] ?? '' }}
                 </li>
 
             @endforeach
@@ -129,7 +129,7 @@
 
                     <thead>
 
-                        <tr class="bg-gray-100">
+                        <tr class="theme-surface-muted">
 
                             <th class="p-3 text-left">Date</th>
                             <th class="p-3 text-left">Amount</th>
@@ -150,7 +150,7 @@
                                 </td>
 
                                 <td class="p-3">
-                                    ₹{{ number_format($order->amount, 2) }}
+                                    &#8377;{{ number_format($order->amount, 2) }}
                                 </td>
 
                                 <td class="p-3">
@@ -172,12 +172,12 @@
         <div class="mt-8 flex gap-4">
 
             <a href="/plans"
-               class="bg-black text-white px-6 py-3 rounded-xl">
+               class="theme-surface-strong theme-text-on-strong px-6 py-3 theme-radius">
 
                 Renew Early
 
 <a href="{{ route('member.billing') }}"
-   class="bg-yellow-500 text-black px-6 py-3 rounded-xl">
+   class="theme-status-warning theme-text-secondary px-6 py-3 theme-radius">
 
     View Billing History
 
@@ -188,7 +188,7 @@
             @if($membership->plan->access_type === 'basic')
 
                 <a href="/plans"
-                   class="bg-yellow-500 text-black px-6 py-3 rounded-xl">
+                   class="theme-status-warning theme-text-secondary px-6 py-3 theme-radius">
 
                     Upgrade to Pro
 
@@ -197,7 +197,7 @@
             @elseif($membership->plan->access_type === 'pro')
 
                 <a href="/plans"
-                   class="bg-yellow-500 text-black px-6 py-3 rounded-xl">
+                   class="theme-status-warning theme-text-secondary px-6 py-3 theme-radius">
 
                     Upgrade to Elite
 
@@ -211,7 +211,7 @@
 
     @else
 
-    <div class="bg-white rounded-3xl shadow-xl p-8">
+    <div class="theme-card theme-radius theme-shadow theme-card-padding">
 
         <h2 class="text-3xl font-bold mb-4">
             No Active Membership
@@ -222,7 +222,7 @@
         </p>
 
         <a href="/plans"
-           class="bg-black text-white px-6 py-3 rounded-xl">
+           class="theme-surface-strong theme-text-on-strong px-6 py-3 theme-radius">
 
             Choose a Plan
 

@@ -1,8 +1,8 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<div class="min-h-screen bg-gray-100 p-8">
+<div class="min-h-screen theme-surface-muted theme-card-padding">
 
     <div class="max-w-7xl mx-auto">
 
@@ -11,11 +11,11 @@
         <div class="flex items-center justify-between mb-10">
 
             <div>
-                <h1 class="text-4xl font-black text-black">
+                <h1 class="text-4xl font-black theme-text-secondary">
                     {{ $setting->site_name }} Admin
                 </h1>
 
-                <p class="text-gray-500 mt-2">
+                <p class="theme-text-neutral mt-2">
                     Manage programs, transformations, clients and business.
                 </p>
             </div>
@@ -30,49 +30,49 @@
 
         <!-- STATS -->
 
-        <div class="grid md:grid-cols-4 gap-6 mb-10">
+        <div class="grid md:grid-cols-4 theme-content-gap mb-10">
 
-            <div class="bg-white rounded-3xl p-6 shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-3">Programs</h3>
-                <div class="text-4xl font-black text-yellow-500">{{ $totalPrograms }}</div>
+            <div class="theme-card theme-radius p-6 theme-shadow">
+                <h3 class="theme-text-neutral text-sm mb-3">Programs</h3>
+                <div class="text-4xl font-black theme-text-primary">{{ $totalPrograms }}</div>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-3">Clients</h3>
-                <div class="text-4xl font-black text-black">{{ $totalClients }}</div>
+            <div class="theme-card theme-radius p-6 theme-shadow">
+                <h3 class="theme-text-neutral text-sm mb-3">Clients</h3>
+                <div class="text-4xl font-black theme-text-secondary">{{ $totalClients }}</div>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-3">Transformations</h3>
-                <div class="text-4xl font-black text-black">{{ $totalTransformations }}</div>
+            <div class="theme-card theme-radius p-6 theme-shadow">
+                <h3 class="theme-text-neutral text-sm mb-3">Transformations</h3>
+                <div class="text-4xl font-black theme-text-secondary">{{ $totalTransformations }}</div>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 shadow-sm">
-                <h3 class="text-gray-500 text-sm mb-3">Orders</h3>
-                <div class="text-4xl font-black text-black">{{ $totalOrders }}</div>
+            <div class="theme-card theme-radius p-6 theme-shadow">
+                <h3 class="theme-text-neutral text-sm mb-3">Orders</h3>
+                <div class="text-4xl font-black theme-text-secondary">{{ $totalOrders }}</div>
             </div>
 
         </div>
 
         <!-- QUICK ACTIONS -->
 
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-3 theme-content-gap">
 
             <a href="#"
-               class="bg-black text-white p-8 rounded-3xl hover:scale-105 transition duration-300">
+               class="theme-surface-strong theme-text-on-strong theme-card-padding theme-radius hover:scale-105 transition duration-300">
 
                 <h2 class="text-2xl font-bold mb-2">
                     Manage Programs
                 </h2>
 
-                <p class="text-gray-300">
+                <p class="theme-text-neutral">
                     Add and update coaching programs.
                 </p>
 
             </a>
 
             <a href="#"
-               class="bg-yellow-500 text-black p-8 rounded-3xl hover:scale-105 transition duration-300">
+               class="theme-status-warning theme-text-secondary theme-card-padding theme-radius hover:scale-105 transition duration-300">
 
                 <h2 class="text-2xl font-bold mb-2">
                     Client Transformations
@@ -85,13 +85,13 @@
             </a>
 
             <a href="#"
-               class="bg-white p-8 rounded-3xl shadow-sm hover:scale-105 transition duration-300">
+               class="theme-card theme-card-padding theme-radius theme-shadow hover:scale-105 transition duration-300">
 
                 <h2 class="text-2xl font-bold mb-2">
                     Blog Management
                 </h2>
 
-                <p class="text-gray-500">
+                <p class="theme-text-neutral">
                     Create SEO fitness blogs.
                 </p>
 

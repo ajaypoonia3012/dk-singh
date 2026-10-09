@@ -2,11 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-
-use Illuminate\Http\Request;
-
 use App\Models\Membership;
+use Closure;
+use Illuminate\Http\Request;
 
 class ActiveMembership
 {
@@ -17,7 +15,7 @@ class ActiveMembership
             ->where('expires_at', '>=', now())
             ->first();
 
-        if (!$membership) {
+        if (! $membership) {
 
             return redirect('/plans')
                 ->with('error', 'Active membership required.');

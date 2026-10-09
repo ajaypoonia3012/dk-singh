@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>Premium Workouts</title>
@@ -24,8 +24,8 @@
         </div>
     @endif
 
-    <div class="card shadow-sm mb-5">
-        <div class="card-header bg-success text-white">
+    <div class="card theme-shadow mb-5">
+        <div class="card-header bg-success theme-text-on-strong">
             Basic Workouts
         </div>
 
@@ -48,9 +48,9 @@
 
     @if($tier === 'pro' || $tier === 'elite')
 
-        <div class="card shadow-sm mb-5">
+        <div class="card theme-shadow mb-5">
 
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-primary theme-text-on-strong">
                 Pro Workouts
             </div>
 
@@ -76,9 +76,9 @@
 
     @if($tier === 'elite')
 
-        <div class="card shadow-sm mb-5">
+        <div class="card theme-shadow mb-5">
 
-            <div class="card-header bg-dark text-white">
+            <div class="card-header bg-dark theme-text-on-strong">
                 Elite Workouts
             </div>
 

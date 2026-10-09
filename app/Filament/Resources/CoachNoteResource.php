@@ -5,25 +5,27 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CoachNoteResource\Pages;
 use App\Models\CoachNote;
 use App\Models\User;
-use Filament\Forms\Form;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class CoachNoteResource extends Resource
 {
     protected static ?string $model = CoachNote::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
 
-    protected static ?string $navigationGroup = 'Members';
+    protected static ?string $navigationGroup = 'Members & Coaching';
 
     protected static ?string $navigationLabel = 'Coach Notes';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -40,10 +42,10 @@ class CoachNoteResource extends Resource
                     ->required(),
 
                 Textarea::make('note')
-    ->rows(8)
-    ->maxLength(5000)
-    ->required()
-    ->columnSpanFull(),
+                    ->rows(8)
+                    ->maxLength(5000)
+                    ->required()
+                    ->columnSpanFull(),
 
                 Toggle::make('is_visible')
                     ->label('Visible To Member')
@@ -67,8 +69,8 @@ class CoachNoteResource extends Resource
                     ->wrap(),
 
                 IconColumn::make('is_visible')
-    ->label('Visible')
-    ->boolean(),
+                    ->label('Visible')
+                    ->boolean(),
 
                 TextColumn::make('created_at')
                     ->dateTime('d M Y H:i')

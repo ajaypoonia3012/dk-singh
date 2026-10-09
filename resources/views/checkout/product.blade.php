@@ -1,10 +1,10 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<div class="max-w-4xl mx-auto py-20 px-6">
+<div class="max-w-4xl mx-auto theme-section px-6">
 
-    <div class="bg-white rounded-3xl shadow-xl p-10">
+    <div class="theme-card theme-radius theme-shadow theme-card-padding-lg">
 
         <h1 class="text-4xl font-black mb-6">
             Product Checkout
@@ -14,13 +14,13 @@
             {{ $product->name }}
         </h2>
 
-        <div class="text-3xl font-black text-yellow-500 mb-6">
-            ₹{{ number_format($product->price) }}
+        <div class="text-3xl font-black theme-text-primary mb-6">
+            &#8377;{{ number_format($product->price) }}
         </div>
 
         @if($product->description)
 
-            <p class="text-gray-600 mb-8">
+            <p class="theme-text-neutral mb-8">
                 {{ $product->description }}
             </p>
 
@@ -28,7 +28,7 @@
 
         <a
     href="/product-payment/{{ $product->id }}"
-    class="inline-block bg-black text-white px-8 py-4 rounded-xl"
+    class="inline-block theme-surface-strong theme-text-on-strong px-8 py-4 theme-radius"
 >
     Proceed To Payment
 </a>

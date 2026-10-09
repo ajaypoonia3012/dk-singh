@@ -1,10 +1,3 @@
-@php
-    $blogs = \App\Models\Blog::where('status',1)
-        ->latest()
-        ->take(3)
-        ->get();
-@endphp
-
 <section class="bg-white py-20">
 
     <div class="max-w-7xl mx-auto px-6">
@@ -25,13 +18,23 @@
 
         </div>
 
-        <div class="grid lg:grid-cols-3 gap-8">
+@php
+    $previewGridClass = match($selectedDevice ?? 'desktop') {
+        'mobile' => 'wb-grid-1 gap-6',
+        'tablet' => 'wb-grid-2 gap-6',
+        default => 'wb-grid-3 gap-8',
+    };
+@endphp
 
-            @forelse($blogs as $blog)
+        <div class="{{ $previewGridClass }}">
+
+            @forelse($previewBlogs->take(3) as $blog)
 
                 <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
 
-                    @if($blog->featured_image)
+                    @if($blog->id === $selectedBlogId && $blogImage)
+                        <img src="{{ $blogImage->temporaryUrl() }}" class="w-full h-60 object-cover" alt="{{ $blog->title }}">
+                    @elseif($blog->featured_image)
 
     <img
         src="{{ asset('storage/'.$blog->featured_image) }}"

@@ -31,7 +31,7 @@ class EnterpriseSettingsTest extends TestCase
         $this->assertFalse(Schema::hasColumn('theme_settings', 'success_color'));
 
         $this->assertCount(96, (new Setting)->getFillable());
-        $this->assertCount(77, (new ThemeSetting)->getFillable());
+        $this->assertCount(98, (new ThemeSetting)->getFillable());
     }
 
     public function test_grouped_configuration_preserves_field_level_access_and_native_types(): void

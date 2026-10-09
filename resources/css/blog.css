@@ -2,24 +2,14 @@
    DK Singh Fitness Blog
 ========================================== */
 
-:root{
-    --dk-yellow:#f5b400;
-    --dk-dark:#111827;
-    --dk-gray:#6b7280;
-    --dk-light:#f8fafc;
-    --dk-radius:18px;
-    --dk-shadow:0 12px 35px rgba(0,0,0,.08);
-    --dk-transition:.3s ease;
-}
-
 /* HERO */
 
 .blog-hero{
     background:
-        linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
-        url('/images/blog-hero.jpg') center/cover;
-    color:#fff;
-    border-radius:24px;
+        linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(30, 41, 59, 0.82)),
+        url('/images/program-1.jpg') center/cover;
+    color:var(--secondary-button-text);
+    border-radius:var(--card-radius);
     padding:90px 70px;
     overflow:hidden;
 }
@@ -37,14 +27,14 @@
 
 .blog-search input{
     border:none;
-    border-radius:14px 0 0 14px;
+    border-radius:var(--input-radius) 0 0 var(--input-radius);
     padding:15px 18px;
 }
 
 .blog-search button{
-    border-radius:0 14px 14px 0;
-    background:var(--dk-yellow);
-    color:#111;
+    border-radius:0 var(--button-radius) var(--button-radius) 0;
+    background:var(--primary-color);
+    color:var(--secondary-color);
     font-weight:700;
 }
 
@@ -52,17 +42,17 @@
 
 .blog-card{
     border:none;
-    border-radius:var(--dk-radius);
+    border-radius:var(--card-radius);
     overflow:hidden;
-    box-shadow:var(--dk-shadow);
-    transition:var(--dk-transition);
+    box-shadow:var(--card-shadow);
+    transition:300ms ease;
     height:100%;
-    background:#fff;
+    background:var(--card-background);
 }
 
 .blog-card:hover{
     transform:translateY(-8px);
-    box-shadow:0 22px 45px rgba(0,0,0,.14);
+    box-shadow:var(--card-shadow);
 }
 
 .blog-card-image{
@@ -92,23 +82,23 @@
 }
 
 .blog-card-title a{
-    color:#111;
+    color:var(--secondary-color);
     text-decoration:none;
 }
 
 .blog-card-title a:hover{
-    color:var(--dk-yellow);
+    color:var(--primary-color);
 }
 
 .blog-meta{
     display:flex;
     gap:16px;
-    color:var(--dk-gray);
+    color:var(--neutral-color);
     font-size:.92rem;
 }
 
 .blog-excerpt{
-    color:#555;
+    color:var(--neutral-color);
     margin-top:18px;
     line-height:1.8;
 }
@@ -117,10 +107,10 @@
 
 .blog-category{
     display:inline-block;
-    background:var(--dk-yellow);
-    color:#111;
+    background:var(--primary-color);
+    color:var(--secondary-color);
     padding:7px 14px;
-    border-radius:30px;
+    border-radius:var(--button-radius);
     font-size:.82rem;
     font-weight:700;
     text-decoration:none;
@@ -129,11 +119,11 @@
 /* SIDEBAR */
 
 .blog-widget{
-    background:#fff;
-    border-radius:18px;
+    background:var(--card-background);
+    border-radius:var(--card-radius);
     padding:28px;
     margin-bottom:30px;
-    box-shadow:var(--dk-shadow);
+    box-shadow:var(--card-shadow);
 }
 
 .blog-widget h4{
@@ -157,7 +147,7 @@
 
 .blog-content img{
     max-width:100%;
-    border-radius:18px;
+    border-radius:var(--card-radius);
     margin:30px 0;
 }
 
@@ -168,11 +158,11 @@
 /* BUTTON */
 
 .blog-btn{
-    background:var(--dk-yellow);
+    background:var(--primary-color);
     border:none;
-    color:#111;
+    color:var(--secondary-color);
     font-weight:700;
-    border-radius:10px;
+    border-radius:var(--input-radius);
     padding:12px 26px;
     transition:.3s;
 }
@@ -184,9 +174,9 @@
 /* NEWSLETTER */
 
 .newsletter-box{
-    background:#111;
-    color:#fff;
-    border-radius:24px;
+    background:var(--secondary-color);
+    color:var(--secondary-button-text);
+    border-radius:var(--card-radius);
     padding:60px;
 }
 
@@ -237,4 +227,3 @@
         height:280px;
     }
 }
-

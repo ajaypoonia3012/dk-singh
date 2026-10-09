@@ -2,9 +2,9 @@
 
 @section('content')
 
-<section class="min-h-screen bg-[#f6f3eb] py-20">
+<section class="min-h-screen theme-surface-muted theme-section">
 
-    <div class="max-w-5xl mx-auto px-6">
+    <div class="theme-page-container">
 
         <h1 class="text-5xl font-black mb-12">
             Coach Feedback History
@@ -12,11 +12,13 @@
 
         @forelse($notes as $note)
 
-            <div class="bg-white rounded-[30px] p-8 shadow-lg mb-8">
+            <div class="theme-card theme-radius theme-card-padding theme-shadow mb-8">
 
-                <p class="uppercase tracking-[2px] text-gray-400 text-sm mb-3">
-                    {{ $note->created_at->format('d M Y') }}
-                </p>
+                <div class="flex items-center justify-between mb-3">
+                    <p class="uppercase tracking-[2px] theme-text-neutral text-xs">
+                        {{ $note->created_at->format('d M Y') }}
+                    </p>
+                </div>
 
                 <p class="text-lg leading-relaxed">
                     {{ $note->note }}
@@ -26,7 +28,7 @@
 
         @empty
 
-            <div class="bg-white rounded-[30px] p-8 shadow-lg">
+            <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
                 No coach feedback available yet.
 

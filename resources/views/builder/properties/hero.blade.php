@@ -77,6 +77,40 @@
 
 </div>
 
+<div>
+    <label class="block text-sm font-semibold mb-2">Secondary Button Link</label>
+    <input wire:model.live="hero.view_button_link" class="w-full rounded-lg border p-3">
+</div>
+
+<div>
+    <label class="block text-sm font-semibold mb-2">Background Video URL</label>
+    <input type="url" wire:model.live="hero.video" class="w-full rounded-lg border p-3">
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+        <label class="block text-sm font-semibold mb-2">Overlay Color</label>
+        <input type="color" wire:model.live="hero.overlay_color" class="w-full h-12 rounded-lg border p-1">
+    </div>
+    <div>
+        <label class="block text-sm font-semibold mb-2">Overlay Opacity</label>
+        <input type="number" min="0" max="100" wire:model.live="hero.overlay_opacity" class="w-full rounded-lg border p-3">
+    </div>
+</div>
+
+<div>
+    <label class="block text-sm font-semibold mb-2">Template</label>
+    <select wire:model.live="hero.template" class="w-full rounded-lg border p-3">
+        <option value="default">Default</option>
+        <option value="modern">Modern</option>
+    </select>
+</div>
+
+<label class="flex items-center gap-3">
+    <input type="checkbox" wire:model.live="hero.enabled" class="rounded border-gray-300">
+    <span class="text-sm font-semibold">Hero enabled</span>
+</label>
+
 
     
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
@@ -112,12 +146,11 @@
     </div>
 
 </div>
-<button
+    <button
         wire:click="saveHero"
-        class="w-full bg-amber-500 hover:bg-amber-600 text-black py-3 rounded-lg font-bold">
-
-        Save Hero
-
+        class="wb-btn-primary w-full py-3 rounded-xl font-black text-sm tracking-wide shadow-md transition"
+        style="background-color: #f59e0b !important; color: #000000 !important;">
+        Save Hero Section
     </button>
 
 

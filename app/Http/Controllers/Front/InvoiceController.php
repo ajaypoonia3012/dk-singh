@@ -20,7 +20,7 @@ class InvoiceController extends Controller
         );
 
         return $pdf->download(
-            $order->invoice_number . '.pdf'
+            $order->invoice_number.'.pdf'
         );
     }
 }

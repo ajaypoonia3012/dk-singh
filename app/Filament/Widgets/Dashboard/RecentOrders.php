@@ -3,14 +3,14 @@
 namespace App\Filament\Widgets\Dashboard;
 
 use App\Models\Order;
-
 use Filament\Tables;
 use Filament\Tables\Table;
-
 use Filament\Widgets\TableWidget as BaseWidget;
 
 class RecentOrders extends BaseWidget
 {
+    protected static ?int $sort = 5;
+
     protected static ?string $heading = 'Recent Orders';
 
     public function table(Table $table): Table
@@ -27,9 +27,9 @@ class RecentOrders extends BaseWidget
                     ->label('Item'),
 
                 Tables\Columns\TextColumn::make('amount')
-    ->formatStateUsing(
-        fn ($state) => '₹' . number_format((float) $state, 2)
-    ),
+                    ->formatStateUsing(
+                        fn ($state) => '₹'.number_format((float) $state, 2)
+                    ),
 
                 Tables\Columns\TextColumn::make('payment_status')
                     ->badge(),

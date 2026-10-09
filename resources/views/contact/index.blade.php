@@ -1,25 +1,27 @@
 @extends('layouts.app')
 
+@section('title', 'Contact Coach DK Singh | Start Your Transformation')
+@section('meta_description', 'Get in touch with DK Singh Fitness & Nutrition. Inquire about 1-on-1 coaching, transformation programs, and personalized nutrition consultations.')
+
 @section('content')
 
-<section class="bg-[#f6f3eb] py-24">
+<section class="theme-surface-muted theme-section">
 
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="theme-page-container">
 
         <!-- HEADING -->
 
         <div class="text-center mb-20">
 
-            <p class="uppercase tracking-[5px] text-yellow-500 font-bold mb-4">
+            <p class="uppercase tracking-[5px] theme-text-primary font-bold mb-4">
                 {{ $setting->contact_title }}
             </p>
 
-            <h1 class="text-5xl lg:text-6xl font-black text-[#111111] mb-6">
+            <h1 class="text-5xl lg:text-6xl font-black theme-text-secondary mb-6">
                 {{ $setting->contact_heading }}
-                </span>
             </h1>
 
-            <p class="max-w-3xl mx-auto text-xl text-gray-600 leading-relaxed">
+            <p class="max-w-3xl mx-auto text-xl theme-text-neutral leading-relaxed">
     {{ $setting->contact_description }}
 </p>
 
@@ -31,16 +33,16 @@
 
             <div data-aos="fade-right">
 
-                <div class="space-y-8">
+                <div class="theme-stack-lg">
 
                     <!-- CARD -->
 
-                    <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                    <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
-                        <div class="flex items-start gap-5">
+                        <div class="flex items-start theme-content-gap">
 
-                            <div class="w-16 h-16 rounded-2xl bg-yellow-500 flex items-center justify-center text-3xl">
-                                📞
+                            <div class="w-16 h-16 theme-radius theme-status-warning flex items-center justify-center text-3xl">
+                                <svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg>
                             </div>
 
                             <div>
@@ -49,7 +51,7 @@
                                     Phone Number
                                 </h3>
 
-                                <p class="text-gray-600 text-lg">
+                                <p class="theme-text-neutral text-lg">
                                     {{ $setting->phone }}
                                 </p>
 
@@ -61,12 +63,12 @@
 
                     <!-- CARD -->
 
-                    <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                    <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
-                        <div class="flex items-start gap-5">
+                        <div class="flex items-start theme-content-gap">
 
-                            <div class="w-16 h-16 rounded-2xl bg-yellow-500 flex items-center justify-center text-3xl">
-                                ✉️
+                            <div class="w-16 h-16 theme-radius theme-status-warning flex items-center justify-center text-3xl">
+                                <svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg>
                             </div>
 
                             <div>
@@ -75,7 +77,7 @@
                                     Email Address
                                 </h3>
 
-                                <p class="text-gray-600 text-lg">
+                                <p class="theme-text-neutral text-lg">
                                     {{ $setting->email }}
                                 </p>
 
@@ -87,12 +89,12 @@
 
                     <!-- CARD -->
 
-                    <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                    <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
-                        <div class="flex items-start gap-5">
+                        <div class="flex items-start theme-content-gap">
 
-                            <div class="w-16 h-16 rounded-2xl bg-yellow-500 flex items-center justify-center text-3xl">
-                                📍
+                            <div class="w-16 h-16 theme-radius theme-status-warning flex items-center justify-center text-3xl">
+                                <svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg>
                             </div>
 
                             <div>
@@ -101,13 +103,13 @@
                                     Location
                                 </h3>
 
-                                <p class="text-gray-600 leading-relaxed mb-5">
+                                <p class="theme-text-neutral leading-relaxed mb-5">
                            {{ $setting->address }}
                         </p>
 
                         <a href="{{ $setting->map_link }}"
    target="_blank"
-   class="text-yellow-600 font-semibold hover:text-yellow-500 transition">
+   class="theme-text-primary font-semibold hover:theme-text-primary transition">
 
     Open in Google Maps
 
@@ -122,12 +124,12 @@
 
                     <!-- CARD -->
 
-                    <div class="bg-white rounded-[32px] p-8 shadow-xl">
+                    <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
-                        <div class="flex items-start gap-5">
+                        <div class="flex items-start theme-content-gap">
 
-                            <div class="w-16 h-16 rounded-2xl bg-yellow-500 flex items-center justify-center text-3xl">
-                                ⏰
+                            <div class="w-16 h-16 theme-radius theme-status-warning flex items-center justify-center text-3xl">
+                                <svg class="inline-block w-5 h-5 theme-text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path stroke-linecap="round" stroke-linejoin="round" d="m8 12 2.5 2.5L16 9" /></svg>
                             </div>
 
                             <div>
@@ -136,7 +138,7 @@
                                     Working Hours
                                 </h3>
 
-                               <p class="text-gray-600 text-lg">
+                               <p class="theme-text-neutral text-lg">
     {{ $setting->working_hours }}
 </p>
 
@@ -154,19 +156,38 @@
 
             <div data-aos="fade-left">
 
-                <div class="bg-white rounded-[40px] p-10 shadow-2xl">
+                <div class="theme-card theme-radius theme-card-padding-lg theme-shadow">
 
-                    <h2 class="text-4xl font-black mb-10">
+                    <h2 class="text-4xl font-black mb-6">
                         Send Message
                     </h2>
 
-<form method="POST" action="{{ route('contact.submit') }}" class="space-y-6">
+                    @if(!empty($selectedService))
+                        <div class="mb-8 p-5 theme-radius theme-card border-2 theme-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <span class="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider theme-status-warning theme-text-secondary mb-1">
+                                    Interested Coaching Service
+                                </span>
+                                <h3 class="text-xl font-bold theme-text-secondary">
+                                    {{ $selectedService->title }} ({{ $selectedService->duration }})
+                                </h3>
+                                <p class="text-xs theme-text-neutral mt-0.5">Your inquiry will be directly routed for this 1-on-1 coaching package.</p>
+                            </div>
+                            <span class="theme-text-primary font-black text-2xl">₹{{ number_format($selectedService->price) }}</span>
+                        </div>
+                    @endif
+
+<form method="POST" action="{{ route('contact.submit') }}" class="theme-stack-lg">
 
     @csrf
 
+    @if(!empty($selectedService))
+        <input type="hidden" name="service" value="{{ $selectedService->title }}">
+    @endif
+
     <div>
 
-        <label class="block mb-3 font-bold text-gray-700">
+        <label class="theme-label block mb-3 font-bold theme-text-neutral">
             Full Name
         </label>
 
@@ -174,14 +195,14 @@
             type="text"
             name="name"
             placeholder="Enter your name"
-            class="w-full rounded-2xl border border-gray-300 px-6 py-5 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            class="theme-form-control w-full theme-radius border theme-border px-6 py-5 focus:outline-none focus:ring-2 theme-border"
         >
 
     </div>
 
     <div>
 
-        <label class="block mb-3 font-bold text-gray-700">
+        <label class="theme-label block mb-3 font-bold theme-text-neutral">
             Email Address
         </label>
 
@@ -189,14 +210,14 @@
             type="email"
             name="email"
             placeholder="Enter your email"
-            class="w-full rounded-2xl border border-gray-300 px-6 py-5 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            class="theme-form-control w-full theme-radius border theme-border px-6 py-5 focus:outline-none focus:ring-2 theme-border"
         >
 
     </div>
 
     <div>
 
-        <label class="block mb-3 font-bold text-gray-700">
+        <label class="theme-label block mb-3 font-bold theme-text-neutral">
             Phone Number
         </label>
 
@@ -204,14 +225,14 @@
             type="text"
             name="phone"
             placeholder="Enter your number"
-            class="w-full rounded-2xl border border-gray-300 px-6 py-5 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            class="theme-form-control w-full theme-radius border theme-border px-6 py-5 focus:outline-none focus:ring-2 theme-border"
         >
 
     </div>
 
     <div>
 
-        <label class="block mb-3 font-bold text-gray-700">
+        <label class="theme-label block mb-3 font-bold theme-text-neutral">
             Message
         </label>
 
@@ -219,14 +240,14 @@
             rows="6"
             name="message"
             placeholder="Write your message..."
-            class="w-full rounded-2xl border border-gray-300 px-6 py-5 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            class="theme-form-control w-full theme-radius border theme-border px-6 py-5 focus:outline-none focus:ring-2 theme-border"
         ></textarea>
 
     </div>
 
     <button
         type="submit"
-        class="w-full rounded-2xl bg-yellow-500 hover:bg-yellow-400 text-black font-black py-5 transition duration-300 shadow-lg">
+        class="w-full theme-radius theme-status-warning hover:theme-status-warning theme-text-secondary font-black py-5 transition duration-300 theme-shadow">
 
         Send Message
 

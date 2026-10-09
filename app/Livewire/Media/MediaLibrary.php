@@ -10,15 +10,16 @@ use Livewire\WithPagination;
 
 class MediaLibrary extends Component
 {
-    use WithPagination;
     use WithFileUploads;
+    use WithPagination;
 
     public $search = '';
 
     public $category = '';
 
     public $upload;
-public ?int $selectedMediaId = null;
+
+    public ?int $selectedMediaId = null;
 
     protected $queryString = [
         'search',
@@ -34,31 +35,32 @@ public ?int $selectedMediaId = null;
     {
         $this->resetPage();
     }
-public function select($id)
-{
-    $this->selectedMediaId = $id;
-}
 
-public function useSelected()
-{
-    if (!$this->selectedMediaId) {
-        return;
+    public function select($id)
+    {
+        $this->selectedMediaId = $id;
     }
 
-    $this->dispatch(
-        'media-selected',
-        id: $this->selectedMediaId
-    );
-}
+    public function useSelected()
+    {
+        if (! $this->selectedMediaId) {
+            return;
+        }
 
-public function getSelectedMediaProperty()
-{
-    if (!$this->selectedMediaId) {
-        return null;
+        $this->dispatch(
+            'media-selected',
+            id: $this->selectedMediaId
+        );
     }
 
-    return Media::find($this->selectedMediaId);
-}
+    public function getSelectedMediaProperty()
+    {
+        if (! $this->selectedMediaId) {
+            return null;
+        }
+
+        return Media::find($this->selectedMediaId);
+    }
 
     public function render()
     {
@@ -73,8 +75,8 @@ public function getSelectedMediaProperty()
                     $query->where(function ($q) {
 
                         $q->where('name', 'like', "%{$this->search}%")
-                          ->orWhere('title', 'like', "%{$this->search}%")
-                          ->orWhere('alt', 'like', "%{$this->search}%");
+                            ->orWhere('title', 'like', "%{$this->search}%")
+                            ->orWhere('alt', 'like', "%{$this->search}%");
 
                     });
 

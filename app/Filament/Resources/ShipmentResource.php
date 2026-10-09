@@ -19,6 +19,10 @@ class ShipmentResource extends Resource
 
     protected static ?string $navigationGroup = 'Commerce';
 
+    protected static ?string $navigationLabel = 'Shipments';
+
+    protected static ?int $navigationSort = 3;
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->with(['order:id,order_number', 'courierProvider:id,name']);

@@ -1,0 +1,210 @@
+[
+    {
+        "path": "\/",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 85036
+    },
+    {
+        "path": "\/about",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 43635
+    },
+    {
+        "path": "\/contact",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 46971
+    },
+    {
+        "path": "\/fitness-hub",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 46025
+    },
+    {
+        "path": "\/fitness",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 118065
+    },
+    {
+        "path": "\/fitness\/exercise-library",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 92628
+    },
+    {
+        "path": "\/blog",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 90370
+    },
+    {
+        "path": "\/blog\/post-pregnancy-fitness-safe-workouts-for-indian-moms",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 80687
+    },
+    {
+        "path": "\/programs",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 46946
+    },
+    {
+        "path": "\/programs\/12-week-fat-loss-transformation",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 43722
+    },
+    {
+        "path": "\/plans",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 60521
+    },
+    {
+        "path": "\/plans?program=12-week-fat-loss-transformation",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 62031
+    },
+    {
+        "path": "\/products",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 56590
+    },
+    {
+        "path": "\/checkout\/product\/1",
+        "status": 302,
+        "expected": 302,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 354
+    },
+    {
+        "path": "\/services",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 44270
+    },
+    {
+        "path": "\/services\/diet-nutrition-coaching",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 48418
+    },
+    {
+        "path": "\/services\/personal-online-coaching",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 49580
+    },
+    {
+        "path": "\/fitness-hub\/workouts",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 40346
+    },
+    {
+        "path": "\/fitness-hub\/workouts\/1-week-workout-plan-designed-for-weight-loss",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 44772
+    },
+    {
+        "path": "\/fitness-hub\/diets",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 40135
+    },
+    {
+        "path": "\/fitness-hub\/diets\/sustainable-high-protein-weight-loss-plan",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 42582
+    },
+    {
+        "path": "\/admin\/login",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 46387
+    },
+    {
+        "path": "\/admin\/website-builder",
+        "status": 302,
+        "expected": 302,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 378
+    },
+    {
+        "path": "\/sitemap.xml",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 29766
+    },
+    {
+        "path": "\/robots.txt",
+        "status": 200,
+        "expected": 200,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 72
+    },
+    {
+        "path": "\/this-page-definitely-does-not-exist-404",
+        "status": 404,
+        "expected": 404,
+        "passed": true,
+        "reason": "OK",
+        "bytes": 42755
+    }
+]

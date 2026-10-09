@@ -27,21 +27,15 @@
 
                 <button
                     wire:click="selectTransformation({{ $item->id }})"
-                    class="flex-1 text-left p-3 rounded-lg border transition
-                    {{ $selectedTransformationId == $item->id
-                        ? 'bg-amber-500 text-white border-amber-500'
-                        : 'bg-white hover:bg-gray-50' }}">
+                    class="flex-1 text-left p-3 rounded-xl border transition wb-card-selector-btn {{ $selectedTransformationId == $item->id ? 'active' : 'bg-white hover:bg-slate-50 border-slate-200' }}"
+                    style="{{ $selectedTransformationId == $item->id ? 'background-color: #fef3c7 !important; border-color: #f59e0b !important; color: #78350f !important; font-weight: 700;' : '' }}">
 
-                    <div class="font-semibold">
-
-                        {{ $item->name }}
-
+                    <div class="font-bold text-xs truncate">
+                        {{ $item->name ?: 'Untitled Transformation' }}
                     </div>
 
-                    <div class="text-xs opacity-70">
-
+                    <div class="text-[11px] opacity-75 truncate">
                         {{ $item->goal }}
-
                     </div>
 
                 </button>

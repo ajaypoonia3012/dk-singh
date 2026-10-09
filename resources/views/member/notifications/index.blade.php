@@ -1,14 +1,14 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('content')
 
-<section class="min-h-screen bg-[#f6f3eb] py-20">
+<section class="min-h-screen theme-surface-muted theme-section">
 
-<div class="max-w-7xl mx-auto px-6">
+<div class="theme-page-container">
 
     <div class="mb-16">
 
-        <p class="uppercase tracking-[3px] text-yellow-500 font-bold mb-4">
+        <p class="uppercase tracking-[3px] theme-text-primary font-bold mb-4">
             Notifications
         </p>
 
@@ -16,17 +16,17 @@
             Notification Center
         </h1>
 
-        <p class="text-gray-500 mt-3">
+        <p class="theme-text-neutral mt-3">
             {{ $unreadCount }} unread notifications
         </p>
 
     </div>
 
-    <div class="space-y-6">
+    <div class="theme-stack-lg">
 
         @forelse($notifications as $notification)
 
-            <div class="bg-white rounded-3xl p-8 shadow-xl">
+            <div class="theme-card theme-radius theme-card-padding theme-shadow">
 
                 <div class="flex justify-between items-start">
 
@@ -38,13 +38,13 @@
 
                         </h2>
 
-                        <p class="mt-4 text-gray-600">
+                        <p class="mt-4 theme-text-neutral">
 
                             {{ $notification->message }}
 
                         </p>
 
-                        <p class="text-sm text-gray-400 mt-4">
+                        <p class="text-sm theme-text-neutral mt-4">
 
                             {{ $notification->created_at->format('d M Y H:i') }}
 
@@ -61,7 +61,7 @@
                             @csrf
 
                             <button
-                                class="px-4 py-2 rounded-xl bg-black text-white"
+                                class="px-4 py-2 theme-radius theme-surface-strong theme-text-on-strong"
                             >
                                 Mark Read
                             </button>
@@ -76,7 +76,7 @@
 
         @empty
 
-            <div class="bg-white rounded-3xl p-10 shadow-xl">
+            <div class="theme-card theme-radius theme-card-padding-lg theme-shadow">
 
                 No notifications available.
 

@@ -8,6 +8,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class LeadsOverview extends BaseWidget
 {
+    protected static ?int $sort = 10;
+
     protected function getStats(): array
     {
         $counts = ContactLead::query()

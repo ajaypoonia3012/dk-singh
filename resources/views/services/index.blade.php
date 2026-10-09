@@ -1,24 +1,27 @@
 @extends('layouts.app')
 
+@section('title', 'Elite Coaching & Training Services | DK Singh Fitness')
+@section('meta_description', 'Explore 1-on-1 online fitness coaching, personalized hypertrophy regimens, fat loss programming, and customized diet strategies by DK Singh.')
+
 @section('content')
 
-<section class="py-24 bg-[#f6f3eb]">
+<section class="theme-section theme-surface-muted">
 
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="theme-page-container">
 
         <!-- HEADING -->
 
         <div class="text-center mb-20">
 
-            <p class="text-yellow-500 font-bold uppercase tracking-[4px] mb-4">
+            <p class="theme-text-primary font-bold uppercase tracking-[4px] mb-4">
                {{ $setting->services_page_label ?? 'Our Services' }}
             </p>
 
-            <h1 class="text-5xl md:text-7xl font-black text-[#111111] mb-8">
+            <h1 class="text-5xl md:text-7xl font-black theme-text-secondary mb-8">
                 {{ $setting->service_label }}
             </h1>
 
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p class="text-xl theme-text-neutral max-w-3xl mx-auto leading-relaxed">
                 {{ $setting->services_page_description ?? 'Premium fitness coaching and transformation services designed to help you achieve real results.' }}
             </p>
 
@@ -26,11 +29,11 @@
 
         <!-- SERVICES GRID -->
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 theme-grid-gap">
 
             @foreach($services as $service)
 
-            <div class="bg-white rounded-[35px] overflow-hidden shadow-xl hover:-translate-y-3 hover:shadow-2xl transition duration-500">
+            <div class="theme-card theme-radius overflow-hidden theme-shadow hover:-translate-y-3 hover:theme-shadow transition duration-500">
 
                 @if($service->image)
 
@@ -42,15 +45,15 @@
 
                 @endif
 
-                <div class="p-8">
+                <div class="theme-card-padding">
 
-                    <h2 class="text-3xl font-black text-[#111111] mb-4">
+                    <h2 class="text-3xl font-black theme-text-secondary mb-4">
 
                         {{ $service->title }}
 
                     </h2>
 
-                    <p class="text-gray-600 leading-relaxed mb-6">
+                    <p class="theme-text-neutral leading-relaxed mb-6">
 
                         {{ Str::limit($service->description, 100) }}
 
@@ -60,9 +63,9 @@
 
                     <div class="mb-6">
 
-                        <span class="text-3xl font-black text-yellow-500">
+                        <span class="text-3xl font-black theme-text-primary">
 
-                            ₹{{ number_format($service->price) }}
+                            &#8377;{{ number_format($service->price) }}
 
                         </span>
 
@@ -71,7 +74,7 @@
                     @endif
 
                     <a href="{{ route('services.show', $service->slug) }}"
-                       class="block text-center bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-2xl transition duration-300">
+                       class="block text-center theme-status-warning hover:theme-status-warning theme-text-secondary font-black py-4 theme-radius transition duration-300">
 
                         View Service
 

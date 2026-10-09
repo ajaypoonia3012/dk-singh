@@ -1,127 +1,95 @@
 @if($theme?->show_hero)
-<!-- HERO SECTION -->
+    @php
+        $heroImageUrl = match (true) {
+            filled($hero?->backgroundMedia?->path) => $hero->backgroundMedia->url,
+            filled($setting?->hero_image) => asset('storage/'.ltrim($setting->hero_image, '/')),
+            filled($hero?->background) => asset('storage/'.ltrim($hero->background, '/')),
+            default => asset('images/dk-hero.jpeg'),
+        };
+    @endphp
 
-<section class="relative bg-[#f8f6f1] overflow-hidden">
-
-    <div class="max-w-7xl mx-auto px-6 py-20">
-
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-            <!-- LEFT CONTENT -->
-
-            <div>
-
-                <p class="text-yellow-500 uppercase tracking-[4px] font-bold mb-6">
+    <x-theme.section class="relative theme-surface-muted overflow-hidden">
+        <div class="grid lg:grid-cols-2 theme-grid-gap items-center">
+            <div class="theme-stack-lg">
+                <p class="theme-eyebrow">
                     {{ $setting->site_name }}
                 </p>
 
-                <h1 class="text-7xl font-black leading-tight">
+                <x-theme.section-heading level="1" class="text-5xl md:text-6xl lg:text-7xl">
+                    {!! nl2br(e($hero?->heading ?? $setting->hero_title ?? 'Transform Your Body, Transform Your Life')) !!}
+                </x-theme.section-heading>
 
-    {!! nl2br($hero?->heading ?? $setting->hero_title ?? 'Transform Your Body, Transform Your Life') !!}
+                <x-theme.section-subtitle class="text-xl max-w-xl">
+                    {{ $hero?->subheading ?? $setting->hero_subtitle ?? 'Expert fitness coaching and personalized nutrition plans.' }}
+                </x-theme.section-subtitle>
 
-</h1>
+                <div class="flex flex-wrap theme-content-gap">
+                    <x-theme.button :href="$hero?->button_link ?? $setting->cta_button_link ?? '/plans'">
+                        {{ $hero?->button_text ?? $setting->cta_button_text ?? 'Start Your Journey' }}
+                    </x-theme.button>
 
-
-
-                <p class="text-xl text-gray-600 leading-relaxed mb-10 max-w-xl">
-
-    {{ $hero?->subheading ?? $setting->hero_subtitle ?? 'Expert fitness coaching and personalized nutrition plans.' }}
-
-</p>
-
-                <!-- BUTTONS -->
-
-                <div class="flex flex-wrap gap-5 mb-14">
-
-                    <a href="{{ $hero?->button_link ?? $setting->cta_button_link ?? '/plans' }}"
-   class="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl transition duration-300 shadow-lg hover:scale-105">
-
-    {{ $hero?->button_text ?? $setting->cta_button_text ?? 'Start Your Journey' }}
-
-</a>
-
-                    <a href="/transformations"
-                       class="border border-gray-300 hover:border-yellow-500 hover:text-yellow-500 text-black font-bold px-8 py-4 rounded-2xl transition duration-300">
-
-                       {{ $setting->view_transformations_text }}
-
-                    </a>
-
+                    <x-theme.button href="/transformations" variant="outline">
+                        {{ $setting->view_transformations_text }}
+                    </x-theme.button>
                 </div>
 
-                <!-- STATS -->
-
-                <div class="grid grid-cols-3 gap-10">
-
+                <div class="grid grid-cols-3 theme-grid-gap">
                     <div>
-                        <h3 class="text-5xl font-black text-yellow-500">
+                        <p class="theme-section-heading theme-text-primary text-3xl md:text-5xl">
                             {{ $setting->instagram_followers ?? '3M+' }}
-                        </h3>
-                        <p class="text-gray-600 mt-2">
+                        </p>
+                        <p class="theme-text-neutral mt-2">
                             {{ $hero?->followers_label ?? 'Followers' }}
                         </p>
                     </div>
 
                     <div>
-                        <h3 class="text-5xl font-black text-yellow-500">
+                        <p class="theme-section-heading theme-text-primary text-3xl md:text-5xl">
                             {{ $setting->years_experience ?? '15+' }}
-                        </h3>
-                        <p class="text-gray-600 mt-2">
+                        </p>
+                        <p class="theme-text-neutral mt-2">
                             {{ $hero?->years_label ?? 'Years' }}
                         </p>
                     </div>
 
                     <div>
-                        <h3 class="text-5xl font-black text-yellow-500">
+                        <p class="theme-section-heading theme-text-primary text-3xl md:text-5xl">
                             {{ $setting->transformations ?? '15000+' }}
-                        </h3>
-                        <p class="text-gray-600 mt-2">
+                        </p>
+                        <p class="theme-text-neutral mt-2">
                             {{ $hero?->transformations_label ?? 'Transformations' }}
                         </p>
                     </div>
-
                 </div>
-
             </div>
-
-            <!-- RIGHT IMAGE -->
 
             <div class="relative flex justify-center">
+                <div class="absolute inset-0 theme-text-primary blur-3xl opacity-20 rounded-full" style="background: currentColor;"></div>
 
-                <!-- GLOW -->
-
-                <div class="absolute inset-0 bg-yellow-200 blur-3xl opacity-20 rounded-full"></div>
-
-                <!-- IMAGE -->
-
-                <img
-                    src="{{ $hero?->backgroundMedia ? asset('storage/' . $hero->backgroundMedia->path) : asset('images/dk-hero.jpeg') }}"
-                    alt="{{ $setting->site_name }}"
-		loading="lazy"
-    		decoding="async"
-
-                    class="relative z-10 w-full max-w-[550px] h-[700px] object-cover rounded-[40px] shadow-2xl"
-                >
-
-                <!-- FLOATING CARD -->
-
-                <div class="absolute bottom-10 left-0 bg-white rounded-3xl shadow-2xl p-6 z-20">
-
-                    <h4 class="text-3xl font-black text-black mb-2">
-                        Transformations
-                    </h4>
-
-                    <p class="text-gray-600 max-w-xs">
-                        {{ $setting->hero_card_title }}
-                    </p>
-
+                <div class="relative z-10 w-full max-w-[550px]">
+                    <img
+                        src="{{ $heroImageUrl }}"
+                        alt="{{ $setting->site_name }}"
+                        loading="eager"
+                        decoding="async"
+                        class="theme-media w-full h-[700px] object-cover"
+                    >
+                    <div
+                        class="theme-hero-overlay theme-media absolute inset-0 pointer-events-none"
+                        style="opacity: calc(var(--hero-overlay-opacity) / 100);"
+                        aria-hidden="true"
+                    ></div>
                 </div>
 
+                <x-theme.card class="absolute bottom-10 left-0 theme-card-padding z-30">
+                    <x-theme.section-heading level="3" class="text-3xl mb-2">
+                        Transformations
+                    </x-theme.section-heading>
+                    <x-theme.section-subtitle class="max-w-xs">
+                        {{ $setting->hero_card_title }}
+                    </x-theme.section-subtitle>
+                </x-theme.card>
             </div>
-
         </div>
-
-    </div>
-
-</section>
+    </x-theme.section>
 @endif

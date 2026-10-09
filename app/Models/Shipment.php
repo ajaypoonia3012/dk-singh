@@ -35,54 +35,55 @@ class Shipment extends Model
 
     ];
 
-protected static function booted()
-{
-    static::updated(function ($shipment) {
+    protected static function booted()
+    {
+        static::updated(function ($shipment) {
 
-        if ($shipment->wasChanged('shipment_status')) {
+            if ($shipment->wasChanged('shipment_status')) {
 
-            $messages = [
+                $messages = [
 
-                'packed' => 'Shipment packed and ready for pickup',
+                    'packed' => 'Shipment packed and ready for pickup',
 
-                'shipped' => 'Shipment picked up by courier',
+                    'shipped' => 'Shipment picked up by courier',
 
-                'out_for_delivery' => 'Shipment is out for delivery',
+                    'out_for_delivery' => 'Shipment is out for delivery',
 
-                'delivered' => 'Shipment delivered successfully',
+                    'delivered' => 'Shipment delivered successfully',
 
-                'cancelled' => 'Shipment cancelled',
+                    'cancelled' => 'Shipment cancelled',
 
-            ];
+                ];
 
-            \App\Models\ShipmentEvent::create([
+                ShipmentEvent::create([
 
-                'shipment_id' => $shipment->id,
+                    'shipment_id' => $shipment->id,
 
-                'event_type' => $shipment->shipment_status,
+                    'event_type' => $shipment->shipment_status,
 
-                'message' =>
-                    $messages[$shipment->shipment_status]
-                    ?? ucfirst($shipment->shipment_status),
+                    'message' => $messages[$shipment->shipment_status]
+                        ?? ucfirst($shipment->shipment_status),
 
-                'event_time' => now(),
+                    'event_time' => now(),
 
-            ]);
-        }
+                ]);
+            }
 
-    });
-}
+        });
+    }
 
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
-public function events()
-{
-    return $this->hasMany(
-        ShipmentEvent::class
-    )->latest('event_time');
-}
+
+    public function events()
+    {
+        return $this->hasMany(
+            ShipmentEvent::class
+        )->latest('event_time');
+    }
+
     public function courierProvider()
     {
         return $this->belongsTo(

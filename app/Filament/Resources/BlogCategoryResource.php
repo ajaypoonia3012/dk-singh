@@ -18,9 +18,9 @@ class BlogCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
-    protected static ?string $navigationGroup = 'Blog CMS';
+    protected static ?string $navigationGroup = 'Editorial Content';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationLabel = 'Categories';
 
@@ -36,8 +36,7 @@ class BlogCategoryResource extends Resource
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(
-                                fn(Set $set, ?string $state)
-                                    => $set('slug', Str::slug($state))
+                                fn (Set $set, ?string $state) => $set('slug', Str::slug($state))
                             ),
 
                         Forms\Components\TextInput::make('slug')

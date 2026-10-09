@@ -16,9 +16,13 @@ class BlogResource extends Resource
 {
     protected static ?string $model = Blog::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Editorial Content';
+
+    protected static ?string $navigationLabel = 'Legacy Blog Archive';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -32,8 +36,7 @@ class BlogResource extends Resource
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(
-                                fn (Set $set, ?string $state) =>
-                                    $set('slug', Str::slug($state))
+                                fn (Set $set, ?string $state) => $set('slug', Str::slug($state))
                             ),
 
                         Forms\Components\TextInput::make('slug')
@@ -57,7 +60,7 @@ class BlogResource extends Resource
                         Forms\Components\Textarea::make('excerpt')
                             ->rows(4)
                             ->maxLength(300)
-                            ->helperText('Short summary shown on blog listing pages.')
+                            ->helperText('Short summary shown on blog listing pages.'),
 
                     ])
                     ->columns(2),

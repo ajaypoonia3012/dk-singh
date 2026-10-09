@@ -3,6 +3,7 @@
 namespace App\Services\Builder;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class ProductService
@@ -26,13 +27,15 @@ class ProductService
 
     public function create(): Product
     {
+        Gate::authorize('create', Product::class);
+
         return Product::create([
 
             'name' => 'New Product',
 
-            'slug' => Str::slug('New Product'),
+            'slug' => Str::slug('New Product '.Str::random(6)),
 
-            'sku' => 'SKU-' . strtoupper(Str::random(6)),
+            'sku' => 'SKU-'.strtoupper(Str::random(6)),
 
             'description' => 'Product Description',
 
@@ -59,6 +62,8 @@ class ProductService
 
     public function update(Product $product, array $data): Product
     {
+        Gate::authorize('update', $product);
+
         if (
             isset($data['name']) &&
             $product->name !== $data['name']
@@ -73,6 +78,8 @@ class ProductService
 
     public function delete(Product $product): void
     {
+        Gate::authorize('delete', $product);
+
         $product->delete();
 
         Product::orderBy('sort_order')
@@ -89,13 +96,15 @@ class ProductService
 
     public function duplicate(Product $product): Product
     {
+        Gate::authorize('replicate', $product);
+
         $copy = $product->replicate();
 
         $copy->name .= ' Copy';
 
-        $copy->slug = Str::slug($copy->name);
+        $copy->slug = Str::slug($copy->name.' '.Str::random(6));
 
-        $copy->sku = 'SKU-' . strtoupper(Str::random(6));
+        $copy->sku = 'SKU-'.strtoupper(Str::random(6));
 
         $copy->sort_order = Product::max('sort_order') + 1;
 
@@ -106,8 +115,10 @@ class ProductService
 
     public function toggleStatus(Product $product): Product
     {
+        Gate::authorize('update', $product);
+
         $product->update([
-            'status' => !$product->status
+            'status' => ! $product->status,
         ]);
 
         return $product->fresh();
@@ -115,8 +126,10 @@ class ProductService
 
     public function toggleFeatured(Product $product): Product
     {
+        Gate::authorize('update', $product);
+
         $product->update([
-            'featured' => !$product->featured
+            'featured' => ! $product->featured,
         ]);
 
         return $product->fresh();

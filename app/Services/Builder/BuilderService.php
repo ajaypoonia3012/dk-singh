@@ -41,7 +41,7 @@ class BuilderService
      */
     public function toggle($model): void
     {
-        if (!isset($model->is_active)) {
+        if (! isset($model->is_active)) {
             return;
         }
 

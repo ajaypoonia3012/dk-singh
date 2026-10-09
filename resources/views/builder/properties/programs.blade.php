@@ -25,21 +25,15 @@
 
                 <button
                     wire:click="selectProgram({{ $item->id }})"
-                    class="flex-1 text-left p-3 rounded-lg border transition
-                    {{ $selectedProgramId == $item->id
-                        ? 'bg-amber-500 text-white border-amber-500'
-                        : 'bg-white hover:bg-gray-50' }}">
+                    class="flex-1 text-left p-3 rounded-xl border transition wb-card-selector-btn {{ $selectedProgramId == $item->id ? 'active' : 'bg-white hover:bg-slate-50 border-slate-200' }}"
+                    style="{{ $selectedProgramId == $item->id ? 'background-color: #fef3c7 !important; border-color: #f59e0b !important; color: #78350f !important; font-weight: 700;' : '' }}">
 
-                    <div class="font-semibold">
-
-                        {{ $item->title }}
-
+                    <div class="font-bold text-xs truncate">
+                        {{ $item->title ?: 'Untitled Program' }}
                     </div>
 
-                    <div class="text-xs opacity-70">
-
+                    <div class="text-[11px] opacity-75 truncate">
                         {{ $item->category }}
-
                     </div>
 
                 </button>
@@ -246,10 +240,9 @@
 
         <button
             wire:click="saveProgram"
-            class="w-full bg-amber-500 hover:bg-amber-600 text-black py-3 rounded-lg font-bold">
-
+            class="wb-btn-primary w-full py-3 rounded-xl font-black text-sm tracking-wide shadow-md transition"
+            style="background-color: #f59e0b !important; color: #000000 !important;">
             💾 Save Program
-
         </button>
 
     @endif
