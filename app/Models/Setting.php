@@ -163,12 +163,41 @@ class Setting extends Model
             'tax_id' => null,
             'copyright_text' => null,
             'fitness_hub_label' => 'Fitness Hub',
+            'coaching_programs_label' => 'Coaching & Programs',
             'followers_label' => 'Followers',
             'years_label' => 'Years Experience',
             'transformations_label' => 'Transformations',
             'maintenance_enabled' => false,
             'maintenance_message' => null,
         ];
+    }
+
+    public function getCoachingProgramsLabelAttribute(): string
+    {
+        return $this->enterprise_configuration['coaching_programs_label']
+            ?? ($this->attributes['coaching_programs_label'] ?? 'Coaching & Programs');
+    }
+
+    public function getMapEmbedUrlAttribute(?string $value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        // If an iframe snippet was saved, extract the src URL
+        if (preg_match('/<iframe[^>]+src=["\']([^"\']+)["\']/i', $value, $matches)) {
+            $extracted = trim($matches[1]);
+            if (filter_var($extracted, FILTER_VALIDATE_URL) && preg_match('#^https?://#i', $extracted)) {
+                return $extracted;
+            }
+        }
+
+        $trimmed = trim($value);
+        if (filter_var($trimmed, FILTER_VALIDATE_URL) && preg_match('#^https?://#i', $trimmed)) {
+            return $trimmed;
+        }
+
+        return null;
     }
 
     protected function groupedConfigurationTypes(): array

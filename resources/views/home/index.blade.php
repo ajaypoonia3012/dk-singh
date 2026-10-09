@@ -244,7 +244,13 @@
                 <div class="grid grid-cols-2 theme-content-gap">
                     @foreach($homepageCards as $card)
                         <x-theme.card class="theme-card-padding hover:-translate-y-2 transition duration-300">
-                            <div class="text-3xl mb-3" aria-hidden="true">{{ $card->icon }}</div>
+                            @if($card->svg_icon)
+                                <div class="w-12 h-12 theme-radius theme-surface-strong flex items-center justify-center mb-3" aria-hidden="true">
+                                    {!! $card->svg_icon !!}
+                                </div>
+                            @elseif($card->icon)
+                                <div class="text-3xl mb-3" aria-hidden="true">{{ $card->icon }}</div>
+                            @endif
                             <x-theme.section-heading level="3" class="text-xl">{{ $card->title }}</x-theme.section-heading>
                             <x-theme.section-subtitle class="mt-2">{{ $card->subtitle }}</x-theme.section-subtitle>
                         </x-theme.card>
@@ -383,19 +389,32 @@
 
         <div class="grid lg:grid-cols-2 theme-grid-gap items-center">
             <x-theme.card data-aos="fade-right" class="overflow-hidden">
-                <iframe
-                    src="{{ $setting->map_embed_url }}"
-                    width="100%"
-                    height="300"
-                    style="border: 0;"
-                    allowfullscreen
-                    loading="lazy"
-                    title="{{ $setting->business_display_name }} location"
-                ></iframe>
+                @if($setting->map_embed_url)
+                    <iframe
+                        src="{{ $setting->map_embed_url }}"
+                        width="100%"
+                        height="300"
+                        style="border: 0;"
+                        allowfullscreen
+                        loading="lazy"
+                        title="{{ $setting->business_display_name }} location"
+                    ></iframe>
+                @else
+                    <div class="h-[220px] w-full theme-surface-strong flex flex-col items-center justify-center p-6 text-center border-b theme-border">
+                        <div class="w-12 h-12 rounded-full theme-surface-muted flex items-center justify-center mb-3">
+                            <svg class="w-6 h-6 theme-text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-bold text-lg mb-1">{{ $setting->business_display_name }}</h4>
+                        <p class="theme-text-muted text-sm max-w-sm">{{ $setting->address ?? 'Jaipur, Rajasthan, India' }}</p>
+                    </div>
+                @endif
                 <div class="theme-card-padding theme-stack-md">
                     <x-theme.section-heading level="3" class="text-3xl">{{ $setting->business_display_name }}</x-theme.section-heading>
                     <x-theme.section-subtitle>{{ $setting->contact_map_text }}</x-theme.section-subtitle>
-                    <a href="{{ $setting->map_link }}" target="_blank" rel="noopener noreferrer" class="theme-link">
+                    <a href="{{ $setting->map_link ?: 'https://maps.google.com/?q=' . urlencode($setting->address ?? 'Jaipur') }}" target="_blank" rel="noopener noreferrer" class="theme-link">
                         Open in Google Maps
                     </a>
                 </div>

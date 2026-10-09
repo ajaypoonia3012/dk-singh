@@ -21,12 +21,9 @@
         </a>
     </div>
 
-    <a href="/programs" class="theme-navbar-link transition">
-        {{ $setting?->program_label ?: 'Programs' }}
-    </a>
-
-    <a href="/services" class="theme-navbar-link transition">
-        {{ $setting?->service_label ?: 'Coaching' }}
+    {{-- UNIFIED COACHING & PROGRAMS HUB --}}
+    <a href="{{ route('coaching-programs.index') }}" class="theme-navbar-link transition">
+        {{ $setting?->coaching_programs_label ?: 'Coaching & Programs' }}
     </a>
 
     <a href="/transformations" class="theme-navbar-link transition">
@@ -39,10 +36,6 @@
 
     <a href="/about" class="theme-navbar-link transition">
         {{ $setting?->about_label ?: 'About' }}
-    </a>
-
-    <a href="/plans" class="theme-navbar-link transition">
-        {{ $setting?->plan_label ?: 'Plans' }}
     </a>
 
     <a href="{{ route('products.index') }}" class="theme-navbar-link transition">

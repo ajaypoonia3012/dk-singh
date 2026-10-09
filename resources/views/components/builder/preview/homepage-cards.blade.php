@@ -31,7 +31,11 @@
                     @endif
 
                     <div class="p-8">
-                        @if($card->icon)
+                        @if($card->svg_icon)
+                            <div class="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mb-5" aria-hidden="true">
+                                {!! $card->svg_icon !!}
+                            </div>
+                        @elseif($card->icon)
                             <div class="text-5xl mb-5">{{ $card->icon }}</div>
                         @endif
 

@@ -80,30 +80,34 @@
                 </div>
             </div>
 
-            <a href="/programs" class="theme-navbar-link font-semibold text-lg">{{ $setting?->program_label ?: 'Programs' }}</a>
-            <a href="/services" class="theme-navbar-link font-semibold text-lg">{{ $setting?->service_label ?: 'Coaching' }}</a>
+            {{-- UNIFIED COACHING & PROGRAMS HUB --}}
+            <a href="{{ route('coaching-programs.index') }}" class="theme-navbar-link font-semibold text-lg">{{ $setting?->coaching_programs_label ?: 'Coaching & Programs' }}</a>
             <a href="/transformations" class="theme-navbar-link font-semibold text-lg">{{ $setting?->transformation_label ?: 'Transformations' }}</a>
             <a href="/blog" class="theme-navbar-link font-semibold text-lg">{{ $setting?->blog_label ?: 'Blog' }}</a>
             <a href="/about" class="theme-navbar-link font-semibold text-lg">{{ $setting?->about_label ?: 'About' }}</a>
-            <a href="/plans" class="theme-navbar-link font-semibold text-lg">{{ $setting?->plan_label ?: 'Plans' }}</a>
             <a href="{{ route('products.index') }}"
-               class="font-semibold text-lg">
+               class="theme-navbar-link font-semibold text-lg">
                 {{ $setting?->product_label ?: 'Products' }}
             </a>
             <a href="/contact" class="theme-navbar-link font-semibold text-lg">{{ $setting?->contact_label ?: 'Contact' }}</a>
 
             @auth
                 @if(auth()->user()->account_type === 'admin')
-                    <x-theme.button href="/admin">{{ $setting?->admin_panel_label ?: 'Admin Panel' }}</x-theme.button>
+                    <x-theme.button href="/admin">{{ $setting?->admin_panel_label ?: 'Dashboard' }}</x-theme.button>
                 @elseif(auth()->user()->activeMembership)
                     <x-theme.button href="/member/dashboard">{{ $setting?->my_plan_label ?: 'My Plan' }}</x-theme.button>
                 @else
                     <x-theme.button :href="route('account.orders')">{{ $setting?->my_orders_label ?: 'My Orders' }}</x-theme.button>
                 @endif
             @else
-                <x-theme.button href="/register">
-                    {{ $setting?->register_label ?: $setting?->cta_button_text ?: 'Join Now' }}
-                </x-theme.button>
+                <div class="flex flex-col gap-3 mt-4">
+                    <x-theme.button href="/register">
+                        {{ $setting?->register_label ?: $setting?->cta_button_text ?: 'Join Now' }}
+                    </x-theme.button>
+                    <a href="/login" class="theme-navbar-link text-center font-semibold text-sm hover:underline py-1">
+                        {{ $setting?->login_label ?: 'Sign In' }}
+                    </a>
+                </div>
             @endauth
         </x-theme.page-container>
     </div>

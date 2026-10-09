@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\ActionPlanController;
 use App\Http\Controllers\Front\BillingController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\CoachNoteController;
+use App\Http\Controllers\Front\CoachingProgramController;
 use App\Http\Controllers\Front\ContactController;
 use App\Http\Controllers\Front\DashboardController;
 use App\Http\Controllers\Front\DietCompletionController;
@@ -39,10 +40,18 @@ use App\Livewire\Media\MediaLibrary;
 use Illuminate\Support\Facades\Route;
 
 /*
-    |--------------------------------------------------------------------------
-    | PROGRAMS
-    |--------------------------------------------------------------------------
-    */
+|--------------------------------------------------------------------------
+| UNIFIED COACHING & PROGRAMS DESTINATION
+|--------------------------------------------------------------------------
+*/
+Route::get('/coaching-programs', [CoachingProgramController::class, 'index'])
+    ->name('coaching-programs.index');
+
+/*
+|--------------------------------------------------------------------------
+| PROGRAMS
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/programs', [ProgramController::class, 'index'])
     ->name('programs.index');
@@ -137,7 +146,8 @@ Route::get(
     [ProductController::class, 'show']
 )->name('products.show');
 
-Route::get('/plans', [PlanController::class, 'index']);
+Route::get('/plans', [PlanController::class, 'index'])
+    ->name('plans.index');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])
     ->name('sitemap');
