@@ -153,16 +153,46 @@ class ContentSyncSafetyTest extends TestCase
         }
     }
 
+    public function test_importer_strictly_rejects_missing_or_corrupt_checksum(): void
+    {
+        $testPath = storage_path('app/content_export/corrupt_checksum_package.json');
+        
+        // 1. Missing checksum
+        $payload1 = [
+            'tables' => [
+                'settings' => [['id' => 1, 'site_name' => 'Test']],
+            ],
+        ];
+        File::put($testPath, json_encode($payload1));
+        $this->artisan('content:import', ['--file' => $testPath])->assertFailed();
+
+        // 2. Corrupt / mismatched checksum
+        $payload2 = [
+            'checksum' => 'invalid_sha256_hash_here',
+            'tables' => [
+                'settings' => [['id' => 1, 'site_name' => 'Test']],
+            ],
+        ];
+        File::put($testPath, json_encode($payload2));
+        $this->artisan('content:import', ['--file' => $testPath])->assertFailed();
+
+        if (File::exists($testPath)) {
+            File::delete($testPath);
+        }
+    }
+
     public function test_foreign_key_checks_are_restored_in_finally_block_when_import_fails(): void
     {
         $malformedPackage = storage_path('app/content_export/malformed_test_package.json');
         // Contains an invalid column that triggers SQL exception during table insert
-        $payload = [
-            'tables' => [
-                'media_categories' => [
-                    ['id' => 1, 'non_existent_column_fail' => 'bad_data'],
-                ],
+        $tables = [
+            'media_categories' => [
+                ['id' => 1, 'non_existent_column_fail' => 'bad_data'],
             ],
+        ];
+        $payload = [
+            'checksum' => hash('sha256', json_encode($tables)),
+            'tables' => $tables,
         ];
         File::put($malformedPackage, json_encode($payload));
 
@@ -219,15 +249,17 @@ class ContentSyncSafetyTest extends TestCase
 
         // 3. Create a payload that updates settings (table 3) but errors on a subsequent table (e.g. invalid column on table 8)
         $failingPackage = storage_path('app/content_export/rollback_test_package.json');
-        $payload = [
-            'tables' => [
-                'settings' => [
-                    ['id' => 1, 'site_name' => 'Should Be Rolled Back Site Name'],
-                ],
-                'blog_categories' => [
-                    ['id' => 999, 'illegal_column_error' => 'crash'],
-                ],
+        $tables = [
+            'settings' => [
+                ['id' => 1, 'site_name' => 'Should Be Rolled Back Site Name'],
             ],
+            'blog_categories' => [
+                ['id' => 999, 'illegal_column_error' => 'crash'],
+            ],
+        ];
+        $payload = [
+            'checksum' => hash('sha256', json_encode($tables)),
+            'tables' => $tables,
         ];
         File::put($failingPackage, json_encode($payload));
 

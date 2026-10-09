@@ -95,7 +95,20 @@ class ImportWebsiteContent extends Command
             return self::FAILURE;
         }
 
-        // Safety Check 1: Forbidden tables check
+        // Safety Check 1: Checksum validation against exact package content
+        if (! isset($content['checksum']) || ! is_string($content['checksum'])) {
+            $this->error('CRITICAL INTEGRITY FAILURE: Content package is missing a valid checksum attribute.');
+            return self::FAILURE;
+        }
+
+        $calculatedChecksum = hash('sha256', json_encode($content['tables']));
+        if (! hash_equals($content['checksum'], $calculatedChecksum)) {
+            $this->error("CRITICAL INTEGRITY FAILURE: Checksum mismatch!\nExpected: {$content['checksum']}\nCalculated: {$calculatedChecksum}");
+            return self::FAILURE;
+        }
+        $this->info("Package checksum verified: {$calculatedChecksum}");
+
+        // Safety Check 2: Forbidden tables check
         foreach (array_keys($content['tables']) as $tableName) {
             if (in_array($tableName, $this->forbiddenTables, true)) {
                 $this->error("CRITICAL SAFETY VIOLATION: Package contains forbidden table '{$tableName}'. Import aborted!");
@@ -236,7 +249,7 @@ class ImportWebsiteContent extends Command
                         continue;
                     }
 
-                    DB::table($table)->truncate();
+                    DB::table($table)->delete();
                     foreach ($records as $record) {
                         foreach ($record as $k => $v) {
                             if (is_array($v)) {
@@ -267,19 +280,27 @@ class ImportWebsiteContent extends Command
 
     protected function disableForeignKeys(): void
     {
-        if (DB::getDriverName() === 'sqlite') {
-            DB::statement('PRAGMA foreign_keys = OFF;');
-        } else {
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        try {
+            if (DB::getDriverName() === 'sqlite') {
+                DB::statement('PRAGMA foreign_keys = OFF;');
+            } else {
+                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            }
+        } catch (\Throwable $e) {
+            $this->warn("Could not disable foreign key checks: {$e->getMessage()}");
         }
     }
 
     protected function enableForeignKeys(): void
     {
-        if (DB::getDriverName() === 'sqlite') {
-            DB::statement('PRAGMA foreign_keys = ON;');
-        } else {
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        try {
+            if (DB::getDriverName() === 'sqlite') {
+                DB::statement('PRAGMA foreign_keys = ON;');
+            } else {
+                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            }
+        } catch (\Throwable $e) {
+            $this->error("CRITICAL: Failed to re-enable foreign key checks: {$e->getMessage()}");
         }
     }
 }
