@@ -131,79 +131,80 @@ class ImportWebsiteContent extends Command
         try {
             $this->disableForeignKeys();
 
-            foreach ($this->allowedContentTables as $table) {
-                if (! isset($content['tables'][$table])) {
-                    continue;
-                }
-
-                $records = $content['tables'][$table];
-                $rowCount = count($records);
-                $insertedOrUpdated = 0;
-
-                if (! DB::getSchemaBuilder()->hasTable($table)) {
-                    $this->warn("Table '{$table}' does not exist in target database. Skipping.");
-                    continue;
-                }
-
-                if (! $isDryRun) {
-                    foreach ($records as $record) {
-                        foreach ($record as $key => $val) {
-                            if (is_array($val)) {
-                                $record[$key] = json_encode($val);
-                            }
-                        }
-
-                        // If record has an 'id' column, use it as unique key
-                        if (isset($record['id'])) {
-                            DB::table($table)->updateOrInsert(
-                                ['id' => $record['id']],
-                                $record
-                            );
-                        } elseif ($table === 'blog_post_tag' && isset($record['blog_post_id'], $record['blog_tag_id'])) {
-                            // Pivot table
-                            DB::table($table)->updateOrInsert(
-                                [
-                                    'blog_post_id' => $record['blog_post_id'],
-                                    'blog_tag_id' => $record['blog_tag_id'],
-                                ],
-                                $record
-                            );
-                        } else {
-                            DB::table($table)->insert($record);
-                        }
-                        $insertedOrUpdated++;
+            try {
+                foreach ($this->allowedContentTables as $table) {
+                    if (! isset($content['tables'][$table])) {
+                        continue;
                     }
-                } else {
-                    $insertedOrUpdated = $rowCount;
+
+                    $records = $content['tables'][$table];
+                    $rowCount = count($records);
+                    $insertedOrUpdated = 0;
+
+                    if (! DB::getSchemaBuilder()->hasTable($table)) {
+                        $this->warn("Table '{$table}' does not exist in target database. Skipping.");
+                        continue;
+                    }
+
+                    if (! $isDryRun) {
+                        foreach ($records as $record) {
+                            foreach ($record as $key => $val) {
+                                if (is_array($val)) {
+                                    $record[$key] = json_encode($val);
+                                }
+                            }
+
+                            // If record has an 'id' column, use it as unique key
+                            if (isset($record['id'])) {
+                                DB::table($table)->updateOrInsert(
+                                    ['id' => $record['id']],
+                                    $record
+                                );
+                            } elseif ($table === 'blog_post_tag' && isset($record['blog_post_id'], $record['blog_tag_id'])) {
+                                // Pivot table
+                                DB::table($table)->updateOrInsert(
+                                    [
+                                        'blog_post_id' => $record['blog_post_id'],
+                                        'blog_tag_id' => $record['blog_tag_id'],
+                                    ],
+                                    $record
+                                );
+                            } else {
+                                DB::table($table)->insert($record);
+                            }
+                            $insertedOrUpdated++;
+                        }
+                    } else {
+                        $insertedOrUpdated = $rowCount;
+                    }
+
+                    $importSummary[] = [
+                        'table' => $table,
+                        'records' => $rowCount,
+                        'status' => $isDryRun ? 'Dry-Run Valid' : 'Upserted Successfully',
+                    ];
                 }
 
-                $importSummary[] = [
-                    'table' => $table,
-                    'records' => $rowCount,
-                    'status' => $isDryRun ? 'Dry-Run Valid' : 'Upserted Successfully',
-                ];
-            }
+                if ($isDryRun) {
+                    DB::rollBack();
+                    $this->info('Dry-run complete. Database remained untouched.');
+                } else {
+                    DB::commit();
+                    $this->info('All database updates successfully committed.');
 
-            $this->enableForeignKeys();
-
-            if ($isDryRun) {
-                DB::rollBack();
-                $this->info('Dry-run complete. Database remained untouched.');
-            } else {
-                DB::commit();
-                $this->info('All database updates successfully committed.');
-
-                // Clear caches
-                Cache::flush();
-                AppServiceProvider::clearSharedViewData();
-                $this->info('Theme and settings cache cleared.');
+                    // Clear caches
+                    Cache::flush();
+                    AppServiceProvider::clearSharedViewData();
+                    $this->info('Theme and settings cache cleared.');
+                }
+            } finally {
+                $this->enableForeignKeys();
             }
 
             $this->table(['Table Name', 'Record Count', 'Status'], $importSummary);
 
             return self::SUCCESS;
         } catch (\Throwable $e) {
-            $this->enableForeignKeys();
             DB::rollBack();
             $this->error("Import encountered error: {$e->getMessage()}. Rolled back completely!");
             return self::FAILURE;
@@ -223,39 +224,41 @@ class ImportWebsiteContent extends Command
         try {
             $this->disableForeignKeys();
 
-            foreach ($this->allowedContentTables as $table) {
-                $filePath = "{$restoreDir}/{$table}.json";
-                if (! File::exists($filePath)) {
-                    continue;
-                }
-
-                $records = json_decode(File::get($filePath), true);
-                if (! is_array($records)) {
-                    continue;
-                }
-
-                DB::table($table)->truncate();
-                foreach ($records as $record) {
-                    foreach ($record as $k => $v) {
-                        if (is_array($v)) {
-                            $record[$k] = json_encode($v);
-                        }
+            try {
+                foreach ($this->allowedContentTables as $table) {
+                    $filePath = "{$restoreDir}/{$table}.json";
+                    if (! File::exists($filePath)) {
+                        continue;
                     }
-                    DB::table($table)->insert($record);
+
+                    $records = json_decode(File::get($filePath), true);
+                    if (! is_array($records)) {
+                        continue;
+                    }
+
+                    DB::table($table)->truncate();
+                    foreach ($records as $record) {
+                        foreach ($record as $k => $v) {
+                            if (is_array($v)) {
+                                $record[$k] = json_encode($v);
+                            }
+                        }
+                        DB::table($table)->insert($record);
+                    }
+                    $this->info("Restored {$table}: " . count($records) . " record(s).");
                 }
-                $this->info("Restored {$table}: " . count($records) . " record(s).");
+
+                DB::commit();
+
+                Cache::flush();
+                AppServiceProvider::clearSharedViewData();
+                $this->info('Restore completed successfully and caches cleared.');
+            } finally {
+                $this->enableForeignKeys();
             }
-
-            $this->enableForeignKeys();
-            DB::commit();
-
-            Cache::flush();
-            AppServiceProvider::clearSharedViewData();
-            $this->info('Restore completed successfully and caches cleared.');
 
             return self::SUCCESS;
         } catch (\Throwable $e) {
-            $this->enableForeignKeys();
             DB::rollBack();
             $this->error("Restore failed: {$e->getMessage()}");
             return self::FAILURE;
