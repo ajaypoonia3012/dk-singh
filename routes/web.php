@@ -369,6 +369,11 @@ Route::middleware('auth')->group(function () {
         [ProductPaymentController::class, 'checkout']
     )->name('product.checkout');
 
+    Route::post(
+        '/checkout/product/{id}/apply-offer',
+        [ProductPaymentController::class, 'applyOffer']
+    )->name('product.checkout.apply-offer');
+
     Route::get(
         '/product-payment/{id}',
         [ProductPaymentController::class, 'checkout']
@@ -379,6 +384,16 @@ Route::middleware('auth')->group(function () {
         [ProductPaymentController::class, 'success']
     )->name('product.payment.success');
 });
+
+/*
+|--------------------------------------------------------------------------
+| RAZORPAY ASYNCHRONOUS WEBHOOK
+|--------------------------------------------------------------------------
+*/
+Route::post(
+    '/webhooks/razorpay',
+    [\App\Http\Controllers\Front\RazorpayWebhookController::class, 'handle']
+)->name('webhooks.razorpay');
 
 require __DIR__.'/auth.php';
 

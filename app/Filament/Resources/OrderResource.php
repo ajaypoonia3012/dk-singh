@@ -36,6 +36,19 @@ class OrderResource extends Resource
                     ->disabled(),
 
                 Forms\Components\TextInput::make('amount')
+                    ->label('Final Paid Amount')
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('subtotal')
+                    ->label('Original Subtotal')
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('discount_amount')
+                    ->label('Discount Applied')
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('promo_code')
+                    ->label('Applied Promo Code')
                     ->disabled(),
 
                 Forms\Components\Select::make('payment_status')
@@ -117,6 +130,12 @@ class OrderResource extends Resource
 
                 Tables\Columns\TextColumn::make('amount')
                     ->money('INR'),
+
+                Tables\Columns\TextColumn::make('promo_code')
+                    ->label('Promo')
+                    ->badge()
+                    ->color('info')
+                    ->placeholder('—'),
 
                 Tables\Columns\TextColumn::make('payment_status')
                     ->badge(),

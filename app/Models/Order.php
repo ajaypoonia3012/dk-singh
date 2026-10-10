@@ -18,6 +18,11 @@ class Order extends Model
         'item_id',
 
         'amount',
+        'subtotal',
+        'discount_amount',
+        'offer_id',
+        'promo_code',
+        'pricing_snapshot',
 
         'payment_status',
         'payment_gateway',
@@ -37,11 +42,23 @@ class Order extends Model
 
     ];
 
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'subtotal' => 'decimal:2',
+        'discount_amount' => 'decimal:2',
+        'pricing_snapshot' => 'array',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
 
     public function user()
     {

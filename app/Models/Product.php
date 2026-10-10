@@ -51,6 +51,11 @@ class Product extends Model
         return $this->belongsTo(Media::class);
     }
 
+    public function offers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Offer::class, 'offer_product')->withTimestamps();
+    }
+
     protected static function boot()
     {
         parent::boot();

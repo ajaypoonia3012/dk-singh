@@ -45,6 +45,25 @@ class RazorpayService
         ];
     }
 
+    public function fetchOrder(string $orderId): ?array
+    {
+        try {
+            $order = $this->api->order->fetch($orderId);
+
+            return [
+                'id' => (string) $order['id'],
+                'amount' => (int) $order['amount'],
+                'currency' => (string) $order['currency'],
+                'status' => (string) ($order['status'] ?? ''),
+                'notes' => (array) ($order['notes'] ?? []),
+            ];
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return null;
+        }
+    }
+
     public function verify(array $payload, array $expected): void
     {
         try {
@@ -72,6 +91,23 @@ class RazorpayService
 
         if (! $valid) {
             throw new RuntimeException('Payment details do not match the checkout session.');
+        }
+    }
+
+    public function verifyWebhookSignature(string $rawPayload, string $signature): void
+    {
+        $secret = (string) config('services.razorpay.webhook_secret');
+
+        if ($secret === '') {
+            throw new RuntimeException('Razorpay webhook secret is not configured.');
+        }
+
+        try {
+            $this->api->utility->verifyWebhookSignature($rawPayload, $signature, $secret);
+        } catch (Throwable $exception) {
+            report($exception);
+
+            throw new RuntimeException('Invalid webhook signature.', 0, $exception);
         }
     }
 

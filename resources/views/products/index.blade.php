@@ -66,6 +66,19 @@
 
                         </span>
 
+                        @php
+                            $productOffer = isset($featuredOffer) && $featuredOffer && $featuredOffer->appliesToProduct($product) ? $featuredOffer : null;
+                        @endphp
+                        @if($productOffer)
+                            <span class="text-xs font-black px-2.5 py-1 theme-radius theme-card border theme-border theme-text-accent uppercase tracking-wide">
+                                @if($productOffer->discount_type === 'percentage')
+                                    {{ rtrim(rtrim((string) $productOffer->discount_value, '0'), '.') }}% OFF
+                                @else
+                                    &#8377;{{ number_format($productOffer->discount_value) }} OFF
+                                @endif
+                            </span>
+                        @endif
+
                     </div>
 
                     <a href="{{ route('products.show', $product->slug) }}"

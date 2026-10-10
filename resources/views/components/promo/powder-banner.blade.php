@@ -23,12 +23,30 @@
         return;
     }
 
-    $badge = $setting?->powder_promo_badge ?: 'FEATURED COLLECTION';
-    $discountText = $setting?->powder_promo_discount_text ?: 'HERBAL & WELLNESS';
-    $promoCode = $setting?->powder_promo_code ?: '';
-    $text = $setting?->powder_promo_text ?: 'Explore our authentic herbal & wellness powder collection.';
-    $btnText = $setting?->powder_promo_button_text ?: 'Explore Powders';
-    $btnLink = $setting?->powder_promo_button_link ?: '/products';
+    $featuredOffer = null;
+    try {
+        $featuredOffer = app(\App\Services\OfferService::class)->getFeaturedActiveOffer();
+    } catch (\Throwable $e) {
+        // Fallback gracefully
+    }
+
+    if ($featuredOffer) {
+        $badge = 'FEATURED OFFER';
+        $discountText = $featuredOffer->discount_type === 'percentage'
+            ? rtrim(rtrim((string) $featuredOffer->discount_value, '0'), '.') . '% OFF'
+            : '₹' . number_format($featuredOffer->discount_value) . ' OFF';
+        $promoCode = $featuredOffer->code;
+        $text = $featuredOffer->banner_headline ?: ($featuredOffer->banner_description ?: ($featuredOffer->description ?: $featuredOffer->name));
+        $btnText = $featuredOffer->banner_cta ?: ($setting?->powder_promo_button_text ?: 'Explore Offers');
+        $btnLink = $setting?->powder_promo_button_link ?: '/products';
+    } else {
+        $badge = $setting?->powder_promo_badge ?: 'FEATURED COLLECTION';
+        $discountText = $setting?->powder_promo_discount_text ?: 'HERBAL & WELLNESS';
+        $promoCode = $setting?->powder_promo_code ?: '';
+        $text = $setting?->powder_promo_text ?: 'Explore our authentic herbal & wellness powder collection.';
+        $btnText = $setting?->powder_promo_button_text ?: 'Explore Powders';
+        $btnLink = $setting?->powder_promo_button_link ?: '/products';
+    }
     $themeStyle = $setting?->powder_promo_theme ?: 'amber-gold';
     $dismissible = (bool) ($setting?->powder_promo_dismissible ?? true);
 
