@@ -123,6 +123,8 @@
         </aside>
     @endif
 
+    <x-promo.powder-banner :setting="$setting" />
+
     @include('partials.navbar')
 
     <main>@yield('content')</main>

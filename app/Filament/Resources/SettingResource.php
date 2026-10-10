@@ -34,6 +34,7 @@ class SettingResource extends Resource
                 ->tabs([
                     self::generalTab(),
                     self::contentTab(),
+                    self::promoBannerTab(),
                     self::contactTab(),
                     self::navigationTab(),
                     self::seoTab(),
@@ -146,6 +147,95 @@ class SettingResource extends Resource
                         Forms\Components\TextInput::make('transformations_page_title')->maxLength(160),
                         Forms\Components\Textarea::make('transformations_page_description')->rows(3)->maxLength(500),
                     ])->columns(['default' => 1, 'lg' => 2]),
+            ]);
+    }
+
+    private static function promoBannerTab(): Tab
+    {
+        return Tab::make('Promo & Discounts')
+            ->icon('heroicon-o-tag')
+            ->schema([
+                Section::make('Product Powder Promotional Campaign')
+                    ->description('Display and control an announcement banner showcasing herbal and fitness powder products.')
+                    ->icon('heroicon-o-sparkles')
+                    ->schema([
+                        Forms\Components\Toggle::make('powder_promo_enabled')
+                            ->label('Enable Powder Promotional Banner')
+                            ->helperText('Turns the promotional marketing banner on or off across the public website.')
+                            ->live()
+                            ->inline(false),
+                        Forms\Components\Toggle::make('powder_promo_dismissible')
+                            ->label('Allow Visitors to Dismiss / Close Banner')
+                            ->helperText('If enabled, visitors can close the banner for their current browsing session.')
+                            ->inline(false),
+                        Forms\Components\Select::make('powder_promo_placement')
+                            ->label('Banner Display Locations')
+                            ->options([
+                                'all_plus_product_card' => 'Sitewide Top Banner + Products Page Feature Spotlight (Recommended)',
+                                'all' => 'Sitewide Top Banner (Visible on all pages)',
+                                'products' => 'Products Page Only (/products)',
+                                'home_and_products' => 'Homepage and Products Page',
+                            ])
+                            ->required(),
+                        Forms\Components\Select::make('powder_promo_theme')
+                            ->label('Banner Color Theme & Style')
+                            ->options([
+                                'amber-gold' => 'Amber Gold & Dark (DK Singh Signature Brand)',
+                                'emerald-wellness' => 'Emerald Herbal (Ayurvedic & Natural Wellness)',
+                                'crimson-energy' => 'Crimson Blaze (High Energy & Athletic)',
+                                'midnight-luxury' => 'Midnight Slate & Champagne Gold (Ultra Premium)',
+                            ])
+                            ->required(),
+                    ])->columns(['default' => 1, 'md' => 2]),
+
+                Section::make('Campaign Highlights & Messaging')
+                    ->description('Define the promotional highlight pill, display code, and announcement copy shown to customers.')
+                    ->icon('heroicon-o-gift')
+                    ->schema([
+                        Forms\Components\TextInput::make('powder_promo_badge')
+                            ->label('Campaign Tag / Badge')
+                            ->placeholder('FEATURED COLLECTION')
+                            ->maxLength(60)
+                            ->helperText('Small highlighted pill shown at the start of the banner.'),
+                        Forms\Components\TextInput::make('powder_promo_discount_text')
+                            ->label('Highlight Tag')
+                            ->placeholder('HERBAL & WELLNESS')
+                            ->maxLength(60)
+                            ->helperText('E.g. FEATURED COLLECTION, HERBAL & WELLNESS, NEW BLENDS. Note: Checkout does not apply coupon discounts.'),
+                        Forms\Components\TextInput::make('powder_promo_code')
+                            ->label('Campaign Reference Code (Display Only)')
+                            ->placeholder('POWDER15')
+                            ->maxLength(30)
+                            ->helperText('Display-only reference code. Note: DK Singh Fitness checkout does not apply coupon discounts automatically.'),
+                        Forms\Components\Textarea::make('powder_promo_text')
+                            ->label('Banner Announcement Message')
+                            ->rows(3)
+                            ->placeholder('Explore our authentic herbal & wellness powder collection.')
+                            ->maxLength(300)
+                            ->columnSpanFull()
+                            ->helperText('Detailed announcement copy visible across desktop and mobile banners.'),
+                    ])->columns(['default' => 1, 'md' => 3]),
+
+                Section::make('Call-To-Action (CTA)')
+                    ->description('Configure where visitors are guided when clicking the promo button.')
+                    ->icon('heroicon-o-cursor-arrow-rays')
+                    ->schema([
+                        Forms\Components\TextInput::make('powder_promo_button_text')
+                            ->label('Button Text')
+                            ->placeholder('Explore Powders')
+                            ->maxLength(60),
+                        Forms\Components\TextInput::make('powder_promo_button_link')
+                            ->label('Button Target URL')
+                            ->placeholder('/products')
+                            ->maxLength(2048)
+                            ->rules([
+                                'nullable',
+                                'string',
+                                'max:2048',
+                                'regex:#^(?:/(?!/)\S*|https://\S+)$#',
+                            ])
+                            ->helperText('Must be a relative application path starting with "/" (e.g. /products, excluding "//") or a secure "https://" URL.'),
+                    ])->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 

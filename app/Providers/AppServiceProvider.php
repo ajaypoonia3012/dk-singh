@@ -92,11 +92,14 @@ class AppServiceProvider extends ServiceProvider
                 View::share('theme', self::$sharedTheme);
             }
 
-            $effectiveSetting = (self::$sharedSetting instanceof Setting)
-                ? self::$sharedSetting
+            $viewSetting = $view->offsetExists('setting') ? $view->offsetGet('setting') : self::$sharedSetting;
+            $viewTheme = $view->offsetExists('theme') ? $view->offsetGet('theme') : self::$sharedTheme;
+
+            $effectiveSetting = ($viewSetting instanceof Setting)
+                ? $viewSetting
                 : new Setting(['site_name' => config('app.name', 'DK Singh Fitness')]);
-            $effectiveTheme = (self::$sharedTheme instanceof ThemeSetting)
-                ? self::$sharedTheme
+            $effectiveTheme = ($viewTheme instanceof ThemeSetting)
+                ? $viewTheme
                 : new ThemeSetting;
 
             $view->with('setting', $effectiveSetting);

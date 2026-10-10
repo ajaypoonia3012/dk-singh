@@ -19,6 +19,23 @@ trait HasGroupedConfiguration
         return [];
     }
 
+    private function getConfigurationArray(): array
+    {
+        $column = $this->groupedConfigurationColumn();
+        $raw = $this->attributes[$column] ?? null;
+
+        if (is_array($raw)) {
+            return $raw;
+        }
+
+        if (is_string($raw) && trim($raw) !== '') {
+            $decoded = json_decode($raw, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+
+        return [];
+    }
+
     /**
      * Return every grouped field as flat form data, including defaults.
      *
@@ -26,9 +43,7 @@ trait HasGroupedConfiguration
      */
     public function groupedConfigurationForForm(): array
     {
-        $configuration = parent::getAttribute($this->groupedConfigurationColumn()) ?? [];
-
-        return array_replace($this->groupedConfigurationDefaults(), $configuration);
+        return array_replace($this->groupedConfigurationDefaults(), $this->getConfigurationArray());
     }
 
     /**
@@ -39,7 +54,7 @@ trait HasGroupedConfiguration
      */
     public function fillGroupedConfigurationFromForm(array $data): array
     {
-        $configuration = parent::getAttribute($this->groupedConfigurationColumn()) ?? [];
+        $configuration = $this->getConfigurationArray();
 
         foreach ($this->groupedConfigurationDefaults() as $key => $default) {
             if (! array_key_exists($key, $data)) {
@@ -58,7 +73,7 @@ trait HasGroupedConfiguration
     public function getAttribute($key)
     {
         if (is_string($key) && array_key_exists($key, $this->groupedConfigurationDefaults())) {
-            $configuration = parent::getAttribute($this->groupedConfigurationColumn()) ?? [];
+            $configuration = $this->getConfigurationArray();
 
             return $configuration[$key] ?? $this->groupedConfigurationDefaults()[$key];
         }
@@ -70,13 +85,34 @@ trait HasGroupedConfiguration
     {
         if (is_string($key) && array_key_exists($key, $this->groupedConfigurationDefaults())) {
             $column = $this->groupedConfigurationColumn();
-            $configuration = parent::getAttribute($column) ?? [];
+            $configuration = $this->getConfigurationArray();
             $configuration[$key] = $this->normalizeGroupedConfigurationValue($key, $value);
 
             return parent::setAttribute($column, $configuration);
         }
 
         return parent::setAttribute($key, $value);
+    }
+
+    public function isFillable($key)
+    {
+        if (is_string($key) && array_key_exists($key, $this->groupedConfigurationDefaults())) {
+            return true;
+        }
+
+        return parent::isFillable($key);
+    }
+
+    protected function fillableFromArray(array $attributes)
+    {
+        $groupedKeys = array_keys($this->groupedConfigurationDefaults());
+        $allFillable = array_merge($this->getFillable(), $groupedKeys);
+
+        if (count($allFillable) > 0 && ! static::$unguarded) {
+            return array_intersect_key($attributes, array_flip($allFillable));
+        }
+
+        return $attributes;
     }
 
     private function normalizeGroupedConfigurationValue(string $key, mixed $value): mixed

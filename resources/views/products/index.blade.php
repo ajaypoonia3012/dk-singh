@@ -26,7 +26,9 @@
 
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 theme-grid-gap">
+        <x-promo.powder-product-card :setting="$setting" />
+
+        <div id="products-catalog" class="grid md:grid-cols-2 lg:grid-cols-3 theme-grid-gap">
 
             @foreach($products as $product)
 

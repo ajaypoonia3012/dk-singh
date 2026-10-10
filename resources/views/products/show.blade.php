@@ -29,6 +29,21 @@
                 &#8377;{{ $product->price }}
             </div>
 
+            @if($setting?->powder_promo_enabled)
+                <div class="mt-4 p-4 theme-radius theme-card border flex items-center justify-between gap-3">
+                    <div class="text-sm">
+                        <span class="font-bold theme-text-accent uppercase tracking-wide text-xs">⚡ {{ $setting->powder_promo_badge ?: 'FEATURED COLLECTION' }}</span>
+                        <p class="font-medium theme-text-neutral mt-0.5">{{ $setting->powder_promo_text ?: 'Explore our authentic herbal & wellness powder collection.' }}</p>
+                    </div>
+                    <a
+                        href="{{ $setting->powder_promo_button_link ?: route('products.index') }}"
+                        class="px-3 py-1.5 theme-radius theme-button-primary text-xs font-bold flex-shrink-0"
+                    >
+                        {{ $setting->powder_promo_button_text ?: 'Explore Collection' }}
+                    </a>
+                </div>
+            @endif
+
             <p class="mt-8 text-lg theme-text-neutral leading-relaxed">
                 {{ $product->description }}
             </p>

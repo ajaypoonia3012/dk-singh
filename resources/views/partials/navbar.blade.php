@@ -1,6 +1,6 @@
 <nav
     id="navbar"
-    class="theme-navbar fixed top-0 left-0 w-full z-50 transition-all duration-500 backdrop-blur-xl border-b"
+    class="theme-navbar sticky top-0 left-0 w-full z-50 transition-all duration-500 backdrop-blur-xl border-b"
 >
     <x-theme.page-container>
         <div class="flex items-center justify-between gap-4" style="height: var(--navbar-height);">
@@ -112,8 +112,6 @@
         </x-theme.page-container>
     </div>
 </nav>
-
-<div style="height: var(--navbar-height);"></div>
 
 <script>
     // Mobile Drawer Logic

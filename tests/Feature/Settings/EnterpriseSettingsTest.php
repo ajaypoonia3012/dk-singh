@@ -168,4 +168,172 @@ class EnterpriseSettingsTest extends TestCase
         $this->assertNotEmpty(SettingResource::form(Form::make($livewire))->getComponents());
         $this->assertNotEmpty(ThemeSettingResource::form(Form::make($livewire))->getComponents());
     }
+
+    public function test_powder_promo_banner_defaults_and_mutation_in_filament_admin(): void
+    {
+        $this->actingAs(User::factory()->create(['account_type' => 'admin', 'is_admin' => true]));
+        $setting = Setting::query()->create(['site_name' => 'DK Singh Fitness']);
+
+        $this->assertFalse($setting->powder_promo_enabled);
+        $this->assertSame('POWDER15', $setting->powder_promo_code);
+        $this->assertSame('HERBAL & WELLNESS', $setting->powder_promo_discount_text);
+
+        Livewire::test(EditSetting::class, ['record' => $setting->getRouteKey()])
+            ->fillForm([
+                'powder_promo_enabled' => true,
+                'powder_promo_badge' => 'EXCLUSIVE MEGA SALE',
+                'powder_promo_discount_text' => 'FLAT 25% OFF',
+                'powder_promo_code' => 'DKPOWDER25',
+                'powder_promo_text' => 'Get 25% discount on all Ayurvedic Weight Loss & Protein Powders!',
+                'powder_promo_button_text' => 'Claim Powder Discount',
+                'powder_promo_button_link' => '/products',
+                'powder_promo_theme' => 'emerald-wellness',
+                'powder_promo_placement' => 'all_plus_product_card',
+                'powder_promo_dismissible' => true,
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors()
+            ->assertNotified();
+
+        $setting->refresh();
+
+        $this->assertTrue($setting->powder_promo_enabled);
+        $this->assertSame('EXCLUSIVE MEGA SALE', $setting->powder_promo_badge);
+        $this->assertSame('FLAT 25% OFF', $setting->powder_promo_discount_text);
+        $this->assertSame('DKPOWDER25', $setting->powder_promo_code);
+        $this->assertSame('Claim Powder Discount', $setting->powder_promo_button_text);
+        $this->assertSame('emerald-wellness', $setting->powder_promo_theme);
+    }
+
+    public function test_powder_promo_banner_renders_in_public_layout_when_enabled_and_hides_when_disabled(): void
+    {
+        $this->withoutVite();
+
+        $setting = Setting::query()->create([
+            'site_name' => 'DK Singh Fitness',
+            'powder_promo_enabled' => true,
+            'powder_promo_badge' => 'SPECIAL POWDER DISCOUNT',
+            'powder_promo_discount_text' => 'FLAT 20% OFF',
+            'powder_promo_code' => 'POWDER20',
+            'powder_promo_text' => 'Exclusive savings on high-quality herbal powders.',
+            'powder_promo_button_text' => 'Order Powder Now',
+        ]);
+        $this->assertSame('FLAT 20% OFF', $setting->powder_promo_discount_text);
+        $theme = ThemeSetting::query()->create(['theme_name' => 'Default']);
+
+        $html = view('layouts.app', compact('setting', 'theme'))->render();
+
+        $this->assertStringContainsString('SPECIAL POWDER DISCOUNT', $html);
+        $this->assertStringContainsString('FLAT 20% OFF', $html);
+        $this->assertStringContainsString('POWDER20', $html);
+        $this->assertStringContainsString('Exclusive savings on high-quality herbal powders.', $html);
+        $this->assertStringContainsString('Order Powder Now', $html);
+
+        // When disabled
+        $setting->powder_promo_enabled = false;
+        $setting->save();
+
+        $htmlDisabled = view('layouts.app', compact('setting', 'theme'))->render();
+        $this->assertStringNotContainsString('SPECIAL POWDER DISCOUNT', $htmlDisabled);
+        $this->assertStringNotContainsString('POWDER20', $htmlDisabled);
+    }
+
+    public function test_powder_promo_cta_button_link_validation_rejects_unsafe_destinations_and_accepts_valid_paths(): void
+    {
+        $this->actingAs(User::factory()->create(['account_type' => 'admin', 'is_admin' => true]));
+        $setting = Setting::query()->create(['site_name' => 'DK Singh Fitness']);
+
+        // Test rejecting javascript: scheme
+        Livewire::test(EditSetting::class, ['record' => $setting->getRouteKey()])
+            ->fillForm([
+                'powder_promo_button_link' => 'javascript:alert(1)',
+            ])
+            ->call('save')
+            ->assertHasFormErrors(['powder_promo_button_link']);
+
+        // Test rejecting protocol-relative // URL
+        Livewire::test(EditSetting::class, ['record' => $setting->getRouteKey()])
+            ->fillForm([
+                'powder_promo_button_link' => '//malicious-site.test/phishing',
+            ])
+            ->call('save')
+            ->assertHasFormErrors(['powder_promo_button_link']);
+
+        // Test rejecting insecure http: URL
+        Livewire::test(EditSetting::class, ['record' => $setting->getRouteKey()])
+            ->fillForm([
+                'powder_promo_button_link' => 'http://insecure.test/products',
+            ])
+            ->call('save')
+            ->assertHasFormErrors(['powder_promo_button_link']);
+
+        // Test accepting valid relative path
+        Livewire::test(EditSetting::class, ['record' => $setting->getRouteKey()])
+            ->fillForm([
+                'powder_promo_button_link' => '/products/herbal-blend',
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors()
+            ->assertNotified();
+
+        $setting->refresh();
+        $this->assertSame('/products/herbal-blend', $setting->powder_promo_button_link);
+
+        // Test accepting valid https URL
+        Livewire::test(EditSetting::class, ['record' => $setting->getRouteKey()])
+            ->fillForm([
+                'powder_promo_button_link' => 'https://dksinghfitness.com/store',
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors()
+            ->assertNotified();
+
+        $setting->refresh();
+        $this->assertSame('https://dksinghfitness.com/store', $setting->powder_promo_button_link);
+    }
+
+    public function test_powder_promo_components_render_honest_copy_and_do_not_render_unbacked_claims(): void
+    {
+        $setting = Setting::query()->create([
+            'site_name' => 'DK Singh Fitness',
+            'powder_promo_enabled' => true,
+        ]);
+
+        $cardHtml = view('components.promo.powder-product-card', compact('setting'))->render();
+
+        $this->assertStringNotContainsString('Lab Verified Potency', $cardHtml);
+        $this->assertStringContainsString('Product Range', $cardHtml);
+        $this->assertStringNotContainsString('Apply this promo code at checkout', $cardHtml);
+
+        $bannerHtml = view('components.promo.powder-banner', compact('setting'))->render();
+        $this->assertStringNotContainsString('discount code', strtolower($bannerHtml));
+    }
+
+    public function test_product_payment_page_does_not_contain_misleading_promo_prompts(): void
+    {
+        $this->withoutVite();
+
+        $user = User::factory()->create();
+        $product = \App\Models\Product::create([
+            'name' => 'Ayurvedic Weight Loss Powder',
+            'slug' => 'ayurvedic-weight-loss-powder',
+            'price' => 1499,
+            'description' => 'Ayurvedic wellness powder.',
+            'status' => true,
+        ]);
+
+        $setting = Setting::query()->create([
+            'site_name' => 'DK Singh Fitness',
+            'powder_promo_enabled' => true,
+            'powder_promo_code' => 'POWDER15',
+        ]);
+        $theme = ThemeSetting::query()->create(['theme_name' => 'Default']);
+
+        $response = $this->actingAs($user)->get(route('product.checkout', $product->id));
+
+        $response->assertOk();
+        $response->assertSee('Pay &#8377;1,499', false);
+        $response->assertDontSee('Coupon Code:');
+        $response->assertDontSee('Apply this promo code at checkout');
+    }
 }

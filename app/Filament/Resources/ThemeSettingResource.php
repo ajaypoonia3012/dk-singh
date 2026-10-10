@@ -269,6 +269,20 @@ class ThemeSettingResource extends Resource
                         Forms\Components\FileUpload::make('popup_image')
                             ->disk('public')->directory('theme-popup')->image()->imagePreviewHeight('120')->openable(),
                     ])->columns(['default' => 1, 'md' => 2]),
+                Section::make('Product Powder Discount Banner')
+                    ->description('High-impact promotional discount banner for Herbal and Weight Loss Powder products.')
+                    ->icon('heroicon-o-tag')
+                    ->schema([
+                        Forms\Components\Placeholder::make('powder_promo_quick_link')
+                            ->label('')
+                            ->content(new \Illuminate\Support\HtmlString(
+                                '<div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-sm flex flex-wrap items-center justify-between gap-3">'
+                                . '<div><strong class="text-amber-900 dark:text-amber-300">Powder Order Discount Banner:</strong> <span class="text-slate-600 dark:text-zinc-300">Configure promo banner copy, coupon code, placement, themes, and CTA buttons in Site Settings.</span></div>'
+                                . '<a href="/admin/settings/1/edit?tab=promo-and-discounts" class="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs shadow-xs transition inline-flex items-center gap-1.5">Manage Powder Promo Banner →</a>'
+                                . '</div>'
+                            ))
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 

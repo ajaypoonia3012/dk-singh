@@ -169,6 +169,16 @@ class Setting extends Model
             'transformations_label' => 'Transformations',
             'maintenance_enabled' => false,
             'maintenance_message' => null,
+            'powder_promo_enabled' => false,
+            'powder_promo_badge' => 'FEATURED COLLECTION',
+            'powder_promo_text' => 'Explore our authentic herbal & wellness powder collection.',
+            'powder_promo_discount_text' => 'HERBAL & WELLNESS',
+            'powder_promo_code' => 'POWDER15',
+            'powder_promo_button_text' => 'Explore Powders',
+            'powder_promo_button_link' => '/products',
+            'powder_promo_theme' => 'amber-gold',
+            'powder_promo_placement' => 'all_plus_product_card',
+            'powder_promo_dismissible' => true,
         ];
     }
 
@@ -204,6 +214,8 @@ class Setting extends Model
     {
         return [
             'maintenance_enabled' => 'boolean',
+            'powder_promo_enabled' => 'boolean',
+            'powder_promo_dismissible' => 'boolean',
         ];
     }
 

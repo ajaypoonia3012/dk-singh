@@ -21,6 +21,7 @@ Product Checkout
 &#8377;{{ number_format($product->price) }}
 </div>
 
+
 <div class="theme-stack-md mb-8">
 
 <input
